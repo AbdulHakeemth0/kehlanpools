@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_purchase_order_inherit_warranty" model="ir.ui.view">
+        <field name="name">view.purchase.order.inherit.warranty</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//list//field[@name='taxes_id']" position="after">
+                <field name="number_of_warranty" optional="hide"/>
+                <field name="warranty_type" required="number_of_warranty > 0" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list//field[@name='discount']" position="before">
+                  <field name="discount_amount"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

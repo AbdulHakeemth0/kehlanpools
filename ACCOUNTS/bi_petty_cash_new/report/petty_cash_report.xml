@@ -1,0 +1,13 @@
+<odoo>
+    <record id="action_report_petty_cash" model="ir.actions.report">
+        <field name="name">Petty Cash</field>
+        <field name="model">petty.cash.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bi_petty_cash_new.report_petty_cash_template</field>
+        <field name="report_file">bi_petty_cash_new.report_petty_cash_template</field>
+        <field name="print_report_name">'Petty Cash - %s' % (object.request_number)</field>
+        <field name="binding_model_id" ref="bi_petty_cash_new.model_petty_cash_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_petty_cash"/>
+    </record>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_sale_subscription_plan_inherited" model="ir.ui.view">
+            <field name="name">sale.subscription.inherited.form</field>
+            <field name="model">sale.subscription.plan</field>
+            <field name="inherit_id" ref="sale_subscription.sale_subscription_plan_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]" position="after">
+                    <group>
+                        <group name="plan_duration" string="Duration">
+                            <label for="is_weekly"/>
+                            <div>
+                                <field name="is_weekly" style="width: 3rem;"/>
+                            </div>
+                            <label for="is_monthly"/>
+                            <div>
+                                <field name="is_monthly" style="width: 3rem;"/>
+                            </div>
+                            <label for="is_yearly"/>
+                            <div>
+                                <field name="is_yearly" style="width: 3rem;"/>
+                            </div>
+                            <label for="is_quaterly"/>
+                            <div>
+                                <field name="is_quaterly" style="width: 3rem;"/>
+                            </div>
+                            <label for="is_bi_yearly"/>
+                            <div>
+                                <field name="is_bi_yearly" style="width: 3rem;"/>
+                            </div>
+                        </group>
+                        <group name="unit_measure" string="Unit Of Measure">
+                            <field name="uom_id"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

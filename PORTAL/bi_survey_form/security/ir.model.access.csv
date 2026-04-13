@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_custom,access_crm_custom,crm.model_crm_lead,base.group_portal,1,0,0,0
+access_mep_equipment_user,bi_survey_form.mep.equipment,model_mep_equipment,base.group_user,1,1,1,1
+access_mep_equipment_portal,access_mep_equipment_user_portal,model_mep_equipment,base.group_portal,1,0,0,0

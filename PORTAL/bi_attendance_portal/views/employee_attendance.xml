@@ -1,0 +1,212 @@
+<odoo>
+    <!-- Breadcrumbs -->
+    <template id="employee_attendance_portal" name="Common Attendance" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'common_attendance'" t-attf-class="breadcrumb-item #{'active' if common_attendance else ''}">
+                <a href="/Commonattendance?{{ keep_query() }}">Attendance</a>
+            </li>
+        </xpath>
+        
+        <!-- Check-In and Check-Out Buttons -->
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="after">
+            <t t-if="request.httprequest.path == '/Commonattendance' and page_name == 'common_attendance'">
+                <t t-if="team == True">
+                    <!-- <t t-if="not last_attendance or (last_attendance and last_attendance.check_out)"> -->
+                    <a href="/check_in_form" class="btn btn-dark" style="margin-right: 10px;"><strong>Check-In</strong></a>
+                    <!-- </t> -->
+                    <!-- <t t-if="last_attendance and not last_attendance.check_out"> -->
+                    <a href="/check_out_form" class="btn btn-secondary"><strong>Check-Out</strong></a>
+                    <!-- </t> -->
+                </t>
+            </t>            
+        </xpath>
+    </template>
+    
+    <!-- Sidebar Menu for Attendance Overview -->
+    <template id="portal_home_menu_common_attendance" name="Common Attendance" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/hr_attendance/static/description/icon.svg'"/>
+                <t t-set="title">Attendance</t>
+                <t t-set="url" t-value="'/Commonattendance'"/>
+                <t t-set="text">Review all attendance related to your account</t>
+                <t t-set="placeholder_count" t-value="'employee_attendance_portal'"/>
+            </t>
+        </div>
+    </template>
+    <!-- Attendance Overview Page Template --> 
+    <template id="portal_my_home_attendance_views" name="My Attendance">
+        <t t-call="portal.portal_layout">
+          <t t-set="breadcrumbs_searchbar" t-value="True"/>
+          <t t-call="portal.portal_searchbar">
+            <t t-set="title">Attendance</t>
+          </t>
+      
+          <t t-if="not common_attendance">
+            <p class="alert alert-warning">There are currently no attendance records for your account.</p>
+          </t>
+      
+          <!-- Attendance Records Table -->
+          <style>
+            /* Mouse hover style for cells */
+            td:hover {
+              background-color: #e0e0ff;
+              cursor: pointer;
+              transition: background-color 0.3s ease, transform 0.2s ease;
+              transform: translateY(-2px);
+            }
+            /* Animation effect on mouse movement over icons */
+            td:hover::before {
+              color: #604058;
+              margin-right: 5px;
+              transition: transform 0.2s ease;
+              transform: rotate(20deg);
+            }
+            /* General table styles */
+            table td {
+              transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+            }
+          </style>
+
+          <t t-if="common_attendance" t-call="portal.portal_table">
+            <thead>
+              <tr class="active">
+                <th class="text-left">Employee</th>
+                <th class="text-center">Check-In</th>
+                <th class="text-center">Check-Out</th>
+                <th class="text-center">Work Hours</th>
+                <th class="text-end">Over Time</th>
+              </tr>
+            </thead>
+            <t t-foreach="common_attendance" t-as="record">
+              <tr>
+                <td class="text-left">
+                  <span t-field="record.employee_id.name"/>
+                </td>
+                <td class="text-center">
+                  <span t-field="record.check_in"/>
+                </td>
+                <td class="text-center">
+                  <span t-field="record.check_out"/>
+                </td>
+                <td class="text-center">
+                  <span t-field="record.worked_hours"/>
+                </td>
+                <td class="text-end">
+                  <span t-field="record.overtime_hours"/>
+                </td>
+              </tr>
+            </t>
+          </t>
+        </t>
+      </template> 
+    <!-- Check-In Form Template -->
+    <template id="check_in_form" name="Manual Check-In Form">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-set="title">Manual Check-In</t>
+
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Check-In Manually</h2>
+                        <form action="/submit_check_in" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <!-- Check-In Time with Default as Current Date and Time -->
+                            <div class="form-group mb-3">
+                                <label for="check_in_time" class="form-label">Check-In Time</label>
+                                <input type="datetime-local" id="check_in_time" name="check_in_time" class="form-control" required="1"/>
+                            </div>
+
+                            <!-- Team Members Selection -->
+                            <div class="form-group mb-3">
+                                <label for="team_members" class="form-label">Select Team Members for Check-In</label>
+                                <div id="team_members">
+                                    <t t-foreach="team_members" t-as="member">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" t-att-id="'member_' + str(member.id)" name="selected_members" t-att-value="member.id"/>
+                                            <label class="form-check-label" t-att-for="'member_' + str(member.id)">
+                                                <t t-esc="member.name"/>
+                                            </label>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit Check-In</button>
+                            <a href="/Commonattendance" class="btn btn-secondary ms-2">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Set Default Date and Time -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    const checkInTimeInput = document.getElementById('check_in_time');
+                    if (checkInTimeInput) {
+                        const now = new Date();
+                        const formattedDate = now.toISOString().slice(0, 16);  // Format to 'YYYY-MM-DDTHH:MM'
+                        checkInTimeInput.value = formattedDate;
+                    }
+                });
+            </script>
+        </t>
+    </template>
+
+    <template id="check_out_form" name="Manual Check-Out Form">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-set="title">Manual Check-Out</t>
+
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Check-Out Manually</h2>
+                        <form action="/submit_check_out" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <div class="form-group mb-3">
+                                <label for="check_out_time" class="form-label">Check-Out Time</label>
+                                <input type="datetime-local" id="check_out_time" name="check_out_time" class="form-control" required="1"/>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="team_members" class="form-label">Select Team Members for Check-Out</label>
+                                <div id="team_members">
+                                    <t t-foreach="team_members" t-as="member">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" t-att-id="'member_' + str(member.id)" name="selected_members" t-att-value="member.id"/>
+                                            <label class="form-check-label" t-att-for="'member_' + str(member.id)">
+                                                <t t-esc="member.name"/>
+                                            </label>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit Check-Out</button>
+                            <a href="/Commonattendance" class="btn btn-secondary ms-2">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    const checkOutTimeInput = document.getElementById('check_out_time');
+                    if (checkOutTimeInput) {
+                        const now = new Date();
+                        const formattedDate = now.toISOString().slice(0, 16);  // Format to 'YYYY-MM-DDTHH:MM'
+                        checkOutTimeInput.value = formattedDate;
+                    }
+                });
+            </script>
+        </t>
+    </template>
+</odoo>

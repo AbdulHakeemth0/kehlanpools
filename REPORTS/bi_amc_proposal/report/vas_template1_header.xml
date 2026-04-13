@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- header for VAS template 1 -->
+        <template id="vas_header">
+            <t t-set="company" t-value="res_company"/>
+            <div class="header" style="width: 100%;">
+                <div class="row">
+                    <div class="col-7">
+                         <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 180px;max-width: 250px;" alt="Logo"/>
+                    </div>
+                    <div class="col-5">
+                        <table width="100%" style=" border-collapse: collapse;border:hidden">
+                            <tr>
+                                <td width="100%" style="line-height:20px;border:hidden;">
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.company_registry">
+                                        <t t-out="res_company.name"/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="line-height:20px;border:hidden;">
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">C.R.No:</span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.company_registry">
+                                        <t t-out="res_company.company_registry"/>.
+                                    </span>
+                                    
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">PO.Box -</span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.zip">
+                                        <t t-out="res_company.zip"/> 
+                                    </span>&#160;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="line-height:20px;border:hidden;">
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.street">
+                                        <t t-out="res_company.street"/>,
+                                    </span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.city">
+                                        <t t-out="res_company.city"/>,
+                                    </span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.country_id">
+                                        Sultanate of <t t-out="res_company.country_id.name"/>.
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="line-height:20px;border:hidden;">
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Tel-</span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.phone">
+                                        <t t-out="res_company.phone"/>,
+                                    </span>&#160;
+
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Fax-</span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.fax">
+                                        <t t-out="res_company.fax"/>.
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="line-height:20px;border:hidden;">
+                                   <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Email-</span>
+                                    <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.email">
+                                        <t t-out="res_company.email"/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="line-height:20px;border:hidden;">
+                                     <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="res_company.website">
+                                        <t t-esc="res_company.website.replace('http://', '')" />
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- footer for VAS template 1 -->
+            <div class="footer">
+                <div class="row">
+                    <table width="90%" class="table table-borderless" style="border-collapse: collapse; width: 100%;">
+                        <tr>
+                            <td style="text-align: left; padding-left: 50px; color: #003399;">
+                                Swimming Pool • Fountains • Spa • Sauna Steam Room • Indoor Landscaping
+                            </td>
+                            <td style="text-align: right; padding-right: 50px; color: #003399;">
+                                <span t-if="report_type == 'pdf'" class="page"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </template>
+
+        <template id="amc_content_header">
+        <link href="https://fonts.googleapis.com/css?family=Abyssinica+SIL" rel="stylesheet"/>
+            <div class="header" style="margin: 0; ">
+                <div class="not-first-page">
+                <table width="950px;" class="table table-borderless" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;">
+                    <tr>
+                        <td width="30%" style="text-align: left;">
+                            <img src="/bi_amc_proposal/static/src/img/kehlan_pools_logo.png" alt="Kehlan Pools Logo" style="margin-top: 1px; width: 200px; height: auto;" />
+                        </td>
+                        <td width="35%" style="text-align: center; font-size: 17px; font-weight: bold; color: #28648c;padding-left:40px; padding-top: 25px;">
+
+                            <b><t t-if="o.name">
+                                <t t-out="o.name"/>
+                                </t>
+                            </b>
+                        </td>
+                        <td width="35%" style="font-size:12px; text-align: right;">
+                            <t t-if="res_company.name">
+                                <t t-esc="res_company.name"/>
+                            </t>
+                            <br/>
+                            <t t-if="res_company.company_registry">
+                                C.R No:<t t-esc="res_company.company_registry"/>.
+                            </t>
+                            <t t-if="res_company.zip">
+                                PO BOX -<t t-esc="res_company.zip"/>,
+                            </t>
+                            <br/>
+                            <t t-if="res_company.street">
+                                <t t-esc="res_company.street"/>,
+                            </t>
+                            <t t-if="res_company.city">
+                                <t t-esc="res_company.city"/>
+                            </t>
+                            <t t-if="res_company.country_id.name">
+                                Sultanate of <t t-esc="res_company.country_id.name"/>.
+                            </t>
+                            <br/>
+                            <span style="color: #086cbc; text-decoration: underline;">
+                                Website -<t t-esc="res_company.website"/>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                </div>  
+            </div>
+            <div class="footer">
+                <div class="row">
+                    <table width="100%" class="table table-borderless" style="border-collapse: collapse; width: 100%;">
+                        <tr>
+                            <td style="text-align: center; font-size: 16px; color: #28648c;">
+                                Swimming Pool | Water Features | Ponds | Spa | Steam Room | Sauna
+                            </td>
+                        </tr>
+                        <tr>
+                        <td style="text-align: center;font-size: 16px; padding-right: 50px;">
+                            <span t-if="report_type == 'pdf'" class="page"/>
+                        </td>
+                        </tr>
+                    </table>
+                </div>
+            <span style="text-align:center" t-if="report_type == 'pdf'" class="page"/>
+            </div>
+        </template>
+
+        <template id="amc_content_header_non_corporate">
+        <link href="https://fonts.googleapis.com/css?family=Abyssinica+SIL" rel="stylesheet">
+            <div class="header" style="margin: 0; ">
+                <div class="not-first-page">
+                <br/><br/>
+                <table width="100%;" class="table table-borderless" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;">
+                    <tr width="100%">
+                        <td width="25%" style="text-align: left;vertical-align:bottom">
+                            <img src="/bi_amc_proposal/static/src/img/kehlan_pools_logo.png" alt="Kehlan Pools Logo" style="margin-top: -17px; width: 170px; height: auto;"/>
+                        </td>
+                        <td width="30%" style="vertical-align:bottom;text-align: right; font-size: 17px; font-weight: bold; color: #28648c;">
+                            <b><t t-if="o.name">
+                                <t t-out="o.name"/>
+                                </t>
+                            </b>
+                        </td>
+                        <td width="45%" style="font-size:11px; text-align: right;justify-content:right;white-space: nowrap;">
+                            <t t-if="res_company.name">
+                                <t t-esc="res_company.name"/>
+                            </t>
+                            <br/>
+
+                            C.R No:
+                            <t t-if="res_company.company_registry">
+                                <t t-esc="res_company.company_registry"/>.
+                            </t>
+                            PO BOX -
+                            <t t-if="res_company.zip">
+                                <t t-esc="res_company.zip"/>,
+                            </t>
+                            <br/>
+
+                            <t t-if="res_company.street">
+                                <t t-esc="res_company.street"/>,
+                            </t>
+                            <t t-if="res_company.city">
+                                <t t-esc="res_company.city"/>,
+                            </t>
+                            <t t-if="res_company.country_id">
+                                Sultanate of <t t-esc="res_company.country_id.name"/>.
+                            </t>
+                            <br/>
+                            Website -
+                            <t t-if="res_company.website">
+                                <t t-esc="res_company.website.replace('http://', '')" />
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                </div>  
+            </div>
+            <div class="footer">
+                <div class="row">
+                    <table width="100%" class="table table-borderless" style="border-collapse: collapse; width: 100%;">
+                        <tr>
+                            <td style="text-align: center; font-size: 13px; color: #28648c;">
+                                Swimming Pool | Water Features | Ponds | Spa | Steam Room | Sauna
+                            </td>
+                            <!-- <td style="text-align: right; padding-right: 50px; color: #003399;">
+                                <span t-if="report_type == 'pdf'" class="page"/>
+                            </td> -->
+                        </tr>
+                    </table>
+                </div>
+                <span style="text-align:center" t-if="report_type == 'pdf'" class="page"/>
+            </div>
+        </link>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_route_user,bi_fleet.vehicle.route,model_vehicle_route,base.group_user,1,1,1,1
+access_fleet_vehicle_damages_description_user,bi_fleet.fleet.vehicle.damages.description,model_fleet_vehicle_damages_description,base.group_user,1,1,1,1
+access_damage_image_user,bi_fleet.damage.image,model_damage_image,base.group_user,1,1,1,1
+access_vehicle_document_user,bi_fleet.vehicle.document,model_vehicle_document,base.group_user,1,1,1,1

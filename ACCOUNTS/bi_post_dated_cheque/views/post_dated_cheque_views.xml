@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Form view for post.dated.cheque -->
+        <record id="view_post_dated_cheque_form" model="ir.ui.view">
+            <field name="name">post.dated.cheque.form</field>
+            <field name="model">post.dated.cheque</field>
+            <field name="arch" type="xml">
+                <form string="Cheque Maintenance">
+                    <header>
+                        <button name="generate_cheques" type="object" string="Generate Cheques" class="btn-primary" invisible="cheques_generated"/>
+                        <button name="create_payment" type="object" string="Create Payment" class="btn-primary" invisible="cheques_generated == False or payment_generated"/>
+                        <field name="state" statusbar_visible="draft,cheques_generated,payment_created" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="bank_id" invisible="1"/>
+                            <field name="bank_acc_id" readonly="not state == 'draft'"></field>
+                            <field name="amount" required="1" readonly="not state == 'draft'"/>
+                            <field name="payment_type" widget="radio" options="{'horizontal': True}" readonly="not state == 'draft'"/>
+                            <field name="cheque_type" widget="radio" options="{'horizontal': True}" readonly="not state == 'draft'"></field>
+                            <field name="cheque_payment_type" readonly="not state == 'draft'"/>
+                            <field name="no_of_cheques" readonly="not state == 'draft'"/>
+                            <field name="partner_id" domain="[('supplier_rank', '>', 0)]" invisible="payment_type == 'receive'" readonly="not state == 'draft'"></field>
+                            <field name="customer_id" domain="[('customer_rank', '>', 0)]" invisible="payment_type == 'send'" readonly="not state == 'draft'"></field>
+                            <field name="starting_cheque_number" readonly="not state == 'draft'"/>
+                            <field name="starting_cheque_date" readonly="not state == 'draft'"/>
+                            <field name="cheques_generated" invisible="1"/>
+                            <field name="payment_generated" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Cheques">
+                                <field name="cheque_line_ids">
+                                    <list editable="bottom">
+                                        <field name="cheque_number" string="Cheque Number" width="25%"/>
+                                        <field name="cheque_date" string="Cheque Date" width="25%"/>
+                                        <field name="cheque_amount" string="Cheque Amount" width="25%"/>
+                                        <field name="remarks" string="Remarks" width="25%"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree view for post.dated.cheque -->
+        <record id="view_post_dated_cheque_tree" model="ir.ui.view">
+            <field name="name">post.dated.cheque.tree</field>
+            <field name="model">post.dated.cheque</field>
+            <field name="arch" type="xml">
+                <list string="Cheque Maintenance">
+                    <field name="bank_acc_id"/>
+                    <field name="no_of_cheques"/>
+                    <field name="amount"></field>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action to open the Post Dated cheque views -->
+        <record id="action_post_dated_cheque" model="ir.actions.act_window">
+            <field name="name">Cheque Maintenance</field>
+            <field name="res_model">post.dated.cheque</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_post_dated_cheque_tree"/>
+        </record>
+
+        <!-- Menu item to access the Post Dated cheque -->
+        <menuitem id="menu_post_dated_cheque" name="Cheque Maintenance" parent="account.menu_finance_configuration" action="action_post_dated_cheque"/>
+    </data>
+</odoo>

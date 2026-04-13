@@ -1,0 +1,39 @@
+<odoo>
+    <record id="hr_leave_type_sick_oman" model="hr.leave.type">
+        <field name="name">Sick Leave (Oman)</field>
+        <field name="requires_allocation">no</field>
+        <field name="is_sick_leave_oman" eval="True"/>
+    </record>
+
+    <record id="input_type_sick_days" model="hr.payslip.input.type">
+        <field name="name">Sick Leave</field>
+        <field name="code">SICK_DAYS</field>
+    </record>
+
+     <record id="hr_salary_rule_sick_leave" model="hr.salary.rule">
+        <field name="name">Sick Leave Payment</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="code">SICK_PAY</field>
+        <field name="sequence">10</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute"><![CDATA[
+input_sick_days = inputs.get('SICK_DAYS')
+if input_sick_days and input_sick_days.amount > 0:
+    sick_days = input_sick_days.amount
+    if sick_days <= 21:
+        result = (contract.wage / 30) * sick_days * 1
+    elif sick_days <= 35:
+        result = (contract.wage / 30) * sick_days * 0.75
+    elif sick_days <= 70:
+        result = (contract.wage / 30) * sick_days * 0.50
+    elif sick_days <= 182:
+        result = (contract.wage / 30) * sick_days * 0.35
+    else:
+        result = 0
+else:
+    result = 0  # Ensures rule does NOT run if SICK_DAYS is missing
+]]></field>
+        <field name="struct_id" ref="hr_payroll.structure_002"/>
+    </record>
+</odoo>

@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--AMC Contract template from subscriptions -->
+    <template id="report_swimming_pool_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="header">
+                        <div class="text-center">
+                            <img src="/bi_swimming_pool_report/static/src/img/amc_contract_header.png" alt="Kehlan Pools Logo" 
+                                style="width: 750px; height: 100px;"/>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <h4 style="text-align: center;font-style: italic;font-family: 'Abyssinica SIL', serif; word-spacing: -2px;"><u><b>Swimming Pool
+                        Maintenance Contract</b></u>
+
+                    </h4>
+                    <p style="text-align: center;color:#084c7c; font-size:20px; margin-top: 20px;font-family: 'Abyssinica SIL', serif; word-spacing: -2px;">US
+                        certified pool operator No: G9-334993 valid up
+                        to 2027
+                    </p>
+                    <table width="100%" class="table table-borderless" style="margin-top:-10px; font-weight:bold;border:hidden;font-family: 'Abyssinica SIL', serif;">
+                        <tr width="100%" style="text-align:left;">
+                            <td width="70%" style="font-size:20px;">
+                                <b>REF : <t t-if="o.name">
+                                    <t t-esc="o.name"/><t t-if="o.m_number">/<t t-esc="o.m_number"/>01</t>
+                                </t></b>
+                            </td>
+                            <td width="30%" style="text-align:right; word-spacing: -2px;">
+                                <t t-if="o.date_order">
+                                    <t t-esc="o.date_order.strftime('%dth %b %Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" class="table table-borderless" style="margin-top:-20px; font-size:17px; line-height:25px; border:hidden;text-align:justify;font-family: 'Abyssinica SIL', serif;">
+                        <tr width="100%">
+                            <td>
+                                <span style="display: inline;font-size:17px;">1.</span>
+                                <span style="padding-left:15px;text-align:justify; word-spacing: -2px;">
+                                    This is a contract for maintenance of <b>Swimming pool</b> between
+                                    <strong>
+                                        <t t-esc="o.partner_id.name"/>
+                                    </strong>,
+                                    <strong>
+                                        <t t-if="o.partner_id.street">
+                                            <t t-esc="o.partner_id.street"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.street2">
+                                            <t t-esc="o.partner_id.street2"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.city">
+                                            <t t-esc="o.partner_id.city"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.state_id.name">
+                                            <t t-esc="o.partner_id.state_id.name"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.zip">
+                                            <t t-esc="o.partner_id.zip"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.country_id">
+                                            <t t-if="o.partner_id.country_id.code == 'OM'">
+                                                Sultanate of <t t-esc="o.partner_id.country_id.name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="o.partner_id.country_id.name"/>
+                                            </t>
+                                        </t>
+                                    </strong>
+                                    (hereafter referred to as “Client”) and
+                                    <b>M/s
+                                        Kehlan Pools and Fountains LLC, Po Box 1386, PC 114, Hai Al Mina, Muscat, Sultanate of
+                                        Oman</b> (hereafter referred to as “Contractor”)
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" border="1" style="font-size:17px;font-family: 'Abyssinica SIL', serif; word-spacing: -2px;">
+                        <tr width="100%" style="line-height:25px;background-color:#c8dcec;">
+                            <td width="10%"
+                                style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px;  text-align: center;">
+                                <b>S No</b>
+                            </td>
+                            <td width="45%"
+                                style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px;text-align: center;">
+                                <b>Service / Property / Location</b>
+                            </td>
+                            <td width="10%"
+                                style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: center;">
+                                <b>Service Frequency</b>
+                            </td>
+                            <td width="10%"
+                                style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: center;">
+                                <b>Water <br/>Volume <br/>(LTR)</b>
+                            </td>
+                            <td width="15%"
+                                style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: center;">
+                                <b>Monthly<br/> charges <br/>including <br/>VAT (OMR)</b>
+                            </td>
+                            <td width="10%"
+                                style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: center;">
+                                <b>Annual<br/> charges<br/> including <br/>VAT<br/>(OMR)</b>
+                            </td>
+                             
+                        </tr>
+                        <t t-foreach="o.order_line" t-as="line">
+                        <tr >
+                            <td style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: center;">
+                                a
+                            </td>
+                            <td style="font-family: 'Abyssinica SIL', serif;border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: left;">
+                                <t t-if="line.service_property_location">
+                                    <t t-out = "line.service_property_location"/>
+                                </t>
+                                <t t-if="o.partner_id.way_no">
+                                    <t t-out="o.partner_id.way_no"/>,
+                                </t>
+                                <!-- <t t-if="o.partner_id">
+                                    <span style="font-weight:bold;"><t t-out="o.partner_id.name"/>,</span>
+                                </t> -->
+                                <t t-if="o.partner_id.street">
+                                    <span style="font-weight:bold;"><t t-out="o.partner_id.street"/>,</span>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <span style="font-weight:bold;"><t t-out="o.partner_id.street2"/>,</span>
+                                </t>
+                                <t t-if="o.partner_id.city">
+                                    <span style="font-weight:bold;"><t t-out="o.partner_id.city"/>,</span>
+                                </t>
+                                <t t-if="o.partner_id.state_id.name">
+                                    <span style="font-weight:bold;"><t t-out="o.partner_id.state_id.name"/>,</span>
+                                </t>
+                                <t t-if="o.partner_id.country_id">
+                                    <t t-if="o.partner_id.country_id.code == 'OM'">
+                                        <b>Sultanate of <span t-esc="o.partner_id.country_id.name"/><br/></b>
+                                    </t>
+                                    <t t-else="">
+                                        <b><span t-esc="o.partner_id.country_id.name"/><br/></b>
+                                    </t>
+                                </t>
+                                <!-- <t t-if="o.partner_id.country_id.name">
+                                    <span style="font-weight:bold;"><t t-out="o.partner_id.country_id.name"/>,</span>
+                                </t> -->
+                            </td>
+                            
+                            <td style="border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; text-align: center;font-family: 'Abyssinica SIL', serif;">
+                                <t t-if="o.pool_specification_ids and o.pool_specification_ids[:1][0].visit_type == 'weekly'">
+                                    <t t-esc="int(o.pool_specification_ids[:1][0].visit_frequency)"/> days in a week
+                                </t>
+                                <t t-elif="o.pool_specification_ids and o.pool_specification_ids[:1][0].visit_type == 'monthly'">
+                                    <t t-esc="int(o.pool_specification_ids[:1][0].visit_frequency)"/> days in a month
+                                </t>
+                                <t t-elif="o.pool_specification_ids and o.pool_specification_ids[:1][0].visit_type == 'yearly'">
+                                    <t t-esc="int(o.pool_specification_ids[:1][0].visit_frequency)"/> days in a year
+                                </t>
+                            </td>
+                            <td style="border: 1px solid black;font-family:'Abyssinica SIL', serif; padding: 5px; padding-top: 2px; padding-bottom: 2px;text-align:center">
+                                <t t-if="sum(o.pool_dimension_ids.mapped('water_volume')) or 0">
+                                    <t t-esc="int((sum(o.pool_dimension_ids.mapped('water_volume')) or 0) * 1000)"/>
+                                </t>
+
+                            </td>
+                            <td style="border: 1px solid black;font-family:'Abyssinica SIL', serif;padding: 6px; text-align:right;">
+                                <t t-set="amount_total" t-value="0"/>
+                                <t t-if="o.plan_id.is_quaterly">
+                                    <t t-set="amount_total" t-value="o.amount_total/o.plan_id.billing_period_value"/>
+                                    <t t-out="'{:.3f}'.format(amount_total)"/>
+                                </t>
+                                <t t-elif="o.plan_id.is_monthly">
+                                    <t t-set="amount_total" t-value="o.amount_total/o.plan_id.billing_period_value"/>
+                                    <t t-out="'{:.3f}'.format(amount_total)"/>
+                                </t>
+                                <t t-elif="o.plan_id.is_bi_yearly">
+                                    <t t-set="amount_total" t-value="o.amount_total/o.plan_id.billing_period_value"/>
+                                    <t t-out="'{:.3f}'.format(amount_total)"/>
+                                </t>
+                                <t t-elif="o.plan_id.is_yearly">
+                                    <t t-set="amount_total" t-value="o.amount_total/o.plan_id.billing_period_value"/>
+                                    <t t-out="'{:.3f}'.format(amount_total)"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="amount_total" t-value="o.amount_total"/>
+                                    <t t-out="'{:.3f}'.format(amount_total)"/>
+                                </t>
+                            </td>
+                            <td style="border: 1px solid black;font-family:'Abyssinica SIL', serif;padding: 6px; text-align:right;">
+                                <t t-set="annual_amount" t-value='0'/> 
+                                <t t-if="o.amount_total">
+                                    <t t-set="annual_amount" t-value="amount_total*12"/>
+                                    <t t-out="'{:.3f}'.format(annual_amount)"/>
+                                </t>
+                                
+                            </td>
+                        </tr>
+                        </t>
+                        <t t-if="o.order_line">
+                            <tr>
+                                <td colspan="6" width="100%"
+                                    style="background-color:#c8dcec;border: 1px solid black; padding: 5px; padding-top: 2px; padding-bottom: 2px; font-weight:bold;font-family: 'Abyssinica SIL', serif;">
+                                    <t t-if="o.currency_id">
+                                        <t t-esc="o.currency_id.with_context(lang='en_US').amount_to_text(annual_amount)"/> only
+                                        <!-- <t t-esc="o.currency_id.with_context(lang='en_US').amount_to_text((annual_amount % 1) * 100).replace('Omani Rial', '')"/> only -->
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <table class="table table-borderless" width="100%" style="font-family: 'Abyssinica SIL', serif;margin-top: 15px; line-height:25px; text-align:justify; word-spacing: -2px;">
+                        <tr width="100%">
+                            <td style="font-size:17px; line-height:25px; " >
+                               <span style="display: inline;">2.</span><span style="padding-left:15px;text-align:justify;">
+                                Upon mutual agreement between the client and the contractor as mentioned above, the
+                                contractor hereby agrees to provide the maintenance services as per design standards and
+                                the
+                                client
+                                hereby agrees to avail the services as per the following terms and conditions.</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div width="100%" class="table table-borderless" style="font-family: 'Abyssinica SIL', serif; margin-left:8px; margin-top:-2%; word-spacing: -2px;">
+                        <p style="font-family: 'Abyssinica SIL', serif; font-size:17px; ">
+                            3.
+                            <span style="font-family: 'Abyssinica SIL', serif; padding-left:15px;font-weight: bold;">Specific Conditions:</span>
+                        </p>
+
+                        <table width="100%" style="font-family: 'Abyssinica SIL', serif; margin-top:-1%; word-spacing: -2px;">
+                            <tr>
+                                <td colspan="6" style="font-family: 'Abyssinica SIL', serif; font-size:17px; padding-left:55px;padding-right:20px;">
+                                    <ul style="font-family: 'Abyssinica SIL', serif;list-style-type: lower-alpha; padding-left:10px; margin-left: 0px;">
+                                        <t t-foreach="o.specific_conditions_ids" t-as="spec">
+                                            <li style="font-family: 'Abyssinica SIL', serif; padding-left:10px;">
+                                                <t t-if="spec.description">
+                                                    <t t-esc="spec.description"/>
+                                                </t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div width="100%" class="table table-borderless" style="font-family: 'Abyssinica SIL', serif; margin-left:8px; margin-top:-2%; word-spacing: -2px;">
+                        <p style="font-family: 'Abyssinica SIL', serif; font-size:17px; ">
+                            4.
+                            <span style="font-family: 'Abyssinica SIL', serif;font-weight: bold; padding-left:15px;">General Scope of Work:</span>
+                        </p>
+
+                        <table width="100%" style="font-family: 'Abyssinica SIL', serif; margin-top:-1%; ">
+                            <tr style="line-height:25px;">
+                                <td colspan="6" style="font-family: 'Abyssinica SIL', serif; font-size:17px; padding-left:55px;padding-right:20px;">
+                                    <ul style="font-family: 'Abyssinica SIL', serif;list-style-type: lower-alpha; padding-left:10px; text-align:justify;">
+                                        <t t-foreach="o.general_scope_ids" t-as="gen">
+                                           <li style="font-family: 'Abyssinica SIL', serif; padding-left:10px; margin-left: 0px;">
+                                                <t t-if="gen.description">
+                                                    <t t-esc="gen.description"/>
+                                                </t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                     <div style="page-break-before: always"/>
+
+
+                    <div width="100%" class="table table-borderless" style="font-family: 'Abyssinica SIL', serif; margin-left:8px; word-spacing: -2px;">
+                        <p style="font-family: 'Abyssinica SIL', serif; font-size:17px; ">
+                            5.
+                            <span style="font-family: 'Abyssinica SIL', serif; font-weight: bold;padding-left:15px;">Detailed Scope of Works and Specification:</span>
+                        </p>
+
+                        <table width="100%" style="font-family: 'Abyssinica SIL', serif; ">
+                            <tr>
+                                <td colspan="6" style="font-family: 'Abyssinica SIL', serif; font-size:17px; padding-left:55px;padding-right:20px;">
+                                    <ul style="font-family: 'Abyssinica SIL', serif;list-style-type: lower-alpha; padding-left:10px; text-align:justify;">
+                                        <t t-foreach="o.detailed_scope_ids" t-as="detail_scope">
+                                            <li style="font-family: 'Abyssinica SIL', serif; margin-left: 0px; padding-left:10px;">
+                                                <t t-if="detail_scope.description">
+                                                    <t t-esc="detail_scope.description"/>
+                                                </t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div width="100%" class="table table-borderless" style="font-family: 'Abyssinica SIL', serif; margin-left:8px; word-spacing: -2px;">
+                        <p style="font-family: 'Abyssinica SIL', serif; font-size:17px;padding-right:20px; ">
+                            6.
+                            <span style="font-family: 'Abyssinica SIL', serif;font-weight: bold; padding-left:15px;">Terms &amp; conditions: -</span>
+                        </p>
+
+                        <table width="100%" style="font-family: 'Abyssinica SIL', serif;   ">
+                            <tr>
+                                <td width="100%" colspan="6" style="font-family: 'Abyssinica SIL', serif; font-size:17px; padding-left:55px; padding-right:20px;">
+                                    <ul style="font-family: 'Abyssinica SIL', serif;list-style-type: lower-alpha; padding-left:10px; text-align:justify;">
+                                        <t t-foreach="o.terms_conditions_ids" t-as="terms">
+                                           <li style="font-family: 'Abyssinica SIL', serif; padding-left:10px; margin-left: 0px;text-align:justify ">
+                                                <t t-if="terms.description">
+                                                    <t t-esc="terms.description"/>
+                                                </t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="page-break-before:always;"></div>
+
+                    <div width="100%" class="table table-borderless" style="font-family: 'Abyssinica SIL', serif; margin-left:8px; word-spacing: -2px;">
+                        <p style="text-align:justify;font-family: 'Abyssinica SIL', serif; font-size:17px;padding-right:20px;">7. <span style="padding-left:15px;">The <b>“AMC”</b> scope of work <b>“EXCLUDES”</b> the
+                            followings other than warranty provided by
+                            <b>“
+                                <t t-if="user.company_id">
+                                    <b>
+                                        <t t-esc="user.company_id.name"/>
+                                    </b>
+                                </t>
+                                ”;
+                            </b>
+                            </span>
+                        </p>
+
+                        <table width="100%" style="font-family: 'Abyssinica SIL', serif; word-spacing: -2px;">
+                            <tr>
+                                <td colspan="6" style="font-family: 'Abyssinica SIL', serif; font-size:17px; padding-left:55px;padding-right:20px;">
+                                    <ul style="font-family: 'Abyssinica SIL', serif;list-style-type: lower-alpha; padding-left:10px; text-align:justify;">
+                                        <t t-foreach="o.amc_scope_ids" t-as="amc_scope">
+                                          <li style="font-family: 'Abyssinica SIL', serif; padding-left:10px; margin-left: 0px;">
+                                                <t t-if="amc_scope.description">
+                                                    <t t-esc="amc_scope.description"/>
+                                                </t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table  width="100%" class="table table-sm table-border" style="border:1px solid black;border-collapse:separate; font-size:17px; word-spacing: -2px;font-family: 'Abyssinica SIL', serif;">
+                        <tr>
+                            <td width="50%" style="">
+                                <div><b>Contractor</b></div>
+                            </td>
+                            <td width="50%" style="border-left:1px solid black;border-top:none;border-bottom:none;border-right:none;">
+                                <div><b>Client</b></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" style="border-top:none; font-size:17px;">
+                                <div><b>Signature and Date.________________</b></div>
+                            </td>
+                            <td width="50%" style="border-left:1px solid black; border-bottom:none;border-top:none;border-right:none;padding: 5px; font-size:17px;">
+                                <div><b>Signature and Date.________________</b></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" style="text-decoration: underline; font-size:17px;">
+                                <div><b>Mr. Anssar Mullapurath</b></div>
+                            </td>
+                            <td width="50%" style="border-left:1px solid black; border-bottom:none;border-top:none;border-right:none;text-decoration: underline; font-size:17px;">
+                                <div><b>M/s / Mr / Ms / Mrs.</b><b><t t-esc="o.partner_id.name"/></b></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" style="text-decoration: underline; font-size:17px;">
+                                <div><b>Senior Operations Manager</b></div>
+                            </td>
+                            <td width="50%" style="border-left:1px solid black; border-bottom:none;border-top:none;border-right:none; font-size:17px;">
+                                <div>____________________</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" style="padding: 5px; text-decoration: underline; font-size:17px;">
+                                <div><b>M/s Kehlan Pools and Fountains LLC-CR-1083294</b></div>
+                            </td>
+                            <td width="50%" style="border-left:1px solid black; border-bottom:none;border-top:none;border-right:none;padding: 5px; font-size:17px;">
+                                <div><b>Desig:</b><t t-esc="o.partner_id.function"/></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" style="padding: 5px; font-size:17px;">
+                                <div><b>Tel /Mob No: +968 24499861 / +968 99441731</b></div>
+                            </td>
+                            <td width="50%" style="border-left:1px solid black; border-bottom:none;border-top:none;border-right:none;padding: 5px; font-size:17px;">
+                                <div><b>Tel /Mob No:</b> <b><t t-esc="o.partner_id.phone"/></b></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-borderless" width="100%" style="margin-left:0px;">
+                    <tr style="font-size:17px;font-family: 'Abyssinica SIL', serif;">
+                        <td>
+                            <p><span style="display: inline;">8.</span> <span style="padding-left:20px;text-align:justify;">For any further clarifications please feel free to contact <b> Mr. Anssar Mullapurath, Senior
+                                Operations Manager, +968 9944 1731 </b> or email us at <span style="text-decoration: underline; color: blue;"> <email>amc@kehlanpools.com</email>.</span></span>
+                            </p>
+                        </td>
+                    </tr>
+                    </table>
+                    <table class="table table-borderless" width="100%" style="margin-top:-30px;margin-left:0px;">
+                        <tr style="font-size:17px;font-family: 'Abyssinica SIL', serif;">
+                            <td>
+                                <p><span style="display: inline;">9.</span><span style="padding-left:20px;text-align:justify;"> Your Job reference for any correspondence related to this pool is <b><t t-if="o.m_number"><t t-esc="o.m_number"/>01</t></b>.</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-borderless" width="100%" style="margin-top:170px;" >
+                    <tr>
+                        <td style="font-size:19px;text-align: center;font-family: 'Abyssinica SIL', serif;">
+                            CRYSTAL CLEAR  <span style="color: #0066b2;"> SPARKLING BLUE SWIMMING POOLS</span> BEGIN WITH KPF
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

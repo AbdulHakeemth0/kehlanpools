@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="purchase_rfq_access">
+            <field name="name">Material Request</field>
+            <field name="description">Purchase Request For Quotation</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <record model="res.groups" id="purchase_rfq_user">
+            <field name="name">User</field>
+            <field name="category_id" ref="purchase_rfq_access"/>
+        </record>
+        <record model="res.groups" id="purchase_rfq_manager">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="purchase_rfq_access"/>
+            <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.purchase_rfq_user'))]"/>
+        </record>
+        <record model="res.groups" id="po_approval_group">
+            <field name="name">Po Approval</field>
+            <field name="category_id" ref="purchase_rfq_access"/>
+            <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.purchase_rfq_user'))]"/>
+        </record>
+    </data>
+</odoo>
+
+    <!-- <data noupdate="0"> -->
+    <!-- <record model="ir.module.category" id="purchase_approve">
+            <field name="name">Purchase Q-approve</field>
+            <field name="description">Purchase Q-approve</field>
+            <field name="sequence">18</field>
+    </record> -->
+
+    <!-- <record model="res.groups" id="group_quotation_approve_1">
+        <field name="name">PQ-Approve 1</field>
+        <field name="category_id" ref="purchase_approve"/>
+    </record> -->
+<!-- 
+    <record model="res.groups" id="group_quotation_approve_2">
+        <field name="name">PQ-Approve 2</field>
+        <field name="category_id" ref="purchase_approve"/>
+    </record> -->
+<!-- </data> -->
+
+<!-- <data>
+    <record model="ir.rule" id="purchase_requisition_line_ext_comp_rule">
+        <field name="name">Purchase requisition Line ext multi-company</field>
+        <field name="model_id" ref="model_purchase_requisition_line_ext"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</data> -->
+    <!-- <record model="ir.module.category" id="module_purchase_requisition">
+        <field name="name">Purchase Requisition</field>
+        <field name="description">Purchase Requisition</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record model="res.groups" id="module_purchase_requisition_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_purchase_requisition"/>
+    </record>
+    <record model="res.groups" id="module_purchase_requisition_reviewed">
+        <field name="name">Reviewed</field>
+        <field name="category_id" ref="module_purchase_requisition"/>
+         <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.module_purchase_requisition_user'))]"/>
+    </record>
+    <record model="res.groups" id="module_purchase_requisition_validate">
+        <field name="name">Validate</field>
+        <field name="category_id" ref="module_purchase_requisition"/>
+         <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.module_purchase_requisition_reviewed'))]"/>
+    </record>
+     -->
+    <!-- <record model="res.groups" id="module_purchase_requisition_approve">
+        <field name="name">Approve</field>
+        <field name="category_id" ref="module_purchase_requisition"/>
+        <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.module_purchase_requisition_reviewed'))]"/>
+    </record> -->
+
+    <!-- <record model="res.groups" id="module_purchase_requisition_manager">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_purchase_requisition"/>
+        <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.module_purchase_requisition_validate'))]"/>
+    </record>    -->
+
+
+    <!-- <record model="ir.module.category" id="purchase_request_access">
+        <field name="name">Purchase Request</field>
+        <field name="description">Purchase Request</field>
+        <field name="sequence">22</field>
+    </record> -->
+  
+
+    <!-- <record model="res.groups" id="purchase_request_access_manager">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="purchase_request_access"/>
+    </record> -->
+
+    
+
+    <!-- <record model="ir.module.category" id="purchase_quotation_access">
+        <field name="name">Purchase Quotation</field>
+        <field name="description">Purchase Quotation</field>
+        <field name="sequence">25</field>
+    </record> -->
+    <!-- <record model="res.groups" id="purchase_quotation_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="purchase_quotation_access"/>
+    </record> -->
+    <!-- <record model="res.groups" id="purchase_quotation_manager">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="purchase_quotation_access"/>
+        <field name="implied_ids" eval="[(4, ref('bi_purchase_requisition.purchase_quotation_user'))]"/>
+    </record> -->

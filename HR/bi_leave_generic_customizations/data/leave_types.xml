@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Maternity Leave Type -->
+        <record id="hr_leave_type_maternity" model="hr.leave.type">
+            <field name="name">Maternity Leave</field>
+            <field name="requires_allocation">no</field>
+            <field name="is_maternity_leave" eval="True"/>
+            <field name="max_leaves" eval="98"/>  
+        </record>
+
+        <!-- Paternity Leave Type -->
+        <record id="hr_leave_type_paternity" model="hr.leave.type">
+            <field name="name">Paternity Leave</field>
+            <field name="requires_allocation">no</field>
+            <field name="is_paternity_leave" eval="True"/>
+            <field name="max_leaves" eval="7"/> 
+        </record>
+
+        <record id="hr_leave_type_marriage" model="hr.leave.type">
+            <field name="name">Marriage Leave</field>
+            <field name="requires_allocation">no</field>
+            <field name="is_marriage_leave" eval="True"/>
+            <field name="max_leaves" eval="3"/>
+        </record>
+
+    </data>
+</odoo>

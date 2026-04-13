@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vehicle_route_view_form" model="ir.ui.view">
+        <field name="name">vehicle.route.form</field>
+        <field name="model">vehicle.route</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Route">
+                <sheet>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <group>
+                                <field name="start_point" widget="geolocation_map" required="1"/>
+                            </group>
+                        </div>
+                        <div class="col-lg-6">
+                            <group>
+                                <field name="end_point" widget="geolocation_map" required="1"/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="vehicle_route_view_list" model="ir.ui.view">
+        <field name="name">vehicle.route.list</field>
+        <field name="model">vehicle.route</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle Route List">
+                <field name="start_point"/>
+                <field name="end_point"/>
+            </list>
+        </field>
+    </record>
+
+    <record id='vehicle_route_action' model='ir.actions.act_window'>
+        <field name="name">Vehicle Route</field>
+        <field name="res_model">vehicle.route</field>
+        <field name="view_mode">list,form</field>
+        <field name="context"></field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Vehicle Route
+          </p><p>
+            You can add various Vehicle Route entries for all vehicles.
+          </p>
+        </field>
+    </record>
+
+    <menuitem action="vehicle_route_action" parent="fleet.fleet_vehicles" id="vehicle_route_menu" groups="base.group_user" sequence="15"/>
+
+</odoo>

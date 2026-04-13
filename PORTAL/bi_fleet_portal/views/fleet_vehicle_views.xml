@@ -1,0 +1,243 @@
+<odoo>
+    <!-- Breadcrumbs for Fleet Overview -->
+    <template id="fleet_vehicle_portal" name="Fleet Breadcrumb" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'fleet_overview'" t-attf-class="breadcrumb-item #{'active' if fleet_records else ''}">
+                <a href="/fleet_overview?{{ keep_query() }}">Fleet Overview</a>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- Sidebar Menu for Fleet -->
+    <template id="portal_home_menu_fleet" name="Fleet Overview" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/fleet/static/description/icon.svg'"/>
+                <t t-set="title">Fleet</t>
+                <t t-set="url" t-value="'/fleet_overview'"/>
+                <t t-set="text">View all your fleet vehicles</t>
+                <t t-set="placeholder_count" t-value="'fleet_vehicle_portal'"/>
+            </t>
+        </div>
+    </template>
+
+    <!-- Fleet Overview Page Template -->
+    <template id="fleet_overview_template" name="Fleet Overview">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Fleet Overview</t>
+            </t>
+
+            <t t-if="not fleet_records">
+                <p class="alert alert-warning">You currently have no fleet vehicles registered in your department</p>
+            </t>
+
+            <!-- Fleet Records Table -->
+            <style>
+                /* Hover effect for table rows */
+                td:hover {
+                    background-color: #e0e0ff;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                    transform: translateY(-2px);
+                }
+                /* General table styling */
+                table td {
+                    transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+                }
+            </style>
+        
+            <t t-if="fleet_records">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th class="text-left">Vehicle</th>
+                            <th class="text-left">License Plate</th>
+                            <th class="text-center">Model</th>
+                            <th class="text-center">Category</th>
+                            <th class="text-end">Registration Date</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="fleet_records" t-as="vehicle">
+                        <tr>
+                            <td class="text-left">
+                                <a t-att-href="'/fleet_view/form' + str(vehicle.id)">
+                                    <span t-field="vehicle.name"/>
+                                </a>
+                            </td>
+                            <td class="text-left">
+                                <span t-field="vehicle.license_plate"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="vehicle.model_id.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="vehicle.category_id.name"/>
+                            </td>
+                            <td class="text-end">
+                                <span t-field="vehicle.acquisition_date"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="fleet_portal_form" name="Fleet Form">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Fleet</t>
+            </t>
+            <form action="/my/fleet_view_controller" id ="fleet_form" name="Fleet Form">
+                <t t-if="not fleet_records">
+                    <p class="alert alert-warning">You currently have no fleet vehicles</p>
+                </t>
+                <t t-if="fleet_records">
+                    <div class="container mt-3">
+                        <div t-foreach="fleet_records" t-as="fleet" class="card mb-3">
+                            <div class="card-header">
+                                <h4><span t-esc="fleet.model_id.name"/></h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>License Plate:</strong> <span t-esc="fleet.license_plate"/></p>
+                                        <p><strong>Driver:</strong> <span t-esc="fleet.team_lead_id.name"/></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Vehicle Route</h6>
+                                        <p><strong>Vehicle Route:</strong> <span t-esc="fleet.route_id.end_point"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                <div>
+                                    <h5 class="text-center" >Odometer</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="active">
+                                                    <th class="text-left">Date</th>
+                                                    <th class="text-center">Vehicle</th>
+                                                    <th class="text-center">Driver</th>
+                                                    <th class="text-center">Starting Km</th>
+                                                    <th class="text-center">Ending Km</th>
+                                                </tr>
+                                            </thead>
+
+                                            
+                                            <t t-set="odometer_records" t-value="request.env['fleet.vehicle.odometer'].sudo().search([('vehicle_id', '=', fleet.id)])"/>
+                                                <t t-if="odometer_records">
+                                                    <tr t-foreach="odometer_records" t-as="rec">
+                                                        <td class='text-left'>
+                                                            <input type="date" class="form-control" t-att-name="'date_%d' % rec.id" t-att-value="rec.date or ''"/>
+                                                        </td>
+                                                        <td class='text-center'>
+                                                            <t t-if="rec.vehicle_id">
+                                                                <select class="form-control" name="vehicle_id_%d" t-att-value="rec.vehicle_id.id">
+                                                                    <option value="" t-att-disabled="True" t-att-selected="True">
+                                                                        <t t-esc="rec.vehicle_id.name" />
+                                                                    </option>
+                                                                    <t t-foreach="fleet_records" t-as="fleet_record">
+                                                                        <option t-att-value="fleet_record.id">
+                                                                            <t t-esc="fleet_record.name" />
+                                                                        </option>
+                                                                    </t>
+                                                                </select>
+                                                            </t>
+
+                                                            <t t-else="">
+                                                                <select class="form-control" name="vehicle_id">
+                                                                    <option value="" t-att-disabled="True" t-att-selected="True">
+                                                                        <option value="">Vehicle</option>
+                                                                    </option>
+                                                                    <t t-foreach="fleet_records" t-as="fleet_record">
+                                                                        <option t-att-value="fleet_record.id">
+                                                                            <t t-esc="fleet_record.name"/>
+                                                                        </option>
+                                                                    </t>
+                                                                </select> 
+                                                            </t> 
+                                                        </td>
+                                                        <td class='text-center'>
+                                                            <input type="text" class="form-control" t-att-name="'driver_%d' % rec.id" t-att-value="rec.driver_id.name or ''" />
+                                                        </td>
+
+                                                        <td class='text-center'>
+                                                            <input  type="text" class="form-control" t-att-name="'starting_km_%d' % rec.id" t-att-value="rec.starting_odometer_value or ''" />
+                                                        </td>
+                                                        <td class='text-center'>
+                                                            <input type="text" class="form-control_center" t-att-name="'ending_km_%d' % rec.id" t-att-value="rec.ending_odometer_value or ''" />
+                                                        </td>
+                                                        <td class='text-center'>
+                                                            <input type="hidden" class="form-control" name="fleet_id" t-att-value="fleet.id"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            <tbody id="alt-fleet-odometer-table">
+                                            </tbody>
+                                        </table>
+                                        <input type="hidden" class="form-control" name="fleet_id" t-att-value="fleet.id"/>
+                                        <button type="button" class="btn btn-secondary" onclick="addOdometerDetails()">Add a Line</button>
+                                        <button type="submit" class="btn btn-primary" form="fleet_form">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </form>
+            <script>
+                let fleetindex = 0; // Keep track of the number of rows added
+
+                function addOdometerDetails() {
+                    const tableBody = document.getElementById('alt-fleet-odometer-table');
+                    const newRow = document.createElement('tr');
+
+                    newRow.innerHTML = `
+                        <td class='text-center'>
+                            <input type="date" class="form-control" name="date_${fleetindex}" />
+                        </td>
+                        <td class='text-center'>
+                            <select class="form-control" name="vehicle_id_${fleetindex}">
+                                <option value="">Select Vehicle</option>
+                                <t t-foreach="fleet_records" t-as="fleet_rec">
+                                    <option t-att-value="fleet_rec.id">
+                                        <t t-esc="fleet_rec.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </td>
+                        <td class='text-center'>
+                            <input type="text" class="form-control" name="driver_${fleetindex}" />
+                        </td>
+                        <td class='text-center'>
+                            <input type="text" class="form-control" name="starting_km_${fleetindex}" />
+                        </td>
+                        <td class='text-center'>
+                            <input type="text" class="form-control" name="ending_km_${fleetindex}" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeDimensionRow(this)">Remove</button>
+                        </td>
+                    `;
+
+                    tableBody.appendChild(newRow);
+                    fleetindex++; 
+                }
+                // Function to remove a row 
+                function removeDimensionRow(button) {
+                    const row = button.closest('tr'); // Find the closest row
+                    row.remove(); // Remove the row
+                }
+            </script>
+        </t>
+    </template>  
+</odoo>

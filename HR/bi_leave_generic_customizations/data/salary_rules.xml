@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Salary Rule for Maternity Leave -->
+        <record id="hr_salary_rule_maternity_leave" model="hr.salary.rule">
+            <field name="name">Maternity Leave Payment</field>
+            <field name="sequence" eval="15"/>
+            <field name="code">MATERNITY_PAY</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+if inputs.get('MATERNITY'):
+    result = inputs.get('MATERNITY').amount
+else:
+    result = 0
+]]>
+            </field>
+            <field name="struct_id" ref="hr_payroll.structure_002"/>
+        </record>
+
+        <!-- Input Type for Maternity Leave -->
+        <record id="maternity_leave_payslip_input" model="hr.payslip.input.type">
+            <field name="name">Maternity Leave</field>
+            <field name="code">MATERNITY</field>
+        </record>
+
+
+        <!-- Salary Rule for Paternity Leave -->
+        <record id="hr_salary_rule_paternity_leave" model="hr.salary.rule">
+            <field name="name">Paternity Leave Payment</field>
+            <field name="sequence" eval="20"/>
+            <field name="code">PATERNITY_PAY</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+if inputs.get('PATERNITY'):
+    result = inputs.get('PATERNITY').amount
+else:
+    result = 0
+]]>
+            </field>
+            <field name="struct_id" ref="hr_payroll.structure_002"/>
+        </record>
+
+        <!-- Payslip Input Type for Paternity Leave -->
+        <record id="paternity_leave_payslip_input" model="hr.payslip.input.type">
+            <field name="name">Paternity Leave</field>
+            <field name="code">PATERNITY</field>
+        </record>
+
+         <record id="hr_salary_rule_marriage_leave" model="hr.salary.rule">
+            <field name="name">Marriage Leave Payment</field>
+            <field name="sequence" eval="25"/>
+            <field name="code">MARRIAGE_PAY</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+if inputs.get('MARRIAGE'):
+    result = inputs.get('MARRIAGE').amount
+else:
+    result = 0
+]]>
+            </field>
+            <field name="struct_id" ref="hr_payroll.structure_002"/>
+        </record>
+
+        <!-- Payslip Input Type for Marriage Leave -->
+        <record id="marriage_leave_payslip_input" model="hr.payslip.input.type">
+            <field name="name">Marriage Leave</field>
+            <field name="code">MARRIAGE</field>
+        </record>
+    </data>
+</odoo>

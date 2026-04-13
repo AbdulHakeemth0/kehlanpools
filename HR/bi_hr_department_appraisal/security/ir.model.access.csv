@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_department_skill_user,bi_hr_department_appraisal.hr.department.skill,model_hr_department_skill,base.group_user,1,1,1,1
+access_hr_department_line_user,bi_hr_department_appraisal.hr.department.line,model_hr_department_line,base.group_user,1,1,1,1
+access_hr_department_skill_line_user,bi_hr_department_appraisal.hr.department.skill.line,model_hr_department_skill,base.group_user,1,1,1,1
+access_hr_appraisal_skill_line_user,bi_hr_department_appraisal.hr.appraisal.skill.line,model_hr_appraisal_skill_line,base.group_user,1,1,1,1

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="account_journal_view_inherited" model="ir.ui.view">
+        <field name="name">account.journal.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="type"]' position='after'>
+                <field name="is_miscellaneous"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

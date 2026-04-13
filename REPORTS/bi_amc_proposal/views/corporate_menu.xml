@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem id="menu_corporate_template_details"
+                  name="AMC Corporate"
+                  parent="bi_amc_proposal.menu_template_details"
+                  sequence="3"/>
+
+        <menuitem id="menu_non_corporate_template_details"
+                  name="AMC Non-Corporate"
+                  parent="bi_amc_proposal.menu_template_details"
+                  sequence="4"/>
+
+        <record id="view_tree_corporate_template_details" model="ir.ui.view">
+            <field name="name">corporate.template.details.list</field>
+            <field name="model">corporate.template.details</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_form_corporate_template_details" model="ir.ui.view">
+            <field name="name">corporate.template.details.form</field>
+            <field name="model">corporate.template.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+
+                        <notebook>
+                        <page string="Corporate Template Details" name="corporate">
+                                <field name="template_line_ids" widget="section_and_note_one2many">
+                                    <list editable="bottom">
+                                        <control>
+                                            <create name="add_line_control" string="Add a line"/>
+                                            <create name="add_section_control" string="Add a section"
+                                                    context="{'default_display_type': 'line_section'}"/>
+
+                                        </control>
+                                        <field name="sl_no" groups="base.group_no_one"/>
+                                        <field name="name"/>
+                                        <field name="asset_action" store="True"/>
+                                        <field name="display_type" column_invisible="True"/>
+                                    </list>
+                                </field>
+                        </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_payment_term_details" model="ir.ui.view">
+            <field name="name">payment.term.details.list</field>
+            <field name="model">payment.term.details</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_form_payment_term_details" model="ir.ui.view">
+            <field name="name">payment.term.details.form</field>
+            <field name="model">payment.term.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <notebook>
+                            <page string="Payment Term Details" name="payment_term" invisible="1">
+                                <field name="payment_line_ids" widget="section_and_note_one2many">
+                                    <list editable="bottom">
+                                        <field name="first_payment_percentage"/>
+                                        <field name="second_payment_percentage"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- list view of AMC non-corporate terms and conditions -->
+        <record id="view_list_non_corporate_amc_tandc" model="ir.ui.view">
+            <field name="name">amc.non.corporate.terms.conditions.list</field>
+            <field name="model">amc.non.corporate.terms.conditions</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_payment_term_details" model="ir.actions.act_window">
+            <field name="name">Payment Term Details</field>
+            <field name="res_model">payment.term.details</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_tree_payment_term_details"/>
+            <field name="context">{}</field>
+        </record>
+
+
+        <record id="view_list_corporate_amc_tandc" model="ir.ui.view">
+            <field name="name">amc.corporate.terms.conditions.list</field>
+            <field name="model">amc.corporate.terms.conditions</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_corporate_template" model="ir.actions.act_window">
+            <field name="name">Corporate Template Details</field>
+            <field name="res_model">corporate.template.details</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_tree_corporate_template_details"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_corporate_tandc" model="ir.actions.act_window">
+            <field name="name">Corporate Terms and Conditions</field>
+            <field name="res_model">amc.corporate.terms.conditions</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_corporate_amc_tandc"/>
+            <field name="context">{}</field>
+        </record>
+        <!-- Action for AMC corporate terms and conditions -->
+        <record id="action_non_corporate_amc_tandc" model="ir.actions.act_window">
+            <field name="name">AMC Corporate Terms and Conditions</field>
+            <field name="res_model">amc.non.corporate.terms.conditions</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_non_corporate_amc_tandc"/>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- list view of AMC corporate Specific conditions-->
+        <record id="view_list_non_corporate_amc_specific_conditions" model="ir.ui.view">
+            <field name="name">amc.non.corporate.specific.conditions.list</field>
+            <field name="model">amc.non.corporate.specific.conditions</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_list_corporate_amc_specific_conditions" model="ir.ui.view">
+            <field name="name">amc.corporate.specific.conditions.list</field>
+            <field name="model">amc.corporate.specific.conditions</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- list view of AMC corporate General Scope of work-->
+        <record id="view_list_non_corporate_amc_general_scope_of_work" model="ir.ui.view">
+            <field name="name">amc.non.corporate.general.scope.work.list</field>
+            <field name="model">amc.non.corporate.general.scope.work</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_list_corporate_amc_general_scope_of_work" model="ir.ui.view">
+            <field name="name">amc.corporate.general.scope.work.list</field>
+            <field name="model">amc.corporate.general.scope.work</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+
+        <!-- list view of AMC corporate Detailed scope of work and specification-->
+        <record id="view_list_non_corporate_amc_detail_scope_of_work" model="ir.ui.view">
+            <field name="name">amc.non.corporate.detail.scope.work.list</field>
+            <field name="model">amc.non.corporate.detail.scope.work</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_list_corporate_amc_detail_scope_of_work" model="ir.ui.view">
+            <field name="name">amc.corporate.detail.scope.work.list</field>
+            <field name="model">amc.corporate.detail.scope.work</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- list view of non-corporate scope of work-->
+        <record id="view_list_non_corporate_amc_scope_of_work" model="ir.ui.view">
+            <field name="name">amc.non.corporate.scope.work.list</field>
+            <field name="model">amc.non.corporate.scope.work</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_list_corporate_amc_scope_of_work" model="ir.ui.view">
+            <field name="name">amc.corporate.scope.work.list</field>
+            <field name="model">amc.corporate.scope.work</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action for non AMC corporate Specific conditions -->
+        <record id="action_non_corporate_amc_specific_conditions" model="ir.actions.act_window">
+            <field name="name">AMC Non Corporate Specific Conditions</field>
+            <field name="res_model">amc.non.corporate.specific.conditions</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_non_corporate_amc_specific_conditions"/>
+            <field name="context">{}</field>
+        </record>
+        <!-- Action for AMC corporate Specific conditions -->
+        <record id="action_corporate_amc_specific_conditions" model="ir.actions.act_window">
+            <field name="name">AMC Corporate Specific Conditions</field>
+            <field name="res_model">amc.corporate.specific.conditions</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_corporate_amc_specific_conditions"/>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Action for AMC corporate General Scope of work -->
+        <record id="action_non_corporate_amc_general_scope_of_work" model="ir.actions.act_window">
+            <field name="name">AMC Non corporate General Scope of work</field>
+            <field name="res_model">amc.non.corporate.general.scope.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_non_corporate_amc_general_scope_of_work"/>
+            <field name="context">{}</field>
+        </record>
+        <record id="action_corporate_amc_general_scope_of_work" model="ir.actions.act_window">
+            <field name="name">AMC corporate General Scope of work</field>
+            <field name="res_model">amc.corporate.general.scope.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_corporate_amc_general_scope_of_work"/>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Action for AMC corporate Detailed scope of work and specification -->
+        <record id="action_non_corporate_amc_detail_scope_of_work" model="ir.actions.act_window">
+            <field name="name">AMC Non corporate Detail Scope of work</field>
+            <field name="res_model">amc.non.corporate.detail.scope.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_non_corporate_amc_detail_scope_of_work"/>
+            <field name="context">{}</field>
+        </record>
+        <record id="action_corporate_amc_detail_scope_of_work" model="ir.actions.act_window">
+            <field name="name">AMC corporate Detail Scope of work</field>
+            <field name="res_model">amc.corporate.detail.scope.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_corporate_amc_detail_scope_of_work"/>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Action for non-corporate AMC scope of work -->
+        <record id="action_non_corporate_amc_scope_of_work" model="ir.actions.act_window">
+            <field name="name">AMC Non scope of work</field>
+            <field name="res_model">amc.non.corporate.scope.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_non_corporate_amc_scope_of_work"/>
+            <field name="context">{}</field>
+        </record>
+        <record id="action_corporate_amc_scope_of_work" model="ir.actions.act_window">
+            <field name="name">AMC scope of work</field>
+            <field name="res_model">amc.corporate.scope.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_corporate_amc_scope_of_work"/>
+            <field name="context">{}</field>
+        </record>
+
+       <menuitem id="menu_corporate_template"
+                  name="AMC Corporate Asset Details"
+                  parent="bi_amc_proposal.menu_corporate_template_details"
+                  action="bi_amc_proposal.action_corporate_template"
+                  sequence="1"/>
+
+       <menuitem id="menu_corporate_tandc"
+                  name="Terms and Conditions"
+                  parent="bi_amc_proposal.menu_corporate_template_details"
+                  action="bi_amc_proposal.action_corporate_tandc"
+                  sequence="2"/>
+        <!-- Menuitem for AMC NON-Corporate terms and conditions -->
+        <menuitem id="menu_non_corporate_amc_tandc"
+                  name="Terms and Conditions"
+                  parent="bi_amc_proposal.menu_non_corporate_template_details"
+                  action="bi_amc_proposal.action_non_corporate_amc_tandc"
+                  sequence="2"/>
+
+        <!-- Menuitem for AMC NON-Corporate Specific Conditions -->
+        <menuitem id="menu_non_corporate_amc_specific_conditions"
+                  name="Specific Conditions"
+                  parent="bi_amc_proposal.menu_non_corporate_template_details"
+                  action="bi_amc_proposal.action_non_corporate_amc_specific_conditions"
+                  sequence="3"/>
+
+        <menuitem id="menu_corporate_amc_specific_conditions"
+                  name="Specific Conditions"
+                  parent="bi_amc_proposal.menu_corporate_template_details"
+                  action="bi_amc_proposal.action_corporate_amc_specific_conditions"
+                  sequence="3"/>
+
+        <!-- Menuitem for AMC NON-Corporate General Scope of work -->
+        <menuitem id="menu_non_corporate_amc_general_scope_of_work"
+                  name="General Scope of work"
+                  parent="bi_amc_proposal.menu_non_corporate_template_details"
+                  action="bi_amc_proposal.action_non_corporate_amc_general_scope_of_work"
+                  sequence="4"/>
+
+        <menuitem id="menu_corporate_amc_general_scope_of_work"
+                  name="General Scope of work"
+                  parent="bi_amc_proposal.menu_corporate_template_details"
+                  action="bi_amc_proposal.action_corporate_amc_general_scope_of_work"
+                  sequence="4"/>
+        <!-- Menuitem for AMC NON-Corporate Detailed scope of work and specification -->
+        <menuitem id="menu_non_corporate_amc_detail_scope_of_work"
+                  name="Detailed scope of work and specification"
+                  parent="bi_amc_proposal.menu_non_corporate_template_details"
+                  action="bi_amc_proposal.action_non_corporate_amc_detail_scope_of_work"
+                  sequence="5"/>
+
+        <menuitem id="menu_corporate_amc_detail_scope_of_work"
+                  name="Detailed scope of work and specification"
+                  parent="bi_amc_proposal.menu_corporate_template_details"
+                  action="bi_amc_proposal.action_corporate_amc_detail_scope_of_work"
+                  sequence="5"/>
+        <!-- Menuitem for AMC NON-Corporate AMC scope of work -->
+        <menuitem id="menu_non_corporate_amc_scope_of_work"
+                  name="AMC scope of work"
+                  parent="bi_amc_proposal.menu_non_corporate_template_details"
+                  action="bi_amc_proposal.action_non_corporate_amc_scope_of_work"
+                  sequence="6"/>
+
+        <menuitem id="menu_corporate_amc_scope_of_work"
+                  name="AMC scope of work"
+                  parent="bi_amc_proposal.menu_corporate_template_details"
+                  action="bi_amc_proposal.action_corporate_amc_scope_of_work"
+                  sequence="6"/>
+    </data>
+</odoo>

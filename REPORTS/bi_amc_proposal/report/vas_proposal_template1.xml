@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_vas_proposal1">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="bi_amc_proposal.vas_header1"/>
+                    <div class="page" style="text-align: center; page-break-inside: avoid;"><br/><br/><br/>
+                    <link href="https://fonts.googleapis.com/css?family=Abyssinica+SIL" rel="stylesheet">
+                        <!-- <table width="100%" style="margin: 20px auto; border-collapse: collapse;border:hidden">
+                            <tr>
+                                <td style="text-align: center;border:hidden" colspan="3" width="100%">
+                                    <img width="500px" height="200x" t-att-src="'/bi_amc_proposal/static/src/img/kehlan_pools_logo.png'" 
+                                        alt="Kehlan Pools Logo"/>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td width="20%"></td>
+                                <td width="60%" style="text-align: center; padding: 20px;border:hidden;">
+                                    <h4 style="font-weight:bold;font-family: Arial, sans-serif; color: #3284B9; margin: 0; line-height: 1.5;">
+                                       <div style="border: 1px solid #F7F7F7;border-radius: 10px;"> PROPOSAL FOR SWIMMING POOL<br/>
+                                        MEP AND FINISHES<br/>
+                                        WORKS<br/><br/><br/></div>
+                                    </h4>
+                                </td>
+                                <td width="20%"></td>
+                            </tr>
+                        </table><br/> -->
+                        <div width="100%" style=""><img src="/bi_amc_proposal/static/src/img/front_logo.png" alt="Imagess" width="65%"/></div>
+                        <br/><br/>
+                        <table width="60%" style="margin:20px auto; border-collapse: collapse; border: 1px solid black; font-family: Arial, sans-serif;">
+                            <tr style="border: 1px solid #B4B8BB;">
+                                <td width="10%" style="padding-top:5px;width: 30%; padding-left:5px; text-align: left; color: #2D5C7B; font-weight: bold; border: 1px solid #B4B8BB;font-size:13px">
+                                    Client Name:
+                                </td>
+                                <td width="50%" style="padding-top:5px;width: 70%; padding-left: 5px; text-align: left; border: 1px solid #B4B8BB;color: #2D5C7B;font-weight: bold">
+                                    <!-- Dynamic content here --><t t-if="o.partner_id.name"><t t-esc="o.partner_id.name"/></t>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid #B4B8BB;">
+                                <td width="10%" style="padding-top:5px;padding-left: 5px; text-align: left; color: #2D5C7B; font-weight: bold; border: 1px solid #B4B8BB;font-size:13px">
+                                    Project Title:
+                                </td>
+                                <td width="50%" style="padding-top:5px;padding-left: 5px; text-align: left; border: 1px solid #B4B8BB;color: #2D5C7B;font-weight: bold">
+                                    <t t-if="o.subject"><t t-esc="o.subject"/></t>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid #B4B8BB;">
+                                <td width="10%" style="padding-top:5px;padding-top:5px;padding-left: 5px; text-align: left; color: #2D5C7B; font-weight: bold; border: 1px solid #B4B8BB;font-size:13px">
+                                    Location:
+                                </td>
+                                <td width="50%" style="padding-top:5px;padding-left: 5px; text-align: left; border: 1px solid #B4B8BB;color: #2D5C7B;font-weight: bold">
+                                    <!-- Dynamic content here -->
+                                    <t t-if="o.partner_id.street">
+                                        <t t-esc="o.partner_id.street"/>,
+                                    </t>
+                                    <t t-if="o.partner_id.city">
+                                        <t t-esc="o.partner_id.city"/>,
+                                    </t>
+                                    <t t-if="o.partner_id.state_id.name">
+                                        <t t-esc="o.partner_id.state_id.name"/>,
+                                    </t>
+                                    <t t-if="o.partner_id.country_id">
+                                        <t t-if="o.partner_id.country_id.code == 'OM'">
+                                            Sultanate of <span t-esc="o.partner_id.country_id.name"/><br/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="o.partner_id.country_id.name"/><br/>
+                                        </t>
+                                    </t>
+                                    <!-- <t t-if="o.partner_id.country_id.name">Sultanate of 
+                                        <t t-esc="o.partner_id.country_id.name"/>
+                                    </t> -->
+                                    <!-- </t> -->
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid #B4B8BB;">
+                                <td width="10%" style="padding-top:5px;padding-left: 5px; text-align: left; color: #2D5C7B; font-weight: bold; border: 1px solid #B4B8BB;font-size:13px">
+                                    Quotation Ref:
+                                </td>
+                                <td width="50%" style="padding-top:5px;padding-left: 5px; text-align: left; border: 1px solid #B4B8BB;color: #2D5C7B;font-weight: bold">
+                                    <!-- Dynamic content here --><t t-if="o.name"><t t-esc="o.name"/></t>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid #B4B8BB;">
+                                <td width="10%" style="padding-top:5px;padding-left: 5px; text-align: left; color: #2D5C7B; font-weight: bold; border: 1px solid #B4B8BB;font-size:13px">
+                                    Date:
+                                </td>
+                                <td width="50%" style="padding-top:5px;padding-left: 5px; text-align: left; border: 1px solid #B4B8BB;color: #2D5C7B; font-weight: bold">
+                                    <!-- Dynamic content here -->
+                    <t t-if="o.date_order">
+                        <t t-esc="o.date_order.strftime('%d-%m-%Y')"/>
+                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/><br/><br/><br/><br/>
+                        <table width="100%" style="border-collapse: collapse;border:hidden;font-family: 'Abyssinica SIL', serif;">
+                            <tr>
+                                <td width="100%" style="font-size:14px;border:hidden;text-align:center;color: #2D5C7B">
+                                    This document contains a formal quotation. When both parties sign the Work Order Agreement,
+                                        this quotation forms a 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="font-size:14px;border:hidden;text-align:center;color: #2D5C7B">
+                                    legally binding contract that guarantees the success of the project through our design excellence, product quality,
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" style="font-size:14px;border:hidden;text-align:center;color: #2D5C7B">
+                                    service delivery standards and your seamless cooperation. 
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="page-break-after: always;"></div>
+                        <div style="color:#2D5C7B; padding: 10px 2px; margin-top: 20px; margin-left: 11px; width: 80%;font-family: 'Abyssinica SIL', serif;">
+                            <h4 style="font-weight:bold;text-align: left; color: #333; margin: 0;color: #2D5C7B">Table of Contents</h4>
+                        </div>
+
+                        <div style="margin-top: 20px; font-family: 'Abyssinica SIL', serif; margin-left: 38px; width: 100%;">
+                            <ul style="list-style-type: none; padding-left: 0; font-size: 16px; margin: 0;">
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">1.</span>
+                                    <span>About us</span>
+                                    <span>............................................................................................................3</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">2.</span>
+                                    <span>General Scope of Work</span>
+                                    <span>........................................................................................5</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">3.</span>
+                                    <span>General Specification Parameters</span>
+                                    <span>..........................................................................5</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">4.</span>
+                                    <span>Detailed Specification</span>
+                                    <span>..........................................................................................5</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">5.</span>
+                                    <span>Exclusions/To be Provided By Client</span>
+                                    <span>.....................................................................6</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">6.</span>
+                                    <span>Warranty Details</span>
+                                    <span>.................................................................................................6</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">7.</span>
+                                    <span>Completion Period</span>
+                                    <span>...............................................................................................7</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">8.</span>
+                                    <span>Payment Terms</span>
+                                    <span>...................................................................................................7</span>
+                                </li>
+                                <li style="display: flex;text-align:left; margin-bottom: 5px;">
+                                    <span style="padding-right:20px;">9.</span>
+                                    <span>Correspondence</span>
+                                    <span>...................................................................................................7</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="page-break-after: always;"></div>
+                        <div style="padding: 2px; margin-top: 20px; margin-left: 30px;">
+                            <h4 style="text-align: left; color: #2D5787;font-weight:bold;font-family: 'Abyssinica SIL', serif;font-size:22px">1. About Us:-</h4>
+                        </div>
+                        <img width="95%" t-att-src="'/bi_amc_proposal/static/src/img/about.png'" alt="First Centered Image" style="margin-bottom: 10px;"/>
+                        <div style="margin-top: 20px; margin-left:17px;font-family: 'Abyssinica SIL', serif;">
+                            <p style="text-align: left;font-size:15px">
+                                <strong>Kehlan Pools®</strong> was established in the year 2009 at Muscat, Oman. We have designed and built more than 2000 Swimming Pools and hundreds of Water Features/Fountains in the region.
+                            </p>
+                        </div>
+
+                        <div style="padding: 2px; margin-top:5px;font-family: 'Abyssinica SIL', serif;">
+                            <h5 style="text-align: left; color: #333;margin-left:17px;font-size:15px;font-weight:bold"><b>Our Services: -</b></h5>
+                        </div>
+
+                        <div style="margin-top: 5px; font-family: Arial, sans-serif;margin-left:40px;font-family: 'Abyssinica SIL', serif;">
+                            <ul style="list-style-type: disc; text-align: left;font-size:14px;line-height:1.1">
+                                <li>Turnkey Solutions</li>
+                                <li>Architectural and MEP Design Consultancy</li>
+                                <li>Value Engineering Services</li>
+                                <li>Construction</li>
+                                <li>Remodeling, Refurbishing and Repairs</li>
+                                <li>Maintenance Contracting, Water Quality Management</li>
+                            </ul>
+                        </div>
+
+                        <div style="padding: 2px; margin-top: 5px; margin-left: 17px;font-family: 'Abyssinica SIL', serif;">
+                            <h5 style="text-align: left; color: #333;font-size:15px;font-weight:bold"><b>Our Products: -</b></h5>
+                            <p style="text-align: left;font-size:15px">We are specialized in Design and Built of</p>
+                        </div>
+
+                        <div style="margin-top: 5px; margin-left: 10%; font-family: 'Abyssinica SIL', serif;margin-left:40px;">
+                            <ul style="list-style-type: disc; text-align: left;font-size:14px;line-height:1.1">
+                                <li>Swimming Pools, Smart Pools, Competition Pools, Pools with Acrylic Walls</li>
+                                <li>Fountains, Light and Music Fountains</li>
+                                <li>Steam Rooms, Jacuzzi and Saunas</li>
+                                <li>Lazy Rivers, Lagoons and Water Falls</li>
+                                <li>Aqua Parks, Fun Park – Water Sports and Water Play Parks</li>
+                            </ul>
+                        </div>
+                        <div width="100%" style="margin-left:-3px"><img src="/bi_amc_proposal/static/src/img/imagess.png" alt="Imagess" width="95%"/></div>
+                        <div style="page-break-after: always;"></div>
+
+                        <div style="padding: 2px; margin-top:5px;margin-left:17px;font-family: 'Abyssinica SIL', serif;">
+                            <h5 style="text-align: left; color: #333;font-size:15px;font-weight:bold"><b>Our Specialties and Expertise: -</b></h5>
+                        </div>
+                        
+                        <div style="margin-top: 5px; margin-left:50px; font-family: 'Abyssinica SIL', serif;font-size:14px">
+                            <ul style="list-style-type: disc; text-align: left;line-height:1.1">
+                                <li>U.S Certified Pool Operator [CPO® Certification No. G9-334993]</li>
+                                <li>FINA standards compliant</li>
+                                <li>Gunite concreting system</li>
+                                <li>Chlorine Free Pools</li>
+                                <li>Therapy and Smart Pools</li>
+                                <li>Smart Solution for Water Quality Management</li>
+                                <li>Energy efficient heating Solution</li>
+                                <li>Child Protection Systems</li>
+                                <li>Underwater music System</li>
+                                <li>Centralized Designing team and Dedicated R and D</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-left: -1px; text-align: center;">
+                            <img src="/bi_amc_proposal/static/src/img/ten.png" alt="Image 10" style="width: 775px; height: auto;"/>
+                        </div>
+
+
+                        <div style="padding: 2px; margin-top: 0px; margin-left: 17px;font-family: 'Abyssinica SIL', serif;">
+                            <h5 style="text-align: left; color: #333;font-size:15px;font-weight:bold"><b>Core Values: -</b></h5>
+                            <h5 style="text-align: left; color: #333;font-size:15px;font-weight:bold"><b>1. Customer Focused: -</b></h5>
+                        </div>
+
+                        <div style="margin-top: 5px; margin-left:50px; font-family: 'Abyssinica SIL', serif;font-size:14px">
+                            <ul style="list-style-type: disc; text-align: left;line-height:1.2">
+                                <li>We focus in demonstrating customer’s pride by providing personalized water bodies within the built environment.</li>
+                                <li>We focus on customer’s changing aspirations by blending innovation, art, technology, and engineering excellence.</li>
+                                <li>We focus on surprising our customers by providing extra value for money at each and every customer touch point.</li>
+                            </ul>
+                        </div>
+
+                        <div style="padding: 2px; margin-top: 2px; margin-left: 17px;font-family: 'Abyssinica SIL', serif;">
+                            <h5 style="text-align: left; color: #333;font-size:15px;font-weight:bold;"><b>2. Result Focused: -</b></h5>
+                        </div>
+
+                        <div style="margin-top: 5px; margin-left:50px; font-family: 'Abyssinica SIL', serif;font-size:14px">
+                            <ul style="list-style-type: disc; text-align: left;;line-height:1.2">
+                                <li>We focus on performance management to achieve an optimum balance of Time, Quality, Reliability, Sustainability, and profitability.</li>
+                                <li>We focus on End to End performance evaluation with a high level of persistence and perseverance to ensure the continuous improvement of product and service delivery standards.</li>
+                                <li>We focus on Values, such as integrity, respect, parity, and transparency in all internal and external business processes.</li>
+                            </ul>
+                        </div>
+                        <t t-set="sl_no" t-value="1"/>
+                        <div style="page-break-after: always;"></div>
+                        <div style=" padding: 2px; margin-top: 5px;font-family: 'Abyssinica SIL', serif;">
+                            <t t-if="o.scope_of_work_ids">
+                            <t t-set="sl_no" t-value="sl_no+1"/>
+                                <h3 style="font-weight:bold ;text-align: left; color: #333;font-size:18px;font-weight:bold;color: #2D5787;margin-left: 30px;"><t t-esc="sl_no"/> General Scope of Work</h3>
+                                <!-- <p style="text-align: left; color: #333;font-size:14px;font-weight:bold;margin-left:55px">Swimming pool with MEP Equipment and finishes as per below
+                                    General and Detailed
+                                    Specification.
+                                </p> -->
+                                <ul style="list-style-type: none; text-align:left;">
+                                    <t t-foreach="o.scope_of_work_ids" t-as="line">
+                                        <li style="text-align:left;padding-left:23px;">
+                                            <span style="text-align:left;"><t t-esc="line.description"/></span>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </t>    
+                        </div>
+                        <div style=" padding: 2px; margin-top: 5px; margin-left: 30px;font-family: 'Abyssinica SIL', serif;">
+                            <t t-set="sl_no" t-value="sl_no+1"/>
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. General Specification Parameters</h4>
+                        </div>
+                        <table width="88%" 
+                            style="border-collapse: collapse; border: 1px solid black;margin-left: 35px;margin-top: 10px;font-family: 'Abyssinica SIL', serif;font-size:16px;">
+                            <tr style="background-color: #D8EAFF; border: 1px solid black;height:15px">
+                                <td style="border: 1px solid black;font-weight:bold; text-align: center;">3- 1</td>
+                                <td style="border: 1px solid black;font-weight:bold; text-align: center;">Parameters</td>
+                                <td style="border: 1px solid black;font-weight:bold; text-align: center;">Description</td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; text-align: center;">3 -1.1</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">Type / Shape</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">
+                                    <t t-esc="o.type_shape"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; text-align: center;">3 -1.2</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">Size</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">
+                                    <t t-esc="o.size"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; text-align: center;">3 -1.3</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">Depth</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">
+                                    <t t-esc="o.depth"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; text-align: center;">3 -1.4</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">Surface Area</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">
+                                    <t t-esc="o.surface_area"/>
+                                </td>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td style="border: 1px solid black; text-align: center;">3 -1.5</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">Volume</td>
+                                <td style="border: 1px solid black; text-align: left;padding-left:5px;">
+                                    <t t-esc="o.volume"/>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        <t t-if="o.detailed_specification_ids">
+                        <t t-set="sl_no" t-value="sl_no+1"/>
+                            <div style=" text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;margin-left:30px;margin-top:20px;font-family: 'Abyssinica SIL', serif;">
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. Detailed Specification
+                            </h4>
+                        </div>
+
+
+                        <t t-set="section_counter" t-value="1"/>
+                        <t t-set="line_item_counter" t-value="0"/>
+                        <t t-set="sub_line_item" t-value="0"/>
+                        <t t-set="sub_line_amount" t-value="0"/>
+                        <t t-set="discount" t-value="0"/>
+
+                        <t t-foreach="o.detailed_specification_ids" t-as="line">
+                            <div style="text-align:left;color:#2D5787;font-weight:bold;padding-left: 50px;">
+                                <t t-if="line.display_type == 'line_note'">
+                                    <t t-set="discount" t-value="0"/>
+                                    <t t-esc="line.name"/>
+                                </t>
+                            </div>
+
+                            <table width="95%" style="font-family: 'Abyssinica SIL', serif;margin-left: 35px;border-collapse:collapse !important; border-spacing: 0 !important;font-size:15px;">
+                                <!-- Section Header Row -->
+                                <t t-if="line.display_type == 'line_section'">
+                                    
+                                    <tr style="background-color:#b3e0ff;">
+                                        <th style="border:1px solid black;width:7%;padding-left:5px;">
+                                            <t t-esc="'4.' + str(section_counter)"/>
+                                        </th>
+                                        <t t-set="section_counter" t-value="section_counter + 1"/>
+                                        <t t-set="sub_line_item" t-value="sub_line_item + 1"/>
+                                        <t t-set="line_item_counter" t-value="0"/>
+                                        <t t-set="sub_line_amount" t-value="0"/>
+                                        <th style="border:1px solid black;width:66%;padding-left:5px;text-align:left;">
+                                            <t t-esc="line.name"/>
+                                        </th>
+                                        <th style="border:1px solid black;width:10%;padding-left:5px;">
+                                            QTY/UNIT
+                                        </th>
+                                        <th style="border:1px solid black;width:12%;padding-left:5px;">
+                                            Amount in OMR
+                                        </th>
+                                    </tr>
+                                </t>
+
+                                <!-- Line Items -->
+                                <t t-if="line.item">
+                                    <t t-set="line_item_counter" t-value="line_item_counter + 1"/>
+                                    <t t-set="discount" t-value="discount + line.discount"/>
+                                    <tr>
+                                        <td style="border:1px solid black;width:7%;;padding-left:5px;">
+                                            <t t-esc="'4.' + str(sub_line_item) + '.' + str(line_item_counter)"/>
+                                        </td>
+                                        <td style="border:1px solid black;width:66%;padding-left:5px;text-align:left;">
+                                            <t t-esc="line.item"/>
+                                        </td>
+                                        <td style="border:1px solid black;width:10%;padding-left:5px;">
+                                            <t t-esc="line.qty"/>
+                                            <t t-if="line.uom_id.name">
+                                            <t t-esc="line.uom_id.name"/>
+                                            </t>
+                                        </td>
+                                        <td style="border:1px solid black;width:12%;padding-left:5px;text-align:right;border-right:1px solid black;border-left:1px solid black;">
+                                            <t t-if="line.section_sum and line.is_sum_line == True">
+                                                <t t-esc="'{:.3f}'.format(line.section_sum)"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <!-- Summary Rows -->
+                                <t t-if="line.is_note_line == True">
+                                    <tr style="background-color:#f0f0f0;font-weight:bold;border:1px solid black;">
+                                        <td></td>
+                                        <td style="border:1px solid black;text-align:right;padding-right:10px;">Total Amount in OMR</td>
+                                        <td colspan="2" style="border:1px solid black;text-align:right;padding-right:10px;">
+                                            <t t-set="note_sum_amount" t-value="line.note_sum"/>
+                                            <t t-esc="'{:.3f}'.format(note_sum_amount)"/>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Discount Row -->
+                                    <tr style="background-color:#f0f0f0;font-weight:bold;border:1px solid black;">
+                                        <td></td>
+                                        <td style="border:1px solid black;text-align:right;padding-right:10px;">Discount</td>
+                                        <td colspan="2" style="border:1px solid black;text-align:right;padding-right:10px;">
+                                            <t t-esc="'{:.3f}'.format(discount)"/>
+                                        </td>
+                                    </tr>
+
+                                    <!-- VAT Calculation -->
+                                    <tr style="background-color:#f0f0f0;font-weight:bold;border:1px solid black;">
+                                        <td></td>
+                                        <td style="border:1px solid black;text-align:right;padding-right:10px;">VAT 5%</td>
+                                        <td colspan="2" style="border:1px solid black;text-align:right;padding-right:10px;">
+                                            <t t-set="vat_amount" t-value="(note_sum_amount-discount) * 0.05"/>
+                                            <t t-esc="'{:.3f}'.format(vat_amount)"/>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Grand Total -->
+                                    <tr style="background-color:#E6BC43;font-weight:bold;border:1px solid black;">
+                                        <td></td>
+                                        <td style="border:1px solid black;text-align:right;padding-right:10px;">Grand Total Amount in OMR</td>
+                                        <td colspan="2" style="border:1px solid black;text-align:right;padding-right:10px;">
+                                            <t t-set="line_total" t-value="(note_sum_amount-discount) + vat_amount"/> 
+                                            <t t-esc="'{:.3f}'.format(line_total)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </t>
+                        </t>
+
+
+                        <t t-if="o.client_exclusions_ids">
+                        <t t-set="sl_no" t-value="sl_no+1"/>
+                            <div style=" padding: 2px; margin-top: 20px; margin-left: 30px;font-family: 'Abyssinica SIL', serif;">
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. Exclusions/Need to be provided by Client/Others
+                            </h4>
+                        </div>
+                        <table width="90%"
+                            style="margin-left: 35px; border-collapse: collapse; border: 1px solid black;font-family: 'Abyssinica SIL', serif;">
+                            <tr style="background-color:#D8EAFF; border: 1px solid black;">
+                                <td colspan="3" style="font-size:15px;font-weight: bold; border: 1px solid black;text-align: left;padding-left:5px">
+                                    All of the following items are specifically excluded from the scope and price of this quotation. Any such items subsequently requested or found necessary should be provided by the client or shall be quoted separately and additionally to this quotation.
+                                </td>
+                            </tr>
+                            <t t-set="line_number" t-value="1" />
+                            <t t-foreach="o.client_exclusions_ids" t-as="line">
+                                    <tr style="text-align: left; border: 1px solid black;font-size:14px;">
+                                        <td colspan="2" style="padding-left: 5px; border: 1px solid black;">
+                                             <t t-esc="'5.' + str(line_number)" />
+                                        </td>
+                                        <td style="padding-left: 5px; width: 90%; border: 1px solid black;">
+                                            <t t-esc="line.exclusion_id.display_name"/>
+                                        </td>
+                                    </tr>
+                                     <t t-set="line_number" t-value="line_number + 1" />
+                            </t>
+                        </table>
+                        </t>
+
+                        <t t-if="o.warranty_details_ids">
+                        <t t-set="sl_no" t-value="sl_no+1"/>
+                            <div style=" padding: 2px; margin-top: 20px; margin-left: 30px;font-family: 'Abyssinica SIL', serif;">
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. Warranty Details
+                            </h4>
+                        </div>
+                        <table width="88%" 
+                            style="margin-left:35px; border-collapse: collapse; border: 1px solid black;font-family: 'Abyssinica SIL', serif;">
+                            <tr height="15px" style="background-color:#D8EAFF; text-align: center; border: 1px solid black;">
+                                <td style="font-weight: bold; border: 1px solid black; text-align: justify; text-align:center" colspan="2">
+                                    Warranty
+                                </td>
+                            </tr>
+                            <t t-set="line_number" t-value="1" />
+                            <t t-foreach="o.warranty_details_ids" t-as="line">
+                                <t t-if="line.display_type=='line_section'">
+                                    <tr height="15px" style="background-color:#D8EAFF; padding-left:5px; border: 1px solid black;">
+                                    <td style="font-weight: bold; border: 1px solid black; text-align:left; font-weight:bold" colspan="2">
+                                        <t style="text-align:left; text-align: justify;" t-esc="line.name"/>
+                                    </td>
+                                </tr>
+                             </t>
+                             <t t-else="">
+                                 <tr>
+                                    <td style="padding-left: 5px; border: 1px solid black; width: 10%;font-size:13px">
+                                        <t t-esc="'6.' + str(line_number)" />
+                                        <t t-set="line_number" t-value="line_number + 1" />
+                                    </td>
+                                    <td style="padding-left: 5px; border: 1px solid black; width: 90%;font-size:13px; text-align: justify;text-align:left">
+                                        <t t-esc="line.name"/>
+                                    </td>
+                                 </tr>
+                             </t>
+                            </t>
+                        </table>
+                        </t>
+
+
+                        <t t-if="o.vas_warranty_ids">
+                            <div style="margin-top: 20px;margin-left: 40px; font-family: 'Abyssinica SIL', serif;padding-left:14px;">
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;">Warranty Exclusion:</h4>
+                            <t t-foreach="o.vas_warranty_ids" t-as="line">
+                                <li style="text-align:left;color: #2D5787;padding-left:20px;">
+                                <span style="text-align:left; color: #2D5787;"><t t-esc="line.name"/></span>
+                                </li>
+                            </t>
+                            <t t-if="o.filled_with">
+                                <span><p style="font-size:17px; text-align:left; color: #2D5787;">Note: Pool water to be filled within<t t-if="o.filled_with">
+                                                <t t-esc="round(o.filled_with)"></t>
+                                            </t> days after completing the tile installation.</p></span>
+                            </t>
+                        </div>
+                        </t>
+
+                        <t t-if="o.completion_line_ids">
+                        <t t-set="sl_no" t-value="sl_no+1"/>
+                            <div style="padding: 2px; margin-top: 20px; margin-left: 30px;font-family: 'Abyssinica SIL', serif;">
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. Completion Period</h4>
+                            <p style="text-align: left; color: #333;padding-left:25px;">
+                                <t t-foreach="o.completion_line_ids" t-as="line">
+                                    <t t-esc="line.description"/><br/>
+                                </t>
+                            </p>
+                        </div>
+                        </t>
+
+                        <t t-if="o.payment_term_vas_ids">
+                        <t t-set="sl_no" t-value="sl_no+1"/>
+                            <div style=" padding: 2px; margin-top: 20px; margin-left: 30px;font-family: 'Abyssinica SIL', serif;">
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. Terms of Payment
+                            </h4>
+
+                        </div>
+                        <table width="88%" 
+                            style="margin-left:35px; border-collapse: collapse; border: 1px solid black;font-size:15px;font-family: 'Abyssinica SIL', serif;">
+                            <!-- Header Row -->
+                            <tr style="text-align: left; height:5px; line-height:1">
+                                <td colspan="2" style="padding: 10px; font-weight: bold; background-color: #D8EAFF;border-bottom: 1px solid black">
+                                    <t t-esc="sl_no"/>-1 Payments Terms
+                                </td>
+                            </tr>
+                            <t t-foreach="o.payment_term_vas_ids" t-as="line">
+                                <tr style="text-align: left;">
+                                    <td colspan="2" style="border-bottom: 1px solid black; padding-left: 5px; font-weight: bold;">
+                                        <t t-esc="line.description" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        </t>
+                        <div style="padding: 2px; margin-top: 20px; margin-left: 30px;font-family: 'Abyssinica SIL', serif;">
+                        <t t-set="sl_no" t-value="sl_no+1"/>
+                            <h4 style="text-align: left; color: #333;font-size:18px;font-weight:bold ;color: #2D5787;"><t t-esc="sl_no"/>. Correspondence</h4>
+                        </div>
+
+                        <!-- <div style="margin-top: 20px; font-size: 14px; text-align: left; margin-left: 10%;">
+                            <span style="text-align: left;">
+                                All Communications related to this proposal shall be addressed to,
+                            </span>
+                            
+                            <span style="text-align: left;font-size: 14px;line-height:1.1">
+                               
+                            </span>
+                            
+                            <span style="text-align: left;font-size: 14px;">
+                                <strong>Sr. Operations and Maintenance Manager</strong>
+                                Kehlan Pools and Fountains LLC<br/>
+                                Hai Al Mina
+                                PO Box: 1386, PC 114
+                            </span>
+                            
+                            <span style="text-align: left;font-size: 14px;line-height:1.1">
+                                <strong>GSM:</strong><br/>
+                                +968 99441731
+                            </span>
+                            
+                            <span style="text-align: left;font-size: 14px;line-height:1.1">
+                                <strong>Email:</strong><br/>
+                                <a href="mailto:amc@kehlanpools.com">amc@kehlanpools.com</a>
+                            </span>
+                        </div> -->
+                        <table width="60%" style="margin-left:65px; border-collapse: collapse; border:hidden;font-family: 'Abyssinica SIL', serif;">
+                            <tr>
+                                <td style="text-align: left;border:hidden;line-height:20px;font-size: 16px">
+                                    <span style="text-align: left;">
+                                        All Communications related to this proposal shall be addressed to,
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                    <span> Name: <strong>Mr. Anssar Mullapurath.</strong>
+                                    <!-- <strong><t t-if="o.partner_id">
+                                        <t t-esc="o.partner_id.name"/>
+                                    </t></strong> -->
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                    <strong>Sr. Operations and Maintenance Manager</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                        Kehlan Pools and Fountains LLC
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                        Hai Al Mina
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                        PO Box: 1386, PC 114
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                    <span style="text-align: left;font-size: 16px;line-height:1.1">
+                                <strong>GSM:</strong>+968 99441731
+                                
+                            </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;font-size: 16px;line-height:20px;border:hidden">
+                                    <strong>Email:</strong> <a href="mailto:amc@kehlanpools.com">amc@kehlanpools.com</a>
+                               
+                                </td>
+                            </tr>
+                        </table>
+                    </link>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

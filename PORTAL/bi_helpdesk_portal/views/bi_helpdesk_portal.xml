@@ -1,0 +1,196 @@
+<odoo>
+    <data>
+        <template id="inherit_helpdesk_portal_ticket" inherit_id="helpdesk.portal_helpdesk_ticket">
+            <xpath expr="//t[@t-call='portal.portal_searchbar']" position="after">
+                <right>   
+                    <a href="/my/tickets/new" class="btn btn-primary">
+                        <i class="fa fa-plus me-1"></i> Create Ticket
+                    </a>
+                </right> 
+            </xpath>
+        </template>
+        <template id="inherit_all_ticket_helpdesk_portal" inherit_id="helpdesk.portal_my_home_menu_helpdesk">
+            <xpath expr="//t[@t-set='rating_page']" position="inside">
+                <li t-if="page_name == 'helpdesk_ticket'" t-attf-class="breadcrumb-item #{'active ' if not ticket else ''}">
+                    <a href="/my/tickets/new,?{{ keep_query() }}">Tickets</a>
+                </li>
+            </xpath>
+        </template>
+        <template id="inherit_view_ticket_helpdesk_portal" inherit_id="helpdesk.tickets_followup">
+            <xpath expr="//div[@id='card_header']" position="after">
+                <div id="card_button" class="container" data-anchor="true">
+                    <div class="row">
+                        <div class="col d-flex justify-content-start align-items-center">
+                            <form action="/my/tickets/state_hold" method="post" class="me-2">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                <input type="hidden" class="form-control" name="ticket_id" t-att-value="ticket.id" />
+                                <button type="submit" class="btn btn-primary">On Hold</button>
+                            </form>
+                            <form action="/my/tickets/state_solved" method="post" class="me-2">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                <input type="hidden" class="form-control" name="ticket_id" t-att-value="ticket.id" />
+                                <button type="submit" class="btn btn-primary">Solved</button>
+                            </form>
+                            <form action="/my/tickets/state_cancel" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                <input type="hidden" class="form-control" name="ticket_id" t-att-value="ticket.id" />
+                                <button type="submit" class="btn btn-primary">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </xpath>
+            <xpath expr="//div[@id='card_body']" position="inside">
+                <form action="/my/tickets/view_ticket_info" method="post">
+                    <t t-call="portal.portal_table">
+                        <!-- Include CSRF token -->
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="ticket_id" t-att-value="ticket.id if ticket else ''"/>
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="name"><b>Ticket Name</b></label>
+                                        <input type="text" id="name" name="ticket_name" class="form-control" required="1" 
+                                            t-att-value="ticket.name if ticket else ''"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="helpdesk_teams"><b>Helpdesk Teams</b></label>
+                                        <input type="text" id="helpdesk_teams" name="help_desk_teams" class="form-control"
+                                            t-att-value="ticket.team_id.name if ticket else ''"/>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="ticket_type"><b>Ticket Type</b></label>
+                                        <input type="text" id="ticket_type" name="ticket_type" class="form-control"
+                                            t-att-value="ticket.ticket_type if ticket.ticket_type else ''"/>
+                                        <!-- <select class="form-control" name="ticket_type" required="1">
+                                            <option value="complaint" t-att-selected="ticket.ticket_type == 'complaint' if ticket else False">Complaint</option>
+                                            <option value="services" t-att-selected="ticket.ticket_type == 'services' if ticket else False">Service</option>
+                                            <option value="maintenance" t-att-selected="ticket.ticket_type == 'maintenance' if ticket else False">Maintenance</option>
+                                        </select> -->
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="remark"><b>Ticket Remarks</b></label>
+                                        <input type="text" id="ticket_remark" name="remark" class="form-control"
+                                            t-att-value="ticket.remarks if ticket.remarks else ''"/>
+                                        <!-- <select class="form-control" name="ticket_type" required="1">
+                                            <option value="complaint" t-att-selected="ticket.ticket_type == 'complaint' if ticket else False">Complaint</option>
+                                            <option value="services" t-att-selected="ticket.ticket_type == 'services' if ticket else False">Service</option>
+                                            <option value="maintenance" t-att-selected="ticket.ticket_type == 'maintenance' if ticket else False">Maintenance</option>
+                                        </select> -->
+                                    </div>
+                                    <!-- <div class="form-group mb-3">
+                                        <label for="description"><b>Description</b></label>
+                                        <input type="text" id="description" name="description" class="form-control" required="1" 
+                                            t-att-value="ticket.description if ticket else ''"/>
+                                    </div> -->
+                                    <!-- <div class="form-group mb-3">
+                                        <label for="phone_id"><b>Phone Number</b></label>
+                                        <input type="text" id="phone_id" name="phone_id" class="form-control" required="1" 
+                                            t-att-value="ticket.partner_phone if ticket else ''"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="email_id"><b>Email Id</b></label>
+                                        <input type="text" id="email_id" name="email_id" class="form-control" required="1" 
+                                            t-att-value="ticket.partner_email if ticket else ''"/>
+                                    </div> -->
+                                    <!-- <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <a href="/AllTickets" class="btn btn-secondary ms-2">Cancel</a>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </form>
+            </xpath>
+        </template>
+        <template id="portal_ticket_create" name="Helpdesk Ticket Creation">
+            <t t-call="portal.portal_layout">
+                <form action="/my/tickets/create_new_ticket" method="post">
+                    <t t-call="portal.portal_table">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <h1 style="text-align: center; color: #8B008B; font-weight: bold">Create New Ticket</h1>
+                        <h5 style="text-align: center;font-weight: bold;">Please fill the form</h5>
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="name"><b>Ticket Name</b></label>
+                                        <input type="text" id="name" name="ticket_name" class="form-control" required="1"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="helpdesk_teams"><b>Helpdesk Teams</b></label>
+                                        <select class="form-control" name="helpdesk_teams" required="1">
+                                            <t t-foreach="helpdesk_teams" t-as="teams">
+                                                <option t-att-value="teams.id">
+                                                    <t t-esc="teams.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="ticket_type"><b>Ticket Type</b></label>
+                                        <select class="form-control" name="ticket_type" required="1">
+                                            <option value="complaint">Complaint</option>
+                                            <option value="services">Service</option>
+                                            <option value="maintenance">Maintenance</option>
+                                        </select>
+                                    </div>                                    
+                                    <!-- <div class="form-group mb-3">
+                                        <label for="assigned_to"><b>Assigned To</b></label>
+                                        <select class="form-control" name="assigned_to" required="1">
+                                            <t t-foreach="assigned_to" t-as="user">
+                                                <option t-att-value="user.id">
+                                                    <t t-esc="user.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div> -->
+                                    <div class="form-group mb-3">
+                                        <label for="description"><b>Description</b></label>
+                                        <input type="text" id="description" name="description" class="form-control" required="1"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!-- <div class="form-group mb-3">
+                                        <label for="customer_id"><b>Customer</b></label>
+                                        <input type="text" id="phone_id" name="phone_id" class="form-control" required="1"/>
+                                        <select class="form-control" name="customer_id" required="1">
+                                            <t t-foreach="customer_id" t-as="customer">
+                                                <option t-att-value="customer.id">
+                                                    <t t-esc="customer.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div> -->
+                                    <div class="form-group mb-3">
+                                        <label for="phone_id"><b>Phone Number</b></label>
+                                        <input type="text" id="phone_id" name="phone_id" class="form-control" required="1"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="email_id"><b>Email Id</b></label>
+                                        <input type="text" id="email_id" name="email_id" class="form-control" required="1"/>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="remark"><b>Remark</b></label>
+                                        <input type="text" id="remark" name="remark" class="form-control"/>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <a href="/AllTickets" class="btn btn-secondary ms-2">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </form>  
+            </t>     
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <record id="created_by_server_action" model="ir.actions.server">
+        <field name="name">Update Created By to Assigned To</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="state">code</field>
+        <field name="code">records.action_assign_created_by_to_assigned_to()</field>
+    </record>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_post_dated_cheque,access_post_dated_cheque_user,model_post_dated_cheque,base.group_user,1,1,1,1
+access_post_dated_cheque_line_user,access_post_dated_cheque_line_user,model_post_dated_cheque_line,base.group_user,1,1,1,1

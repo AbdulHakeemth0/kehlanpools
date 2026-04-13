@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="vas_header1">
+            <div class="header" style="width: 90%; margin-left: 50px;">
+             <div class="not-first-page">
+                <table width="100%" style="border-collapse: collapse;border:hidden;text-align:right">
+                    <tr>
+                        <td width="100%" style="line-height:10px;border:hidden;">
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.name">
+                                <t t-out="env.company.name"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="line-height:10px;border:hidden;">
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">C.R.No:</span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.company_registry">
+                                <t t-out="env.company.company_registry"/>.
+                            </span>
+                            
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">PO.Box -</span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.zip">
+                                <t t-out="env.company.zip"/>,
+                            </span>&#160;
+
+                            <!-- <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">PC-</span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.zip">
+                                <t t-out="env.company.zip"/>, 
+                            </span> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="line-height:10px;border:hidden;">
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.street">
+                                <t t-out="env.company.street"/>,
+                            </span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.city">
+                                <t t-out="env.company.city"/>,
+                            </span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.country_id">
+                               Sultanate of <t t-out="env.company.country_id.name"/>.
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="line-height:10px;border:hidden;">
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Tel-</span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.phone">
+                                <t t-out="env.company.phone"/>,
+                            </span>&#160;
+
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Fax-</span>
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.fax">
+                                <t t-out="env.company.fax"/>.
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="line-height:10px;border:hidden;">
+                            <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Email -</span>
+                            <span style="text-decoration:underline;color:#046cbc;font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.email">
+                                <t t-out="env.company.email"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%" style="line-height:10px;border:hidden;">
+                                <span style="font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">Website -</span>
+                                <span style="text-decoration:underline;color:#046cbc;font-size: 11px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;" t-if="env.company.website">
+                                <t t-esc="env.company.website.replace('http://', '')" />
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+            <div class="footer">
+                <div class="row">
+                    <table width="90%" style="border-collapse: collapse; width: 100%;border:hidden">
+                        <tr>
+                            <td style="width:90%;text-align: left; color:rgb(38, 84, 114);border:hidden;">
+                                <center>Swimming Pool | Water Features | Ponds | Spa | Steam Room | Sauna</center>
+                            </td>
+                            <!-- <td style="text-align: right; padding-right: 50px; color: #003399;">
+                                <span t-if="report_type == 'pdf'" class="page"/>
+                            </td> -->
+                        </tr>
+                        <tr>
+                        <td style="text-align: center;vertical-align:bottom;font-size: 16px; padding-right: 50px;border:hidden;">
+                            <span t-if="report_type == 'pdf'" class="page"/>
+                        </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

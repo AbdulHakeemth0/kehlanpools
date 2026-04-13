@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- for Corporate AMC proposal format  -->
+        <template id="report_amc_corporate">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+
+                        <t t-call="bi_amc_proposal.amc_content_header"/>
+                        <div class="page">
+                        <link href="https://fonts.googleapis.com/css?family=Abyssinica+SIL" rel="stylesheet">
+                        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;display=swap" rel="stylesheet"/>
+
+                            <!-- <div class="text-center">
+                                <img src="/bi_amc_proposal/static/src/img/kehlan_pools_logo.png" alt="Kehlan Pools Logo"
+                                     style="width: 300px; height: 200px; margin-right: 20px; margin-top:-5%;"/>
+                                <img src="/bi_amc_proposal/static/src/img/healthwave_logo.png" alt="Healthwave Logo"
+                                     style="width: 300px; height: 200px; margin-top:-5%;"/>
+                            </div> -->
+
+                            <div class="text-center">
+                                <img src="/bi_amc_proposal/static/src/img/kehlan_andheathwave_logo.png" alt="Kehlan and healthwave Logo" style="height: 180px;margin-top:35px;padding-right:8px;"/>
+                            </div>
+                            <!-- <div class="text-center" style="margin-top:2px;">
+                                <img src="/bi_amc_proposal/static/src/img/kehlan_andheathwave_logo.png" alt="Kehlan and healthwave Logo" style="width: 960px; height: 220px; margin-right: 10px; "/>
+                            </div> -->
+                            
+                            <h3 class="text-center"
+                                style="max-width: 90%; margin: 5% auto 0 auto; font-weight:bold; font-size: 30px; color: #3074bc; padding: 10px;">
+                                <b>PROPOSAL / AGREEMENT FOR 
+                                    <t t-if="o.subject">
+                                        <t t-out="o.subject.upper()"/>
+                                    </t>
+                                </b>
+                            </h3>
+
+                            <!-- <h3 class="text-center" style="margin-top: 14%;font-family: 'Abyssinica SIL', serif;font-size: 36px; color:#3074bc; padding: 35px;">
+                                <b>PROPOSAL / AGREEMENT FOR
+                                    <t t-if="o.subject">
+                                        <t t-out="o.subject.upper()"/>
+                                    </t>
+                                </b>
+                            </h3> -->
+
+                            <table style="width: 100%; margin-top: 26%; border: 1px solid #000; border-collapse: collapse;font-family: 'Abyssinica SIL', serif;font-weight:bold;font-size: 17px;">
+                                <tr style="height:40px;">
+                                    <td style=" width: 14%; padding-left: 10px; font-weight: bold; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        Attn
+                                    </td>
+                                    <td style="width: 43%;padding-left: 10px; border: 1px solid #000;color: #3074bc;vertical-align: top;">
+                                        <t t-if="o.partner_id">
+                                        <span t-field="o.partner_id.name"/>
+                                        </t>
+                                    </td>
+                                    <td style="width: 27%;padding-left: 10px; font-weight: bold; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        Mob No :
+                                         <t t-if="o.partner_id.phone">
+                                        <span t-field="o.partner_id.phone"/>
+                                         </t>
+                                    </td>
+                                </tr>
+                                <tr style="height:40px;">
+                                    <td style="padding-left: 10px; font-weight: bold; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        Title
+                                    </td>
+                                    <td colspan="3" style="padding-left: 10px; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        <t t-if="o.subject">
+                                        <span t-field="o.subject"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr style="height:40px;">
+                                    <td style="padding-left: 10px; font-weight: bold; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        Address
+                                    </td>
+                                    <td colspan="3" style="padding-left: 10px; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        <!--<t t-if="o.partner_id">-->
+                                        <!--    <span t-field="o.partner_id.name"/>,-->
+                                        <!--</t>-->
+                                        <t t-if="o.partner_id.street">
+                                            <span t-field="o.partner_id.street"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.street2">
+                                            <span t-field="o.partner_id.street2"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.city">
+                                            <span t-field="o.partner_id.city"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.state_id">
+                                            <t t-out="o.partner_id.state_id.name"/>,
+                                        </t>
+                                        <t t-if="o.partner_id.country_id">
+                                            <t t-if="o.partner_id.country_id.code == 'OM'">
+                                                Sultanate of <span t-esc="o.partner_id.country_id.name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="o.partner_id.country_id.name"/>
+                                            </t>
+                                        </t>
+                                        <!-- <t t-if="o.partner_id.country_id">
+                                            Sultanate of <span t-field="o.partner_id.country_id.name"/>
+                                        </t> -->
+                                    </td>
+                                </tr>
+                                <tr style="height:40px;">
+                                    <td style="padding-left:10px;font-weight: bold; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        Proposal No
+                                    </td>
+                                    <td colspan="3" style="padding-left:10px;border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        <t t-if="o.name">
+                                        <span t-field="o.name"/>
+                                        </t>
+                                    </td>
+
+                                </tr>
+                                <tr style="height:40px;">
+                                    <td style="padding-left: 10px; font-weight: bold; border: 1px solid #000; color: #3074bc;vertical-align: top;">Date</td>
+                                    <td colspan="3" style="padding-left: 10px; border: 1px solid #000; color: #3074bc;vertical-align: top;">
+                                        <span t-esc="o.date_order.strftime('%d %b %Y')"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <p class="text-center" style="text-align:center; margin-top: 32px; font-size: 17px; color: #28648c;font-family: 'Abyssinica SIL', serif; ">
+                                This document contains formal proposal. When both parties sign this proposal, it forms a<br/>
+                                <span style="margin-top:-30px;">legally binding contract that guarantees the success of the project through our service
+                                delivery</span><br/>
+                                <span style="margin-top:-30px;">standards and your seamless co-operation.</span>
+                            </p> -->
+                            <table class="table table-borderless" style="text-align: center; margin-top: 32px; font-size: 17px; color: #28648c; font-family: 'Abyssinica SIL', serif; border-collapse: collapse; width: 100%;">
+                                <tr style="line-height:20px;">
+                                    <td style="color: #28648c;">
+                                        This document contains a formal proposal. When both parties sign this proposal, it forms a<br/>
+                                        legally binding contract that guarantees the success of the project through our service delivery<br/>
+                                        standards and your seamless co-operation.
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div style="page-break-before: always;"/>
+                            <p style="text-align: justify;font-family: 'Abyssinica SIL', serif;font-size: 17px;margin-top:0px;line-height:20px;word-spacing: -5.5px;">
+                                 <b>Maintenance Service Division</b> of M/s
+                                <t t-if="user.company_id">
+                                <t t-esc="user.company_id.name"/>
+                                </t>
+                                , a
+                                <b>U.S Certified Pool Operator
+                                [CPO® Certification No. C-010717]</b>, is fully equipped to manage the operations and
+                                maintenance
+                                of your swimming pool / water features with world-class standards and expertise as
+                                follows:-
+                            </p>
+                            <ul style="text-align: justify;font-family: 'Abyssinica SIL', serif;font-size: 17px;margin-left: -13px;line-height:23px;word-spacing: -5px;">
+                                <li>CPO-US Certified swimming operations to ensure water quality and asset maintenance
+                                    standards.
+                                </li>
+                                <li>ISO 9001, 14001, 450001 certified.</li>
+                                <li>14 years of experience in swimming pool maintenance and trained staff.</li>
+                                <li>Value-added service team to ensure the reactive maintenance 24/7.</li>
+                                <li>Trading support for the timely delivery of genuine consumables and spares.</li>
+                                <li>Multi-layer supervision and service quality audits.</li>
+                                <li>Key Account manager for all communications.</li>
+                                <li>Asset condition survey reporting and monthly reporting.</li>
+                                <li>Flexible timing according to client demand.</li>
+                                <li>Customized uniform according to client preferences.</li>
+                                <li>Environment-friendly chemicals are available on customer demand without any
+                                    additional cost.
+                                </li>
+                            </ul>
+                            <div style="text-align: center;">
+
+                                <img src="/bi_amc_proposal/static/src/img/amc_img.png" alt="Image Description" style="margin-left:-11px;width: 793px; height: 460px;margin-top:-10px;"/>
+                            </div>
+                            <div style="display: flex; align-items: center; border: 1px solid white; font-size: 17px;">
+                                <table width="100%" style="border-spacing: 0; border-collapse: collapse;margin-top:15px;font-family: 'Abyssinica SIL', serif;">
+                                    <tr style="border: 1px solid white;word-spacing: -1px;">
+                                        <td width="70%" style="text-align: justify;border: 1px solid white; vertical-align: top;padding-right:35px;">
+                                            <p style="font-size: 17px;line-height:20px;">
+                                                <b>Puresan</b>
+                                                is a saturated ionic complex biochemical solution containing copper-,
+                                                silver-,
+                                                zinc-, and aluminium nitrate. We use this in the pools maintained by us
+                                                which helps to reduce
+                                                the chlorine usage. The merits of using <b>Puresan</b> are as follows:-
+                                            </p>
+                                            <ul style="margin-top: -15px;margin-left:-13px;line-height:20px;">
+                                                <li>Healthy and eco-friendly water treatment for the pool.</li>
+                                                <li>Improved quality of pool water.</li>
+                                                <li>Drastic reduction in chlorine exposure and its irritating and
+                                                    harmful effects.
+                                                </li>
+                                                <li>Reduced chances of sensitizing allergies.</li>
+                                                <li>No smell of chlorine.</li>
+                                                <li>Non-toxic, hence no side effects.</li>
+                                            </ul>
+                                        </td>
+                                        <td width="30%" style="border: 1px solid white; text-align: right; vertical-align: top;">
+                                            <img src="/bi_amc_proposal/static/src/img/amc_img1.png" alt="Puresan Image" style="width: 250px; height: auto;"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="page-break-before: always;"/>
+                            <table class="table table-borderless" style="text-align: justify; margin-left: -6px; margin-top: 10px; font-size: 17px; line-height: 20px; font-family: 'Abyssinica SIL', serif; border-collapse: collapse; width: 100%;">
+                                <tr style="line-height: 22px;word-spacing: -5px;">
+                                    <td style="padding-right: 14px; vertical-align: top;">1.</td>
+                                    <td>
+                                        <span>This proposal is for <b><t t-if="o.order_line">
+                                                                            <span>
+                                                                                <span t-esc="o.order_line[0].service_property_location"/>
+                                                                            </span>
+                                                                        </t>
+                                                                    </b> at</span>
+                                                                    <b>
+                                            <t t-if="o.partner_id.street">
+                                                <span>
+                                                    <span t-esc="o.partner_id.street"/>,
+                                                </span>
+                                            </t>
+                                        </b>
+                                        <b>
+                                            <t t-if="o.partner_id.street2">
+                                                <span t-esc="o.partner_id.street2"/>
+                                            </t>
+                                        </b>
+                                            <span>between</span>
+                                        <b> 
+                                        <!-- <span>The Manager,</span> -->
+                                            <t t-if="o.partner_id">
+                                                <t t-if="o.partner_id.name">
+                                                    <span t-esc="o.partner_id.name"/>,
+                                                </t>
+                                                <t t-if="o.partner_id.street">
+                                                    <span t-esc="o.partner_id.street"/>,
+                                                </t>
+                                                <t t-if="o.partner_id.street2">
+                                                    <span t-esc="o.partner_id.street2"/>,
+                                                </t>
+                                                <t t-if="o.partner_id.city">
+                                                    <span t-esc="o.partner_id.city"/>,
+                                                </t>
+                                                <t t-if="o.partner_id.country_id">
+                                                    <t t-if="o.partner_id.country_id.code == 'OM'">
+                                                        Sultanate of <span t-esc="o.partner_id.country_id.name"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span t-esc="o.partner_id.country_id.name"/>
+                                                    </t>
+                                                </t>
+                                                <!-- <t t-if="o.partner_id.country_id.name">
+                                                    <span>Sultanate of </span>
+                                                    <span t-esc="o.partner_id.country_id.name"/>
+                                                </t> -->
+                                            </t>
+                                            <span>and</span>
+                                            <t t-if="user.company_id">
+                                                <t t-if="user.company_id.name">
+                                                   <span>M/s <span t-esc="user.company_id.name"/>,</span>
+                                                </t>
+                                                <t t-if="o.partner_id.zip">
+                                                    <span>PO BOX -</span>
+                                                        <span t-esc="o.partner_id.zip"/>,
+                                                </t>
+                                                <t t-if="user.company_id.street">
+                                                    <span><span t-esc="user.company_id.street"/>,</span>
+                                                </t>
+                                                <t t-if="user.company_id.city">
+                                                    <span><span t-esc="user.company_id.city"/>,</span>
+                                                </t>
+                                                <t t-if="user.company_id.country_id">
+                                                    <t t-if="user.company_id.country_id.name == 'Oman'">
+                                                        Sultanate of <span t-esc="user.company_id.country_id.name"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span t-esc="user.company_id.country_id.name"/><br/>
+                                                    </t>
+                                                </t>
+                                                <!-- <t t-if="user.company_id.country_id.name">
+                                                    <span>Sultanate of </span>
+                                                    <span t-esc="user.company_id.country_id.name"/>.
+                                                </t> -->
+                                            </t>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </table>
+                            <t t-set="sl_nu" t-value="1"/>
+                            <!-- <p style="margin-top: -5px; font-size: 17px;font-family: 'Abyssinica SIL', serif;">
+                                <t t-set="sl_nu" t-value="sl_nu+1"/>
+                                <span style="padding-right:25px;word-spacing:-3px"><t t-esc="sl_nu"/>.</span><b>General Scope of work: -</b>
+                            </p>
+                            <table width="100%" class="table table-borderless" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;margin-top: 0;word-spacing:-5.5px;">
+                                <tr style="line-height:25px;">
+                                    <td colspan="6" style="padding-left:30px;">
+                                        <ul style="list-style-type: decimal; text-align:left;font-size: 17px;text-align: justify;">
+                                            <t t-foreach="o.general_scope_corporate_ids" t-as="condition">
+                                                <li style="padding-left:10px;">
+                                                    <t t-if="condition.description">
+                                                        <t t-esc="condition.description"/>
+                                                    </t>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table> -->
+                            <t t-if="o.general_scope_corporate_ids">
+                                <p style="margin-top: -8px; font-size: 17px;font-family: 'Noto Serif', serif;">
+                                    <t t-set="sl_nu" t-value="sl_nu+1"/>
+                                    <span style="padding-right:25px;word-spacing:-3px"><t t-esc="sl_nu"/>.</span><b>General Scope of work: -</b>
+                                </p>
+                                <table width="100%" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;border:hidden;">
+                                    <t t-set="line_no" t-value="0"/>
+                                    <t t-foreach="o.general_scope_corporate_ids" t-as="condition">
+                                        <t t-set="line_no" t-value="line_no+1"/>
+                                        <tr height="10px">
+                                            <td width="10%" style="border:hidden;text-align:right;">
+                                                <t t-esc="sl_nu"/>.<t t-esc="line_no"/>
+                                            </td>
+                                            <td width="90%" style="border:hidden;padding-left:20px;word-spacing:-3px;font-size:20px">
+                                                <t t-if="condition.description">
+                                                    <t t-esc="condition.description"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </t>
+                            <!-- <p style="margin-top: -8px; font-size: 17px;font-family: 'Abyssinica SIL', serif;">
+                                <span style="padding-right:25px;">3.</span><b>Detailed scope of work and specification: -</b>
+                            </p>
+                            <table width="100%" class="table table-borderless" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;margin-top: 0;word-spacing:-5.5px; ">
+                                <tr style="line-height:25px;">
+                                    <td colspan="6" style="padding-left:30px;">
+                                        <ul style="list-style-type: decimal; text-align:left;font-size: 17px;text-align: justify;">
+                                            <t t-foreach="o.detailed_scope_corporate_ids" t-as="gen">
+                                                <li style="padding-left:10px;">
+                                                    <t t-if="gen.description">
+                                                        <t t-esc="gen.description"/>
+                                                    </t>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table> -->
+                            <t t-if="o.detailed_scope_corporate_ids">
+                                <div width="100%" class="table table-borderless" style="margin-top:25px;font-size:17px;">
+                                <t t-set="sl_nu" t-value="sl_nu+1"/>
+                                <h6 style="font-weight: bold; margin-bottom: 8px;font-family: 'Noto Serif', serif;font-size:17px;">
+                                    <t t-esc="sl_nu"/>.
+                                    <span style="padding-left:20px;word-spacing:-3px">Detailed scope of work and specification: -</span>
+                                </h6>
+                            </div>
+                             <table width="100%" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;border:hidden;">
+                                    <t t-set="line_no1" t-value="0"/>
+                                    <t t-foreach="o.detailed_scope_corporate_ids" t-as="gen">
+                                        <t t-set="line_no1" t-value="line_no1+1"/>
+                                        <tr height="10px">
+                                            <td width="10%" style="border:hidden;text-align:right;">
+                                                <t t-esc="sl_nu"/>.<t t-esc="line_no1"/>
+                                            </td>
+                                            <td width="90%" style="border:hidden;padding-left:20px;word-spacing:-3px;font-size:20px">
+                                                <t t-if="gen.description">
+                                                    <t t-esc="gen.description"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            <!-- <div style="margin-top: 0; font-size:17px; padding-left: 8%;">
+                                <ul style="list-style-type: decimal; padding-left: 6px; text-align:justify; font-family: 'Abyssinica SIL', serif;word-spacing:-3px;">
+                                    <t t-foreach="o.detailed_scope_corporate_ids" t-as="gen">
+                                        <li style="padding-left:10px;">
+                                            <t t-if="gen.description">
+                                                <t t-esc="gen.description"/>
+                                            </t>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div> -->
+                            </t>
+
+                            <t t-if="o.amc_asset_details">
+                                <table style="width: 800px; margin-left: 42px;margin-top: 5px; border: 1px solid #000;font-size: 17px; border-collapse: collapse;font-family: 'Abyssinica SIL', serif;">
+                                <tr>
+                                    <td style=" width: 30%; padding: 10px; font-size: 17px; text-align:center;font-family: 'Noto Serif', serif; font-weight: bold; border: 1px solid #000; background-color:#c8dcec;">
+                                        Asset
+                                    </td>
+
+                                    <td style=" width: 70%; padding: 10px; font-size: 17px; text-align:center;font-family: 'Noto Serif', serif; font-weight: bold; border: 1px solid #000; background-color:#c8dcec;">
+                                        Actions
+                                    </td>
+                                </tr>
+
+
+                                <t t-set="processed_sl_nos" t-value="[]"/> <!-- Track processed sl_no values -->
+                                <t t-foreach="o.amc_asset_details" t-as="asset_line">
+                                    <t t-if="asset_line.sl_no not in processed_sl_nos">
+                                        <t t-set="processed_sl_nos" t-value="processed_sl_nos + [asset_line.sl_no]"/> <!-- Mark sl_no as processed -->
+                                        <t t-set="consolidated_values" t-value="'&lt;br/&gt;'.join([line.asset_action for line in o.amc_asset_details if line.sl_no == asset_line.sl_no])"/> <!-- Use escaped version of <br/> -->
+                                        <tr>
+                                            <td style="padding: 10px; font-size: 16px; text-align:left; border: 1px solid #000;">
+                                                <t t-esc="asset_line.name"/> <!-- Display the name of the first asset_line with this sl_no -->
+                                            </td>
+                                            <td style="padding: 10px; font-size: 16px; text-align:left; border: 1px solid #000;">
+                                                <t t-raw="consolidated_values"/> <!-- Use t-raw to render HTML line breaks -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </table>
+                            </t>
+                            <t t-set="sl_nu" t-value="sl_nu+1"/>
+                            <p style="margin-top: 25px; font-size: 17px;font-family: 'Noto Serif', serif;">
+                                <span style="padding-right:26px;word-spacing:-3px"><t t-esc="sl_nu"/>.</span><b>Commercial Details.</b>
+                            </p>
+                            <table style="width: 800px; font-size: 17px; margin-left: 42px;margin-top: 35px; border: 1px solid #000; border-collapse: collapse;font-family: 'Abyssinica SIL', serif;">
+                                <tr>
+                                    <td style="width: 70%; padding: 10px; text-align:left;font-family: 'Noto Serif', serif; font-weight: bold; border: 1px solid #000; background-color:#c8dcec;">
+                                        Service Particulars
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:center;font-family: 'Noto Serif', serif; font-weight: bold; border: 1px solid #000; background-color:#c8dcec;">
+                                        Monthly Charges
+                                        <br/>
+                                        <span style="font-weight:bold ;">(OMR)</span>
+                                    </td>
+                                </tr>
+
+                                <!-- Main Swimming Pool row -->
+                                <tr>
+                                    <td style="width: 70%; padding: 10px; text-align:left; border: 1px solid #000; ">
+                                        <!-- <t t-esc="o.get_value_order_line(o.partner_id)"/> -->
+                                    <span style="font-size: 14px; font-weight: bold;">
+                                        <t t-esc="o.get_service_property_location(o.partner_id)"/>
+                                      </span>
+                                    <br/>
+                                        <b>Total Water Volume –
+                                            <t t-if="o.pool_specification_ids">
+                                                <t t-set="total_volume" t-value="sum(spec.volume_of_water for spec in o.pool_specification_ids)"/>
+                                                <t t-esc="round(total_volume*1000)"/>
+                                                L
+                                            </t>
+                                        </b>
+                                        <!-- <t t-if="o.pool_specification_ids">(
+                                            <t t-set="total_volume"
+                                               t-value="sum(spec.volume_of_water for spec in o.pool_specification_ids)"/>
+                                        )
+                                        </t> -->
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:right; border: 1px solid #000; ">
+                                        <t t-if="o.total_quote_amount">
+
+                                            <t t-if="o.plan_id.is_monthly">
+                                                <t t-esc="'{:.3f}'.format(o.total_quote_amount + o.discount)"/>
+                                            </t>
+                                            <t t-if="o.plan_id.is_quaterly">
+                                                <t t-esc="'{:.3f}'.format((o.total_quote_amount + o.discount)/ 3)"/>
+                                            </t>
+                                            <t t-if="o.plan_id.is_bi_yearly">
+                                                <t t-esc="'{:.3f}'.format((o.total_quote_amount + o.discount)/ 6)"/>
+                                            </t>
+                                            <t t-if="o.plan_id.is_yearly">
+                                                <t t-esc="'{:.3f}'.format((o.total_quote_amount + o.discount)/ 12)"/>
+                                            </t>
+                                            
+                                        </t>
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom:hidden;line-height:25px;">
+                                    <td style="width: 70%; padding: 10px; text-align:left; font-weight: bold; border: 1px solid #000; ">
+                                        <!-- <b>Total Water Volume –
+                                            <t t-if="o.pool_specification_ids">
+                                                <t t-set="total_volume"
+                                                   t-value="sum(spec.volume_of_water for spec in o.pool_specification_ids)"/>
+                                                <t t-esc="round(total_volume*1000)"/>
+                                                L
+                                            </t>
+                                        </b>
+                                        <br/> -->
+                                        <b>Service Frequency –</b>
+                                        <!-- <t t-if="o.visit_freq">
+                                            <t t-esc="o.visit_freq"/>
+                                            <br/>
+                                        </t> -->
+                                        <t t-if="o.pool_specification_ids and o.pool_specification_ids[:1][0].visit_type == 'weekly'">
+                                            <t t-esc="int(o.pool_specification_ids[:1][0].visit_frequency)"/> days in a week
+                                        </t>
+                                        <t t-elif="o.pool_specification_ids and o.pool_specification_ids[:1][0].visit_type == 'monthly'">
+                                            <t t-esc="int(o.pool_specification_ids[:1][0].visit_frequency)"/> days in a month
+                                        </t>
+                                        <t t-elif="o.pool_specification_ids and o.pool_specification_ids[:1][0].visit_type == 'yearly'">
+                                            <t t-esc="int(o.pool_specification_ids[:1][0].visit_frequency)"/> days in a year
+                                        </t>
+                                        <t t-else="">
+                                                <!-- No visit frequency specified -->
+                                        </t>
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:left; font-weight: bold; border: 1px solid #000; ">
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom:hidden;">
+                                <td style="width: 70%; padding: 10px; text-align:left; border: 1px solid #000;">
+                                <p style="text-align:left: font-size: 17px;">
+                                    <b>Chemicals in use:</b>
+                                </p>
+                                </td>
+                                <td style="width: 30%; padding: 10px; text-align:center; font-weight: bold; border: 1px solid #000;">
+                                </td>
+                                </tr>
+                                <t t-foreach="o.pool_specification_ids" t-as="pool"/>
+                                <tr style="line-height:8px;border-bottom:hidden;">
+                                    <td style="width: 70%; padding: 10px; text-align:left; border: 1px solid #000; ">
+                                            <t t-if="o.sale_manpower_line_ids">
+                                            <t t-foreach="o.sale_chemical_use_line_ids.filtered(lambda l: l.pool_structure_sl_no == pool.pool_specification_sl_no)" t-as="consumable">
+                                                <p style="font-size: 16px; text-align:left; line-height: 10px;">
+                                                    <div>
+                                                        <!-- <t t-if="consumable.name != 'Total'"> -->
+                                                            - <t t-esc="consumable.name"/>
+                                                        <!-- </t> -->
+                                                    </div>
+                                                </p>
+                                            </t></t>
+                                            <t t-else="">
+                                                <t t-foreach="o.pricing_structure_ids.filtered(lambda l: l.pool_structure_sl_no == pool.pool_specification_sl_no and l.is_consumables)" t-as="consumables">
+                                                    <p style="font-size: 16px; text-align:left; line-height: 10px;">
+                                                        <div>
+                                                            <t t-if="consumables.name != 'Total'">
+                                                                <t t-esc="consumables.name"/>
+                                                            </t>
+                                                        </div>
+                                                    </p>
+                                                </t>
+                                            </t>
+
+                                            
+                                            <!-- <t t-foreach="o.pricing_structure_ids.filtered(lambda l: l.pool_structure_sl_no == pool.pool_specification_sl_no and l.is_manpower)"
+                                           t-as="manpower">
+                                            <p style="font-size: 16px;text-align:left;line-height:10px;">
+                                                <div>
+                                                    <t t-if="manpower.name != 'Total'">
+                                                            <t t-esc="manpower.name"/>
+                                                    </t>
+                                                </div>
+
+                                            </p>
+                                            </t> -->
+                                        <!-- </p> -->
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:center; font-weight: bold; border: 1px solid #000;">
+                                    </td>
+                                </tr>
+
+                                <tr style="border-bottom:hidden;">
+                                <td style="width: 70%; padding: 10px; text-align:left; border: 1px solid #000;">
+                                <p style="text-align:left: font-size: 17px; ">
+                                            
+                                            <b>Manpower provision:</b>
+                                </p>
+                                </td>
+                                <td style="width: 30%; padding: 10px; text-align:center; font-weight: bold; border: 1px solid #000;">
+                                </td>
+                                </tr>
+
+                                <tr style="line-height:8px;">
+                                    <td style="width: 70%; padding: 10px; text-align:left; border: 1px solid #000; ">
+
+                                        
+                                            <!-- <t t-foreach="o.pool_specification_ids" t-as="pool">
+                                            </t>
+                                            <t t-foreach="o.pricing_structure_ids.filtered(lambda l: l.pool_structure_sl_no == pool.pool_specification_sl_no and l.is_consumables)"
+                                            t-as="consumable">
+                                                <p style="font-size: 16px; text-align:left; line-height: 10px;">
+                                                    <div>
+                                                        <t t-if="consumable.name != 'Total'">
+                                                                <t t-esc="consumable.name"/>
+                                                        </t>
+                                                    </div>
+                                                </p>
+                                            </t> -->
+                                        
+                                            <t t-if="o.sale_manpower_line_ids">
+                                            <t t-foreach="o.sale_manpower_line_ids.filtered(lambda l: l.pool_structure_sl_no == pool.pool_specification_sl_no)" t-as="manpower">
+                                                <p style="font-size: 16px;text-align:left;line-height:10px;">
+                                                    <div>
+                                                        <!-- <t t-if="manpower.name != 'Total'"> -->
+                                                        - <t t-esc="manpower.name"/>
+                                                        <!-- </t> -->
+                                                    </div>
+                                                </p>
+                                            </t>
+                                            </t>
+                                            <t t-else="">
+                                            <t t-foreach="o.pricing_structure_ids.filtered(lambda l: l.pool_structure_sl_no == pool.pool_specification_sl_no and l.is_manpower)" t-as="manpowers">
+                                                <p style="font-size: 16px;text-align:left;line-height:10px;">
+                                                    <div>
+                                                        <t t-if="manpowers.name != 'Total'">
+                                                        <t t-esc="manpowers.name"/>
+                                                        </t>
+                                                    </div>
+                                                </p>
+                                            </t></t>
+                                        <!-- </p> -->
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:center; font-weight: bold; border: 1px solid #000;">
+
+                                    </td>
+                                </tr>
+
+                                 <tr style="line-height:10px;">
+                                    <td style="width: 70%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                       <b>Total</b>
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                        <t t-if="o.pricing_structure_discount">
+                                            <t t-if="o.pricing_structure_discount">
+                                                <t t-out="'{:.3f}'.format((o.total_cost)+(o.over_head)+(o.profit_margin))"/> 
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="o.amount_untaxed">
+                                                <t t-out="'{:.3f}'.format(o.amount_untaxed)"/> 
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <t t-if="o.pricing_structure_discount">
+                                <tr style="line-height:10px;">
+                                    <td style="width: 70%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                       <b>Discount</b>
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+
+                                        <t t-if="o.pricing_structure_discount"/>
+                                        <t t-esc="'%.3f' % (o.discount)"/>
+                                    </td>
+                                </tr>
+
+                                <tr style="line-height:10px;">
+                                    <td style="width: 70%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                       <b>Amount After Discount</b>
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+
+                                        <t t-if="o.pricing_structure_discount"/>
+                                        <t t-esc="'%.3f' % (o.amount_untaxed)"/>
+                                    </td>
+                                </tr>
+
+                                </t>
+
+                                <tr style="line-height:10px;">
+                                    <td style="width: 70%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                        <b>VAT
+                                            <t t-if="o.order_line">
+                                                <t t-if="o.order_line[0].tax_id">
+                                                    <t t-esc="o.order_line[0].tax_id[0].name"/>
+                                                </t>
+                                            </t>
+                                        </b>
+                                    </td>
+
+                                    <td style="width: 30%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+
+                                        <t t-if="o.amount_tax"/>
+                                        <t t-esc="'%.3f' % (o.amount_tax)"/>
+                                    </td>
+                                    <!-- <t t-esc="'%.3f' % ((((o.total_cost) + (o.over_head) + (o.profit_margin)) * 5) / 100)" /> -->
+                                </tr>
+                                <!-- <tr style="line-height:10px;">
+                                    <td style="width: 70%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                       <b>Discount</b>
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;"> -->
+
+                                        <!-- <t t-if="o.amount_total + o.amount_total/100*5"></t> -->
+                                        <!-- <t t-esc="'%.3f' % ((((o.pricing_structure_discount) * 5) / 100) + o.pricing_structure_discount)" />
+
+                                    </td>
+                                </tr> -->
+                                <tr style="line-height:10px;">
+                                    <td style="width: 70%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+                                       <b>Total including VAT (Per Month)</b>
+                                    </td>
+                                    <td style="width: 30%; padding: 10px; text-align:right; font-weight: bold; border: 1px solid #000;">
+
+                                        <t t-if="o.amount_total"/>
+                                        <t t-out="'{:.3f}'.format(o.amount_total)"/>
+                                    </td>
+                                </tr>
+                                <tr style="line-height:10px;">
+                                    <td colspan="2" style="width: 70%; padding: 10px; text-align:left; font-weight: bold; border: 1px solid #000; background-color:#b0cce4;">
+                                       <b>
+                                            <t t-if="o.currency_id">
+
+                                                <t t-esc="o.currency_id.with_context(lang='en_US').amount_to_text(o.amount_total)+ ' Only'"/>
+                                                <!-- <t t-esc="o.currency_id.with_context(lang='en_US').amount_to_text('{:.3f}'.format(o.amount_total + o.amount_tax))"/> -->
+                                            </t> 
+                                       </b>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <p style="margin-top: 25px; font-size: 17px; width: 100%;font-family: 'Abyssinica SIL', serif;">
+                                <span style="padding-right:26px;">5.</span><b>Terms &amp; Conditions:-</b>
+                            </p>
+                            <table width="100%" class="table table-borderless" style="font-size: 17px;border-collapse: collapse;font-family: 'Abyssinica SIL', serif;word-spacing:-2px;">
+                                <tr>
+                                    <td colspan="6" style="padding-left:32px;">
+                                        <ul style="list-style-type: decimal; text-align:left;text-align: justify;">
+                                            <t t-foreach="o.terms_condtion_corporate_ids" t-as="terms">
+                                                <li style="padding-left:10px;">
+                                                    <t t-if="terms.description">
+                                                        <t t-esc="terms.description"/>
+                                                    </t>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table> -->
+                            <t t-if="o.terms_condtion_corporate_ids">
+                                <div width="100%" class="table table-borderless" style="margin-top:25px;font-size:21px;">
+                                <t t-set="sl_nu" t-value="sl_nu+1"/>
+                                <h6 style="font-weight: bold; margin-bottom: 8px;font-family: 'Noto Serif', serif;font-size:17px;">
+                                    <t t-esc="sl_nu"/>.
+                                    <span style="padding-left:20px;">Terms &amp; conditions: -</span>
+                                </h6>
+                            </div>
+                            <table width="100%" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;border:hidden;">
+                                    <t t-set="line_no2" t-value="0"/>
+                                    <t t-foreach="o.terms_condtion_corporate_ids" t-as="terms">
+                                        <t t-set="line_no2" t-value="line_no2+1"/>
+                                        <tr height="10px">
+                                            <td width="10%" style="border:hidden;text-align:right;">
+                                                <t t-esc="sl_nu"/>.<t t-esc="line_no2"/>
+                                            </td>
+                                            <td width="90%" style="border:hidden;padding-left:20px;word-spacing:-3px;font-size:20px;">
+                                                <t t-if="terms.description">
+                                                    <t t-esc="terms.description"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                            </table>
+                            <!-- <div style="margin-top: 0; font-size:17px; padding-left: 8%;">
+                                <ul style="list-style-type: decimal; padding-left: 6px; text-align:justify; font-family: 'Abyssinica SIL', serif;word-spacing:-3px">
+                                    <t t-foreach="o.terms_condtion_corporate_ids" t-as="terms">
+                                        <li style="padding-left:10px;">
+                                            <t t-if="terms.description">
+                                                <t t-esc="terms.description"/>
+                                            </t>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div> -->
+                            </t>
+
+
+                           <!-- <p style="margin-top: 30px; font-size: 16px;font-family: 'Abyssinica SIL', serif;line-height:25px;">
+                                <span style="padding-right:25px;">6.</span>The <b>“AMC”</b> scope of work <b>“EXCLUDES”</b>the following other than
+                                warranty provided by
+                                <b>“M/s
+                                    <t t-if="user.company_id">
+                                    <t t-esc="user.company_id.name"/>
+                                    </t>
+                                    ”
+                                </b>
+                                : -
+                            </p> -->
+                            <t t-if="o.amc_scope_corporate_ids">
+                                <t t-set="sl_nu" t-value="sl_nu+1"/>
+                                <table width="100%" class="table table-borderless" style="font-size: 17px;margin-left:-9px;margin-top: 5px; font-size: 16px; font-family: 'Abyssinica SIL', serif;  border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding-right: 19px; vertical-align: top;font-size: 17px;"><t t-esc="sl_nu"/>.</td>
+                                        <td style="font-size: 17px;text-align: justify;word-spacing:-5px;">
+                                            The <b>“AMC”</b> scope of work <b>“EXCLUDES”</b> the following other than warranty provided by
+                                            <b>“M/s
+                                                <t t-if="user.company_id">
+                                                    <t t-esc="user.company_id.name"/>
+                                                </t>
+                                            ”</b>:
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width="100%" style="border-collapse: collapse;font-family: 'Abyssinica SIL', serif;border:hidden;">
+                                    <t t-set="line_no3" t-value="0"/>
+                                    <t t-foreach="o.amc_scope_corporate_ids" t-as="amc_scope">
+                                        <t t-set="line_no3" t-value="line_no3+1"/>
+                                        <tr height="10px">
+                                            <td width="10%" style="border:hidden;text-align:right;">
+                                                <t t-esc="sl_nu"/>.<t t-esc="line_no3"/>
+                                            </td>
+                                            <td width="90%" style="border:hidden;padding-left:20px;word-spacing:-3px">
+                                                <t t-if="amc_scope.description">
+                                                    <t t-esc="amc_scope.description"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <!-- <table width="100%" class="table table-borderless" style="font-size: 17px;border-collapse: collapse;font-family: 'Abyssinica SIL', serif;margin-top: -7px;word-spacing:-2px;">
+                                    <tr>
+                                        <td colspan="6" style="padding-left:32px;">
+                                            <ul style="list-style-type: decimal; text-align:left;text-align: justify;">
+                                                <t t-foreach="o.amc_scope_corporate_ids" t-as="amc_scope">
+                                                    <li style="padding-left:10px;">
+                                                        <t t-if="amc_scope.description">
+                                                            <t t-esc="amc_scope.description"/>
+                                                        </t>
+                                                    </li>
+                                                </t>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table> -->
+                            </t>
+                            <br/>
+                            <!-- <div style="page-break-before: always;"></div> -->
+                            <t t-set="sl_nu" t-value="sl_nu+1"/>
+                            <p style="text-align: justify;margin-top: -7px; font-size: 17px;font-family: 'Abyssinica SIL', serif;word-spacing:-3px;">
+                                <span style="padding-right:25px;"><t t-esc="sl_nu"/>.</span><b>Work Order Confirmation.</b>
+                                By signing this contract both parties agree to all the terms and
+                                conditions mentioned above.
+                            </p>
+                            <div class="row">
+                                <table class="table table-borderless" style="font-size:15px; width: 100%; margin-top: 20px;font-size: 17px; border-collapse: collapse;font-family: 'Abyssinica SIL', serif;">
+                                    <tr style="line-height:7px;">
+
+                                        <td style="width: 50%; vertical-align: top; padding-right: 20px;">
+                                            <p>
+                                                <strong>
+
+                                                     <!-- <t t-if="user.company_id">
+                                                         <b>
+                                                    <t t-esc="user.company_id.name"/></b>
+                                                    : -
+                                                     </t> -->
+                                                     Kehlan Pools LLC: -
+                                                </strong>
+                                            </p>
+                                            <p style="margin-top:100px;"><span style="padding-right:48px;">Name:</span><b>Anssar Mullapurath</b></p>
+                                            <p><span>Designation:</span><b>Sr Operations Manager</b></p>
+                                            <p><span style="padding-right:20px;">Mob No:</span> +968 9944 1731</p>
+                                            <p>Tel: +968 24499861</p>
+                                            <p>Fax: +968 24499204</p>
+                                            <p>Email: <span style="color: #3074bc;text-decoration:underline;">amc@kehlanpools.com</span></p>
+                                        </td>
+
+                                        <td style="width: 50%; vertical-align: top; padding-left: 110px;">
+                                            <p>
+                                                <strong><b>Client: -</b></strong>
+                                            </p>
+                                            <p style="margin-top:100px;">Signature:   __________________</p>
+                                            <p>Date: ______________________</p>
+                                            <p>Name:   _____________________</p>
+                                            <p>Address:  ____________________</p>
+                                            <p>Mob No: ____________________</p>
+                                            <p>Email: ______________________</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <p style="width: 100%;text-align:center;font-size: 18px;padding-top:40px;font-family: 'Abyssinica SIL', serif;word-spacing:-2px;">
+                                <b>This is digitally signed, signature and stamp not required</b>
+                            </p>
+
+                            <p style="width: 100%; text-align: center;font-size:22px;padding-top:40px;font-family: 'Abyssinica SIL', serif;word-spacing:-2px;">
+                                <b>CRYSTAL CLEAR SPARKLING <span style="color: #3074bc;">BLUE SWIMMING POOLS</span> BEGIN
+                                    WITH KPF
+                                </b>
+                            </p>
+                        </link>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

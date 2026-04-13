@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="purchase_custom_layout_header">
+    <t t-foreach="docs" t-as="o">
+        <div class="header">
+            <link href='https://fonts.googleapis.com/css?family=Outfit' rel='stylesheet'>      
+            <div class="row">
+                <div style="margin-top:20px;width:110px">
+                    <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" style="width:200px;height:80px;margin-top:30px;" alt="Logo"/>
+                </div>
+                <t t-if="doc.customer_rank == 1">
+                    <div style="margin-top:40px;width:260px;margin-left:470px;;align-items: center;font-family: 'Outfit'">
+                        <h1 style="margin-left:-70px;margin-top:-5px;font-size:18px;font-weight:bold"><span style="direction: rtl; display: inline-block;">  <strong t-esc="company.name"/></span></h1>
+                        <h5 style="margin-left:-200px; font-size:15px; white-space:nowrap;"><strong>DEBTORS STATEMENT OF ACCOUNT FROM <span t-esc="data[o.id]['start']" style="display:inline; white-space:nowrap;"/> TO <span t-esc="data[o.id]['end']" style="display:inline; white-space:nowrap;"/></strong></h5>
+
+                        <!-- <h5 style="margin-left:-10px;font-size:15px;"><strong></strong></h5> -->
+                        <h6 style="margin-left:-60px;font-size:15px;margin-top:-5px"><b>VAT NO # : <span style="direction: rtl; display: inline-block;" t-esc="company.vat"/></b></h6>
+                  
+                </div></t>
+                <t t-elif="doc.supplier_invoice_count >= 1">
+                <div style="margin-top:40px;width:260px;margin-left:470px;align-items: center;font-family: 'Outfit'">
+                    <h1 style="margin-left:-70px;margin-top:-5px;font-size:18px;font-weight:bold"><span style="direction: rtl; display: inline-block;">  <strong t-esc="company.name"/></span></h1>
+                    <h5 style="margin-left:-200px; font-size:15px; white-space:nowrap;"><strong>CREDITORS STATEMENT OF ACCOUNT FROM <span t-esc="data[o.id]['start']"/> TO <span t-esc="data[o.id]['end']"/></strong></h5>
+                    <!-- <h5 style="margin-left:-130px;font-size:15px;"><strong>FROM<span t-esc="data[o.id]['start']"/> TO <span t-esc="data[o.id]['end']"/></strong></h5> -->
+                        <!-- <h5 style="margin-left:-10px;font-size:15px;"><strong></strong></h5> -->
+                        <h6 style="margin-left:-60px;font-size:15px;margin-top:-5px"><b>VAT NO # : <span style="direction: rtl; display: inline-block;" t-esc="company.vat"/></b></h6>
+                </div></t>
+                <t t-else="">
+                    <div style="margin-top:40px;width:260px;margin-left:470px;;align-items: center;font-family: 'Outfit'">
+                        <h1 style="margin-left:-70px;margin-top:-5px;font-size:18px;font-weight:bold"><span style="direction: rtl; display: inline-block;">  <strong t-esc="company.name"/></span></h1>
+                        <h5 style="margin-left:-200px; font-size:15px; white-space:nowrap;"><strong>DEBTORS STATEMENT OF ACCOUNT FROM <span t-esc="data[o.id]['start']" style="display:inline; white-space:nowrap;"/> TO <span t-esc="data[o.id]['end']" style="display:inline; white-space:nowrap;"/></strong></h5>
+                        <!-- <h5 style="margin-left:-130px;font-size:15px;"><strong>FROM<span t-esc="data[o.id]['start']"/> TO <span t-esc="data[o.id]['end']"/></strong></h5> -->
+                        <!-- <h5 style="margin-left:-10px;font-size:15px;"><strong><span style="margin-left: 10px; direction: rtl; display: inline-block;" t-esc="datetime.date.today().strftime('%d-%m-%Y')"/></strong></h5> -->
+                        <h6 style="margin-left:-60px;font-size:15px;margin-top:-5px"><b>VAT NO # : <span style="direction: rtl; display: inline-block;" t-esc="company.vat"/></b></h6>
+                </div></t>
+
+                <div style="margin-top:20px;width:430px;font-family: 'Outfit'">
+                    <table class="table table-sm o_main_table table-borderless">
+
+                        <tr>
+                            <td  style="text-align: end;font-size:10px; word-break: break-word;margin-top:-10px;"><b><span style="font-size:12px;" t-field="env.company.name"/></b><br/><span t-field="env.company.street"/><br/>
+                                <b><span t-field="env.company.name"/></b><br/>
+                                <!-- <span t-field="env.company.address"/> -->
+                            </td>
+                        </tr>
+
+                        <tr style="margin-bottom:0px;">
+                            <td style="text-align: end; font-size: 11px; font-weight: 400;">
+                                <span>Phone No </span>
+                                <span style="direction: ltr; display: inline-block;width:95px;">
+                                    <span t-field="env.company.phone"></span>
+                                </span>
+                                <br />
+
+                                <span>Email:</span>
+                                <span style="direction: ltr; display: inline-block;">
+                                    <span t-field="env.company.email"></span>
+                                </span>
+                                <br />
+                                <span>Website:</span>
+                                <span style="direction: ltr; display: inline-block;">
+                                    <span t-esc="env.company.website.replace('http://', '').replace('https://', '')"></span>
+                                </span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            </link>
+        </div>
+    </t>
+
+        <div class="footer">
+            <link href='https://fonts.googleapis.com/css?family=Outfit' rel='stylesheet'>
+             <span><div class="row">
+               <t t-set="vall" t-value="0" />
+                <div style="min-width:102%;font-size:12px;padding:10px 20px 13px 10px;margin-top:-10px;text-align: right;">
+                    <div>
+                        Page <span class="page"/> of <span class="topage"/>
+                    </div>
+                </div>
+             </div>
+             </span>
+            </link>
+        </div>
+    </template>
+</odoo>

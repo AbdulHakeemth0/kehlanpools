@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+        <template id="report_payment_voucher_template">
+            <t t-call="web.html_container">
+            <t t-call="bi_payment_voucher_printout.payment_voucher_header"/>
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                    <div class="page" style="font-family: Verdana, sans-serif; padding-top:25px;">
+                        <div style="border-bottom:1px solid #555; margin:6px 0;"></div>
+                        <table class="table-borderless" style="width:100%; font-size:13px; margin-bottom:5px; border:none !important; border-collapse:collapse;">
+                            <tr style="height:34px;">
+                                <td style="text-align:start; vertical-align:middle; border:none !important;">
+                                    <span>Cash A/C</span>
+                                    <span style="margin-left:38px">: </span>
+                                    <b><t t-if="o.acc_type"/><t t-esc="o.acc_type"/></b>
+                                </td>
+                                <td style="text-align:end; vertical-align:middle; border:none !important; padding-right:8px;">
+                                    Voucher No :
+                                    <t t-if="o.name"><b><t t-esc="o.name"/></b></t>
+                                </td>
+                                <td style="text-align: start;vertical-align:middle;padding-left:3px;border:hidden"><t t-if="o.acc_type == 'BANK'">Cheque Date : </t></td>
+                            </tr>
+
+                            <tr style="height:24px;">
+                                <td style="text-align:start; vertical-align:middle; border:none !important;">
+                                    Narration <span style="margin-left:40px">:</span>
+                                    <span style="padding-left:5px"><t t-if="o.ref"><b><t t-esc="o.ref"/></b></t></span>
+                                </td>
+                                <td style="text-align:end; vertical-align:middle; border:none !important; padding-right:8px;">
+                                    Voucher Date :
+                                    <t t-if="o.date"><b><t t-esc="o.date.strftime('%d/%m/%Y')"/></b></t>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="border-bottom:1px solid #555; margin:6px 0;"></div>
+                        <t t-set="total_debit" t-value="0"/>
+                        <t t-set="total_credit" t-value="0"/>
+                        <table class="table table-borderless" 
+                            style="width: 100%;font-size:15px;">
+                            <tr style="background-color:#080484;padding=0">
+                                <td width="5%" style="text-align: start;color:white;font-weight:bold;">LNo</td>
+                                <td width="13%" style="text-align: start;color:white;font-weight:bold;">A/C Code</td>
+                                <td width="42%" style="text-align: start;color:white;font-weight:bold;">Description</td>
+                                <td width="20%" style="text-align: end;color:white;font-weight:bold;">Debit</td>
+                                <td width="20%" style="text-align: end;color:white;font-weight:bold;">Credit</td>
+                            </tr>
+                            <t t-set="counter" t-value="0"/>
+                            <t t-foreach="o.line_ids" t-as="line">
+                                <tr>
+                                    <td style="text-align: start;vertical-align:top"><b><t t-esc="counter + 1"/></b></td>
+                                    <td ><b><span style="text-align: start;" t-field="line.account_id.code"/></b><br/>
+                                    <span style="padding-left: 18px;">Remarks :</span><br/>
+                                    <span style="padding-left: 18px;">Partner :</span></td>
+                                    <td style="text-align: start;"><b><span t-field="line.account_id.name"/></b><br/>
+                                    <span style="text-align: start;" t-field="line.name"></span><br/>
+                                    <span style="text-align: start;" t-field="line.partner_id.name"></span></td>
+                                    <td style="text-align: end;"><b><span t-esc="'%.3f'%(line.debit)"/></b></td>
+                                    <td style="text-align: end;"><b><span t-esc="'%.3f'%(line.credit)"/></b></td>
+                                </tr>
+                                <t t-set="counter" t-value="counter + 1"/>
+                                <t t-set="total_debit" t-value="total_debit + line.debit"/>
+                                <t t-set="total_credit" t-value="total_credit + line.credit"/>
+                            </t>
+                        </table>
+                        <table
+                            style="width: 100%;font-size:16px;border-spacing:2px 2px; border-collapse:separate;height:30px;">
+                            <tr >
+                                <th width="55%" style="text-align: start;vertical-align:middle"><b>Amount In Words : <span t-esc="o.currency_id.with_context(lang='en_US').amount_to_text(total_credit)"/> Only</b></th>
+                                <th width="10%" style="text-align: start;vertical-align:middle"><b>Total : </b></th>
+                                <th width="15%" style="border:hidden;border-top:1px solid black;border-bottom:1px solid black;text-align: end;vertical-align:middle;"><b><span t-esc="'{0:,.3f}'.format(total_debit)"/> </b></th>
+                                <th width="20%" style="border:hidden;border-top:1px solid black;border-bottom:1px solid black;text-align: end;vertical-align:middle;"><b><span t-esc="'{0:,.3f}'.format(total_credit)"/> </b></th>
+                            </tr>
+                            <tr >
+                                <th width="55%"></th> 
+                                <th width="10%"></th>
+                                <th width="15%" style="border:hidden;border-top:1px solid black;"></th>
+                                <th width="20%" style="border:hidden;border-top:1px solid black;"></th>
+                            </tr>
+                        </table>
+                    </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

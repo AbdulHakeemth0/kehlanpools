@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_subscription" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.subscription</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_primary_form_view"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="action_amc_report" type="object" string="AMC Contract" invisible="state in ['draft', 'sent','sale']"/>
+            </header>
+        </field>
+    </record>
+    <record id="view_order_form_inherit_sale_order" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.amc.contract</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="action_amc_report" type="object" string="AMC Contract" invisible="type != 'amc' or state not in ['draft', 'sent','sale']"/>
+            </header>
+        </field>
+    </record>
+</odoo>

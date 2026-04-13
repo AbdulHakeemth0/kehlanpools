@@ -1,0 +1,26 @@
+<odoo>
+
+    <data>
+        <record id="view_leave_form_view_inherit" model="ir.ui.view">
+            <field name="name">hr.leave.form.view.inherit</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='leave_salary_action']" position="attributes">
+                    <attribute name="invisible">is_full_leave_salary or is_partial_leave_salary or not is_annual_leave</attribute>
+                    <attribute name="groups">bi_time_approval.group_time_off_approval</attribute>
+                </xpath>
+                <xpath expr="//field[@name='annual_leave_salary']" position="attributes">
+                    <attribute name="invisible">not is_annual_leave</attribute>
+                </xpath>
+                <xpath expr="//field[@name='holiday_status_id']" position="after">
+                    <field name="child_birth_date" required="is_paternity_leave" invisible="not is_paternity_leave"/>
+                    <field name="is_child_alive" invisible="not is_paternity_leave"/>
+                    <field name="is_paternity_leave" invisible="1"/>
+                    <field name="is_annual_leave" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

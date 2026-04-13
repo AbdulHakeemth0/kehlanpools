@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_view_form_approval_inherit_view" model="ir.ui.view">
+        <field name="name">hr.payslip.view.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_payslip_done']" position="attributes">
+                <attribute name="groups">bi_leave_generic_customizations.group_ceo_related</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_register_payment']" position="attributes">
+                <attribute name="groups">bi_leave_generic_customizations.group_accounts_related</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_payment_report']" position="attributes">
+                <attribute name="groups">bi_leave_generic_customizations.group_accounts_related</attribute>
+            </xpath>
+            <xpath expr="//button[@name='refund_sheet']" position="attributes">
+                <attribute name="groups">bi_leave_generic_customizations.group_accounts_related</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

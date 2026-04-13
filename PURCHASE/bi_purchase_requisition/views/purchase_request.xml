@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View: Purchase Request Form -->
+    <record id="purchase_request_form" model="ir.ui.view">
+        <field name="name">purchase.request.form.view</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button class="oe_highlight" invisible="state not in ['draft']" name="confirm" string="Approve" type="object"/>
+                    <!-- <button class="oe_highlight" type="object" name="approve" groups="bi_purchase_requisition.purchase_request_access_manager" string="Approve" invisible = "state not in ['draft']"></button> -->
+                    <button class="oe_highlight" invisible="state not in ['draft']" name="cancel" string="Reject" type="object"/>
+                    <button class="oe_highlight" groups="purchase.group_purchase_manager" invisible="1" name="create_purchase_requisition" string="Create Requisition" type="object">
+                        <!-- <field string="Confirm" name="insert" widget="statinfo" /> -->
+                    </button>
+                    <!-- <button class="oe_highlight" type="object" name="close" string="Close" invisible = "state not in ['in_progress']"></button> -->
+                    <field name="state" statusbar_visible="draft,cancel,approve,in_progress" widget="statusbar"/>
+                </header>
+                <sheet string="Initial Purchase Request">
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" icon="fa-list-alt" name="get_requisition" type="object">
+                            <field name="requisition_id" string="Requisition" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="user_id" readonly="1" />
+                            <field name="partner_ref" readonly="state not in ('draft')"/>
+                            <field name="m_number"/>
+                        </group>
+                        <group>
+                            <field name="date_order" readonly="state not in ('draft')"/>
+                            <field name="date_end" readonly="state not in ('draft')"/>
+                            <field invisible="1" name="currency_id"/>
+                            <field name="job_number"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product Details">
+                            <button class="oe_highlight" name="select_line" string="select" type="object"/>
+                            <field name="purchase_request_ids" readonly="state in ('in_progress', 'cancel', 'done')" widget="one2many_selectable">
+                                <list editable="bottom" string="Product Details">
+                                    <control>
+                                        <create context="{'default_display_type': 'line_section'}" name="add_section_control" string="Add a section"/>
+                                        <create context="{'default_display_type': 'line_note'}" name="add_note_control" string="Add a note"/>
+                                    </control>
+                                    <field name="is_select"/>
+                                    <field name="name" widget="section_and_note_text"/>
+                                    <field name="reason_to_buy"/>
+                                    <field name="product_qty"/>
+                                    <field column_invisible="1" name="price_unit"/>
+                                    <field column_invisible="1" name="price_subtotal"/>
+                                    <field column_invisible="1" name="requisition_id"/>
+                                    <field column_invisible="1" name="currency_id"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right oe_inline o_td_label">
+                                <div class="oe_subtotal_footer oe_right o_td_label">
+                                    <label for="amount_total"/>
+                                </div>
+                                <strong>
+                                    <field invisible="1" name="amount_total" nolabel="1" options="{'currency_field': 'currency_id'}" widget="monetary"/>
+                                </strong>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group>
+                        <field name="is_rejected" invisible="1"/>
+                        <field name="reason_for_reject" invisible="is_rejected == False" readonly="1"/>
+                    </group>
+                </sheet>
+                <!-- <div>
+                    <field name ="reason_for_reject"/>
+                </div> -->
+                <chatter/>
+            </form></field>
+    </record>
+    <record id="purchase_request_list_inform" model="ir.ui.view">
+        <field name="name">purchase.request.list</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <list string="Initial Purchase Request">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="partner_ref"/>
+                <field name="state"/>
+                <!-- <field name="department_id"/> -->
+            </list></field>
+    </record>
+    <!-- Action: Open Initial Purchase Request Form -->
+    <record id="open_purchase_request_form" model="ir.actions.act_window">
+        <field name="name">Initial Purchase Request</field>
+        <field name="res_model">purchase.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <!-- Menu Item: Initial Purchase Request -->
+    <menuitem action="open_purchase_request_form" id="menu_purchase_request" name="Initial Purchase Request" parent="purchase.menu_procurement_management" sequence="1" active="False"/>
+</odoo>

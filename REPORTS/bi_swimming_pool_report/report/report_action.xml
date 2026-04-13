@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_swimming_pool_report" model="ir.actions.report">
+            <field name="name">Swimming Pool Maintenance Contract Report</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_swimming_pool_report.report_swimming_pool_template</field>
+            <field name="report_file">bi_swimming_pool_report.report_swimming_pool_template</field>
+            <field name="paperformat_id" ref="bi_swimming_pool_report.amc_contract_paperformat"/>
+            <field name="print_report_name">'Swimming Pool Maintenance Contract'</field>
+            <!-- <field name="binding_model_id" ref="sale_subscription.model_sale_order"/> -->
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

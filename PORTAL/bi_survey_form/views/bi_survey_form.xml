@@ -1,0 +1,492 @@
+<odoo>
+    <template id="crm_lead_portal" name="CRM Breadcrumbs">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/my/home">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/crm/leads">CRM</a>
+            </li>
+            <t t-if="page_name == 'crm_lead_create'">
+                <li class="breadcrumb-item active">Create Lead</li>
+            </t>
+            <t t-if="page_name == 'crm_leads'">
+                <li class="breadcrumb-item active">My Leads</li>
+            </t>
+        </ol>
+    </template>
+
+    <template id="portal_home_menu_fleet" name="CRM Overview" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/crm/static/description/icon.svg'"/>
+                <t t-set="title">CRM</t>
+                <t t-set="url" t-value="'/crm/leads'"/>
+                <t t-set="text">View all your leads</t>
+                <t t-set="placeholder_count" t-value="'crm_lead_portal'"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="crm_leads_template" name="CRM Leads">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Leads</t>
+            <div class="container mt-5">
+                <div class="row">
+
+                    <!-- Main Content -->
+                    <div class="col-md-9">
+                        <t t-call="portal.portal_table">
+                        <h2>My CRM Leads</h2>
+                        <a href="/crm/leads/create" class="btn btn-primary mt-3">Create New Lead</a>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="leads" t-as="lead">
+                                    <tr>
+                                        <td><t t-esc="lead.name"/></td>
+                                        <td><t t-esc="lead.contact_name"/></td>
+                                        <td><t t-esc="lead.email_from"/></td>
+                                        <td><t t-esc="lead.phone"/></td>
+                                        <td><t t-esc="lead.description"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="crm_site_survey_form" name="CRM Site Survey Form">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Create CRM Lead - Site Survey Form</t>
+            <div class="container mt-5">
+                <h2 class="text-center">Site Survey Form</h2>
+                <form action="/crm/site_survey/submit" method="post">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <h4 class="mt-4">Client Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td><strong>Project Name</strong></td>
+                            <td><input type="text" name="project_ref_no" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Individual/Company Name</strong></td>
+                            <td>
+                                <select class="form-control" name="customer_id" required="1">
+                                    <t t-foreach="customer_id" t-as="customer">
+                                        <option id="customer_id" t-att-value="customer.id">
+                                            <t t-esc="customer.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>                            
+                        </tr>
+                        <!-- <tr>
+                            <td><strong>Client Type</strong></td>
+                            <td>
+                                <input type="radio" name="client_type" value="Individual" /> Individual
+                                <input type="radio" name="client_type" value="Company" class="ms-3" /> Company
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Building No./Villa No.</strong></td>
+                            <td><input type="text" name="building_no" id="building_no" class="form-control" readonly="1" /></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Area/Location</strong></td>
+                            <td><input type="text" name="area_location" id="area_location" class="form-control" readonly="1" /></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Way No.</strong></td>
+                            <td><input type="text" name="way_no" id="way_no" class="form-control" readonly="1" /></td>
+                        </tr> -->
+                        <tr>
+                            <td><strong>Mob no:</strong></td>
+                            <td><input type="text" name="mob_no" class="form-control"/></td>
+                        </tr>
+                    </table>
+
+                    <!-- Asset Details -->
+                    <h4 class="mt-4">Asset Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td><strong>Type</strong></td>
+                            <td>
+                                <select name="pool_type" class="form-select">
+                                    <option value="Swimming Pool">Swimming Pool</option>
+                                    <option value="Kids' Pool">Kids' Pool</option>
+                                    <option value="Waterfall">Waterfall</option>
+                                    <option value="Water Wall">Water Wall</option>
+                                    <option value="Jacuzzi">Jacuzzi</option>
+                                    <option value="Steam Room">Steam Room</option>
+                                    <option value="Sauna">Sauna</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sub Type</strong></td>
+                            <td>
+                                <select name="pool_sub_type" class="form-select">
+                                    <option value="Concrete">Concrete</option>
+                                    <option value="FRP">FRP</option>
+                                    <option value="Liner">Liner</option>
+                                </select>
+                            </td>                        
+                        </tr>
+                        <tr>
+                            <td><strong>Dimensions (m)</strong></td>
+                            <td>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Length (m)</th>
+                                            <th>Width (m)</th>
+                                            <th>Depth (m)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dimension-lines">
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4" class="text-left">
+                                                <button type="button" class="btn btn-light" onclick="addDimensionRow()">Add a Line</button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maintenance Kit</strong></td>
+                            <td>
+                                <select name="maintenance_kit" class="form-select">
+                                    <option value="Available">Available</option>
+                                    <option value="Not Available">Not Available</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <script>
+                        let dimensionIndex = 0; // Keep track of the number of rows added
+
+                        // Function to add a new row
+                        function addDimensionRow() {
+                            const tableBody = document.getElementById('dimension-lines');
+                            const newRow = document.createElement('tr');
+
+                            // Create cells for the new row
+                            newRow.innerHTML = `
+                                <td>
+                                    <input type="number" name="dimension_length_${dimensionIndex}" placeholder="Length" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="number" name="dimension_width_${dimensionIndex}" placeholder="Width" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="number" name="dimension_depth_${dimensionIndex}" placeholder="Depth" class="form-control" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeDimensionRow(this)">Remove</button>
+                                </td>
+                            `;
+
+                            // Append the new row to the table body
+                            tableBody.appendChild(newRow);
+
+                            // Increment the index for unique input names
+                            dimensionIndex++;
+                        }
+
+                        // Function to remove a row 
+                        function removeDimensionRow(button) {
+                            const row = button.closest('tr'); // Find the closest row
+                            row.remove(); // Remove the row
+                        }
+                    </script>
+
+                    <table>
+                        <tr>
+                            <td><strong>Location</strong></td>
+                            <td>
+                                <select name="pool_sub_type" class="form-select">
+                                    <option value="Underground">Underground</option>
+                                    <option value="On Ground">On Ground</option>
+                                    <option value="Rooftop">Rooftop</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="pool_sub_type" class="form-select">
+                                    <option value="Indoor">Indoor</option>
+                                    <option value="Outdoor">Outdoor</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="pool_sub_type" class="form-select">
+                                    <option value="Covered">Covered</option>
+                                    <option value="Uncovered">Uncovered</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- MEP Equipment Details -->
+                    <h4 class="mt-4">MEP Equipment Details</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Equipment</th>
+                                <th>Make</th>
+                                <th>Quantity</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dimension-lines-equipment">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-left">
+                                    <button type="button" class="btn btn-light" onclick="addEquipmentRow()">Add a Line</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <script>
+                        let dimensionEquipmentIndex = 0; // Keep track of the number of rows added
+
+                        // Function to add a new row
+                        function addEquipmentRow() {
+                            const tableBody = document.getElementById('dimension-lines-equipment');
+                            const newRow = document.createElement('tr');
+
+                            // Create cells for the new row
+                            newRow.innerHTML = `
+                                <td>
+                                    <select class="form-control" name="mep_equipments${dimensionEquipmentIndex}" required="1">
+                                        <t t-foreach="mep_equipments" t-as="equipment">
+                                        <option id="mep_equipments" t-att-value="equipment.id" placeholder="Equipment">
+                                           <t t-esc="equipment.name"/>
+                                        </option>
+                                        </t>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="equipment_make${dimensionEquipmentIndex}" placeholder="Make" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="number" name="equipment_qty${dimensionEquipmentIndex}" placeholder="Quantity" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="text" name="equipment_type${dimensionEquipmentIndex}" placeholder="Type" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="number" name="equipment_size${dimensionEquipmentIndex}" placeholder="Size" class="form-control" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeDimensionRow(this)">Remove</button>
+                                </td>
+                            `;
+
+                            // Append the new row to the table body
+                            tableBody.appendChild(newRow);
+
+                            // Increment the index for unique input names
+                            dimensionEquipmentIndex++;
+                        }
+
+                        // Function to remove a row 
+                        function removeDimensionRow(button) {
+                            const row = button.closest('tr'); // Find the closest row
+                            row.remove(); // Remove the row
+                        }
+                    </script>
+                    <!-- Observation -->
+                    <h4 class="mt-4">Observation / Remarks</h4>
+                    <textarea name="remarks" class="form-control" rows="4"></textarea>
+                    
+                    <!-- Submit Button -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>
+
+                        <!-- <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_1" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                
+                                <td><input type="text" name="equipment_1_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_1_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_1_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_1_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_2" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                 
+                                <td><input type="text" name="equipment_2_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_2_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_2_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_2_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_3" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                 
+                                <td><input type="text" name="equipment_3_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_3_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_3_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_3_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_4" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                 
+                                <td><input type="text" name="equipment_4_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_4_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_4_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_4_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_5" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>  
+                                <td><input type="text" name="equipment_5_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_5_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_5_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_5_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_6" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                  
+                                <td><input type="text" name="equipment_6_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_6_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_6_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_6_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_7" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                  
+                                <td><input type="text" name="equipment_7_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_7_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_7_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_7_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_8" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                  
+                                <td><input type="text" name="equipment_8_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_8_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_8_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_8_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_9" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                  
+                                <td><input type="text" name="equipment_9_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_9_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_9_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_9_size" class="form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="mep_equipment_10" required="1">
+                                        <t t-foreach="mep_equipments" t-as="mep">
+                                            <option t-att-value="mep.id">
+                                                <t t-esc="mep.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </td>                                  
+                                <td><input type="text" name="equipment_10_make" class="form-control" /></td>
+                                <td><input type="number" name="equipment_10_qty" class="form-control" /></td>
+                                <td><input type="text" name="equipment_10_type" class="form-control" /></td>
+                                <td><input type="text" name="equipment_10_size" class="form-control" /></td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+
+
+
+        

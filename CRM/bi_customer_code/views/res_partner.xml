@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="customer_code_res_partner">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="code"/>
+                <field name="customer_profile"/>
+                <field name="customer_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- m_number search in search filter -->
+    <record id="res_partner_view_search_inherited" model="ir.ui.view">
+        <field name="name">res.partner.view.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- m_number search in customer list view -->
+    <record id="view_res_partner_customer_code_tree" model="ir.ui.view">
+        <field name="name">res.partner.list.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="code"/>
+            </field>
+        </field>
+    </record>
+</odoo>

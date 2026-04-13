@@ -1,0 +1,100 @@
+<odoo>
+    <template id="report_petty_cash_template">
+        <t t-call="web.html_container">
+            <t t-call="bi_petty_cash_new.petty_cash_inv_header"/><br/>
+            <t t-foreach="docs" t-as="doc">
+
+                <div class="page">
+                    <table width="100%" style="max-width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsise;border-bottom:1px solid black;">
+                        <tr width="100%">
+                            <td width="15%" style="text-align: start;vertical-align:middle;padding-left:8px;border:hidden;">Statement No.</td>
+                            <td width="2%">
+                                <span>:</span>
+                            </td>
+                            <td width="33%">
+                            <t t-if="doc.statement_no">
+                                    <b>
+                                        <t t-esc="doc.statement_no"/>
+                                    </b>
+                                </t>
+                            </td>
+                            
+                            <td width="15%" style="text-align: start;vertical-align:middle;border:hidden">Requested Date</td>
+                            <td width="2%">
+                                <span>:</span>
+                            </td>
+                            <td width="33%">
+                                <t t-if="doc.requested_date">
+                                    <b>
+                                        <t t-esc="doc.requested_date.strftime('%d/%m/%Y')"/>
+                                    </b>
+                                </t>
+                            </td>
+                                
+                        </tr>
+                        <tr width="100%">
+                            <td width="15%" style="text-align: start;vertical-align:middle;padding-left:8px;border:hidden;">Narration</td>
+                            <td width="2%">
+                                <span>:</span>
+                            </td>
+                            <td width="33%">
+                            <t t-if="doc.narration">
+                                    <b>
+                                        <t t-esc="doc.narration"/>
+                                    </b>
+                                </t>
+                            </td>
+                            
+                            <td width="15%" style="text-align: start;vertical-align:middle;border:hidden">Petty Cash No.</td>
+                            <td width="2%">
+                                <span>:</span>
+                            </td>
+                            <td width="33%">
+                                <t t-if="doc.request_number">
+                                    <b>
+                                        <t t-esc="doc.request_number"/>
+                                    </b>
+                                </t>
+                            </td>  
+                        </tr>
+                    </table>
+
+                    <table width="100%" class="table table-borderless">
+                        
+                        <tr style="background-color:#080484;padding=0;text-align:center;">
+                            <td width="10%" style="color:white;font-weight:bold;">SL No.</td>
+                            <td width="50%" style="color:white;font-weight:bold;">PETTY EXPENSES</td>
+                            <td width="15%" style="color:white;font-weight:bold;">DIVISION</td>
+                            <td width="15%" style="color:white;font-weight:bold;">AMOUNT</td>
+                        </tr>
+                        <tbody>
+                            <t t-set="counter" t-value="1"/>
+                            <tr t-foreach="doc.line_ids" t-as="line">
+                                <td style="text-align: center;"><t t-esc="counter"/></td>
+                                <td><t t-esc="line.particulars"/></td>
+                                <td style="text-align: center;"><t t-esc="line.division"/></td>
+                                <td style="text-align: right;"><t t-esc="'%.3f' % line.amount"/></td>
+                                <t t-set="counter" t-value="counter + 1"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+
+                    <table width="100%">
+                        <tr width="100%">
+                            <th width="60%" style="text-align: start;vertical-align:middle"><b>Amount In Words : <span t-esc="doc.currency_id.with_context(lang='en_US').amount_to_text(doc.total_amount)"/> Only</b></th>
+                            <th width="15%" style="text-align: start;vertical-align:middle"><b>Total : </b></th>
+                            <th width="15%" style="border:hidden;border-top:1px solid black;border-bottom:1px solid black;text-align: end;vertical-align:middle;"><b><span t-esc="'{0:,.3f}'.format(doc.total_amount)"/> </b></th>
+                        </tr>
+                        <tr>
+                            <th width="60%"></th> 
+                            <th width="15%"></th>
+                            <th width="15%" style="border:hidden;border-top:1px solid black;"></th>
+                        </tr>
+                    </table>
+                   
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

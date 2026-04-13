@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- m_number search in search filter -->
+    <record id="sale_subscription_view_search_inherit_bi_sale_subscription" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.bi_sale_subscription_generic_customiatons</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_subscription.sale_subscription_view_search"/>
+        <field name="arch" type="xml">
+            <field name="sale_order_template_id" position="after">
+                <field name="m_number"/>
+                <field string="Visit Frequency" name="pool_specification_ids" filter_domain="[('pool_specification_ids.visit_frequency', '=', self)]"/>
+                <field string="Asset Location" name="pool_specification_ids" filter_domain="[('pool_specification_ids.asset_location', '=', self)]"/>
+                <field string="Filtration System" name="pool_specification_ids" filter_domain="[('pool_specification_ids.filteration_system', '=', self)]"/>
+                <field string="Pool Location" name="pool_specification_ids" filter_domain="[('pool_specification_ids.pool_loc', '=', self)]"/>
+            </field>
+            <filter name="payment_exception" position="after">
+                <separator/>
+                <filter string="Indoor Location" name="asset_loc_indoor" domain="[('pool_specification_ids.asset_location', '=', 'indoor')]"/>
+                <filter string="Outdoor Location" name="asset_loc_outdoor" domain="[('pool_specification_ids.asset_location', '=', 'outdoor')]"/>
+                <!-- <filter string="Other Location" name="asset_loc_other" domain="[(pool_specification_ids.asset_location', '=', 'other')]"/> -->
+                <filter string="filteration Firtrinov" name="filteration_firtrinov" domain="[('pool_specification_ids.filteration_system', '=', 'firtrinov')]"/>
+                <filter string="filteration skimmer" name="filteration_skimmer" domain="[('pool_specification_ids.filteration_system', '=', 'skimmer')]"/>
+                <filter string="filteration Overflow" name="filteration_overflow" domain="[('pool_specification_ids.filteration_system', '=', 'overflow')]"/>
+                <filter string="filteration infinity" name="filteration_infinity" domain="[('pool_specification_ids.filteration_system', '=', 'infinity')]"/> 
+                <!-- <filter string="filteration Other" name="filteration_other" domain="[(pool_specification_ids.filteration_system', '=', 'other')]"/> -->
+                <filter string="VIP Customers" name="cust_profile_vip" domain="[('partner_id.customer_profile', '=', 'vip')]"/>
+                <filter string="General Customers" name="cust_profile_general" domain="[('partner_id.customer_profile', '=', 'general')]"/>
+                <filter string="Individual Type Customers" name="cust_individual" domain="[('partner_id.customer_type', '=', 'individual')]"/>
+                <filter string="Community type Customers" name="cust_community" domain="[('partner_id.customer_type', '=', 'community')]"/>
+                <filter string="Hospitality Type Customers" name="cust_hospitality" domain="[('partner_id.customer_type', '=', 'hospitality')]"/>
+                <filter string="Commericial Customers" name="cust_commercial" domain="[('partner_id.customer_type', '=', 'commercial')]"/>
+                <filter string="Govt Customers" name="cust_govt" domain="[('partner_id.customer_type', '=', 'govt')]"/>
+                <filter string="Visit Type-Weekly" name="visit_type_weekly" domain="[('pool_specification_ids.visit_type', '=', 'weekly')]"/>
+                <filter string="Visit Type-Monthly" name="visit_type_monthly" domain="[('pool_specification_ids.visit_type', '=', 'monthly')]"/>
+                <filter string="Visit Type-Yearly" name="visit_type_yearly" domain="[('pool_specification_ids.visit_type', '=', 'yearly')]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

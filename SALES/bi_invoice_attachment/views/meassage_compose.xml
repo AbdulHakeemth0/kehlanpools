@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="message_compose_form_view_id" model="ir.ui.view">
+        <field name="name">message compose wizard</field>
+        <field name="model">whatsapp.compose.message</field>
+        <field name="arch" type="xml">
+            <form> 
+                <sheet>
+                <group>
+                    <field name="sale_id"/>
+                    <field name="customer_id"/>
+                </group>
+                <group>
+                    <field name="attachment_ids"  widget="many2many_binary" string="Attach a file" nolabel="1" class="o_sign_attachments"/>
+                </group>
+                </sheet>
+                <footer>
+                    <button name="action_send" type="object" string="Send" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>    
+        </record>
+    
+        <record id='message_compose_form_action' model='ir.actions.act_window'>
+            <field name="name">message compose wizard action</field>
+            <field name="res_model">whatsapp.compose.message</field>
+            <field name="view_mode">form</field>
+        </record>
+</odoo>

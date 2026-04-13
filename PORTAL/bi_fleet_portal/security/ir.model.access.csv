@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fleet_custom,access_fleet_custom,fleet.model_fleet_vehicle,base.group_portal,1,1,1,0
+access_fleet_vehicle_model,access_fleet_vehicle_model,fleet.model_fleet_vehicle_model,base.group_portal,1,1,1,0
+access_fleet_vehicle_odometer,access_fleet_vehicle_odometer,fleet.model_fleet_vehicle_odometer,base.group_portal,1,1,1,0
+access_hr_employee,access_hr_employee,hr.model_hr_employee,base.group_portal,1,1,1,0
+

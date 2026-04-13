@@ -1,0 +1,555 @@
+<odoo>
+    <data>
+        <template id="tax_invoice_print_template">
+            <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="bi_amc_tax_invoice.amc_invoice_header"/>
+                    <div class="page" id="all_page">
+                        <table width="100%" style="border-collapse: collapse;">
+                            <tr width="100%">
+                                <td style="text-align:center;border:1px solid black;">
+                                    <b>TAX INVOICE</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;border:1px solid black;">
+                                    <b>TRN:<span t-if="o.company_id">
+                                    <t t-if="o.company_id.vat">
+                                        <span t-field="o.company_id.vat"/>
+                                    </t>
+                                    <t t-else="">
+                                        NA
+                                    </t>
+                                    </span>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="table table-sm table-borderless" style="font-size: 14px;border-collapse: collapse;">
+                            <tr width="100%" style="line-height:25px;border-left:1px solid black;border-right:1px solid black;">
+                                <td width="11%" style="font-weight: bold;">Name</td>
+                                <td width="2%" style="text-align: center;">:</td>
+                                <td width="44%" style="">
+                                    <span t-if="o.partner_id">
+                                        <span t-field="o.partner_id.name"/>
+                                    </span>
+                                </td>
+                                <td width="1%">
+                                    <!-- السم -->
+                                </td>
+                                <td width="15%" style="font-weight: bold;">Date</td>
+                                <td width="2%">:</td>
+                                <td width="20%">
+                                    <span t-field="o.invoice_date" t-options="{&quot;format&quot;: &quot;dd/MM/yyyy&quot;}"/>
+                                </td>
+                                <td width="11%">
+                                    <!-- العنوان -->
+                                </td>
+                            </tr>
+                            <tr width="100%" style="line-height:25px;border-left:1px solid black;border-right:1px solid black;">
+                                <td style="font-weight: bold;vertical-align: top">Address</td>
+                                <td style="vertical-align: top;text-align:center;">:</td>
+                                <td>
+                                    <span t-if="o.partner_id">
+                                        <t t-if="o.partner_id.street">
+                                            <span t-field="o.partner_id.street"/>
+                                            <t t-if="o.partner_id.street">, </t>
+                                        </t>
+                                        <t t-if="o.partner_id.street2"/>
+                                            <span t-field="o.partner_id.street2"/>
+                                                <t t-if="o.partner_id.street2">, 
+                                        </t>
+
+                                       <!-- <t t-if="o.partner_id.street">
+                                            <span t-field="o.partner_id.street" />
+                                            <t t-if="o.partner_id.city or o.partner_id.state_id or o.partner_id.country_id">, </t>
+                                        </t> -->
+                                        <t t-if="o.partner_id.city">
+                                            <span t-field="o.partner_id.city"/>
+                                            <t t-if="o.partner_id.state_id or o.partner_id.country_id">, </t>
+                                        </t>
+                                        <t t-if="o.partner_id.state_id">
+                                            <span t-field="o.partner_id.state_id"/>
+                                            <t t-if="o.partner_id.country_id">, </t>
+                                        </t>
+                                        <t t-if="o.partner_id.country_id">
+                                            <t t-if="o.partner_id.country_id.code == 'OM'">
+                                                Sultanate of <span t-field="o.partner_id.country_id"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="o.partner_id.country_id"/>
+                                            </t>
+                                        </t>
+
+                                        <!-- <span t-if="o.partner_id.city and o.partner_id.zip">, </span>
+                                        <span t-if="o.partner_id.zip">
+                                            <span t-field="o.partner_id.zip" />
+                                        </span><br /> -->
+                                        <!-- <span t-if="o.partner_id.state_id">
+                                            <span t-field="o.partner_id.state_id" />
+                                        </span> -->
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- العنوان -->
+                                </td>
+                                <td style="font-weight: bold;">Invoice No.</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <!-- <span t-field="o.sequence_no" /> -->
+                                    <span t-if="o.name">
+                                        <span t-field="o.name"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- رقم الفاتورة -->
+                                </td>
+                            </tr>
+                            <tr style="line-height:25px;border-left:1px solid black;border-right:1px solid black;">
+                                <td style="font-weight: bold; ">Tel</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.partner_id.phone">
+                                        <span t-field="o.partner_id.phone"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- لهاتف -->
+                                </td>
+                                 <td style="font-weight: bold; ">M Number</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.invoice_line_ids.sale_line_ids.order_id">
+                                        <span t-esc="o.invoice_line_ids.sale_line_ids.order_id.m_number"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- رقم العقد -->
+                                </td>
+                            </tr>
+                            <tr style="line-height:25px;border-left:1px solid black;border-right:1px solid black;">
+                                <td style="font-weight: bold; ">Fax</td>
+                                <td style="text-align: center;">:</td>
+                                <td/>
+                                <td>
+                                    <!-- الفاكس -->
+                                </td>
+                                <td style="font-weight: bold; ">Job No.</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.job_no">
+                                        <span t-field="o.job_no"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- وظيفة رقم -->
+                                </td>
+                            </tr>
+                            <tr style="line-height:25px;border-left:1px solid black;border-right:1px solid black;">
+                                <td style="font-weight: bold; ">TRN</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <t t-if="o.partner_id.vat">
+                                        <span t-field="o.partner_id.vat"/>
+                                    </t>
+                                    <t t-else="">
+                                        NA
+                                    </t>
+                                </td>
+                                <td>
+                                    <!-- الرقم الضريبي -->
+                                </td>
+                                 <td style="font-weight: bold;">LPO No.</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.lpo_no">
+                                        <span t-field="o.lpo_no"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- رقم أمر الشراء -->
+                                </td>
+                            </tr>
+                            <tr style="line-height:25px;border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;">
+                                <td style="font-weight: bold; "/>
+                                <td style="text-align: center;"/>
+                                <td>
+                                   
+                                </td>
+                                <td>
+                                   
+                                </td>
+                                 <td style="font-weight: bold;">Payment Term's:</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.invoice_payment_term_id">
+                                        <span t-field="o.invoice_payment_term_id.name"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <!-- شروط الدفع -->
+                                </td>
+                            </tr>
+                            
+                            
+                        </table>
+
+                        <!-- <table width="411.5px" style="border: 1px solid black; border-collapse: collapse; float: left; margin-right: 4px;height:197px;"> -->
+                            <!-- <tr>
+                                <td width="123.3px" style="font-weight: bold; padding-top: 15px; padding-left: 5px;">Name</td>
+                                <td width="41.1px" style="padding-top: 15px; text-align: center;">:</td>
+                                <td width="246.6px" style="padding-top: 15px;">
+                                    <span t-if="o.partner_id">
+                                        <span t-field="o.partner_id.name" />السم
+                                    </span>
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;vertical-align: top">Address</td>
+                                <td style="vertical-align: top;text-align:center;">:</td>
+                                <td>
+                                    <span t-if="o.partner_id">
+                                        <span t-if="o.partner_id.street">
+                                            <span t-field="o.partner_id.street" /><br/>
+                                        </span>
+                                        <span t-if="o.partner_id.street2">
+                                            <span t-field="o.partner_id.street2" /><br/>
+                                        </span>
+                                        <span t-if="o.partner_id.city">
+                                            <span t-field="o.partner_id.city" />
+                                        </span>
+                                        <span t-if="o.partner_id.city and o.partner_id.zip">, </span>
+                                        <span t-if="o.partner_id.zip">
+                                            <span t-field="o.partner_id.zip" />
+                                        </span><br />
+                                        <span t-if="o.partner_id.state_id">
+                                            <span t-field="o.partner_id.state_id" /><br/>
+                                        </span>
+                                        <span t-if="o.partner_id.country_id">
+                                            <span t-field="o.partner_id.country_id" />
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">Tel</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.partner_id.phone">
+                                        <span t-field="o.partner_id.phone" />
+                                    </span>
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">Fax</td>
+                                <td style="text-align: center;">:</td>
+                                <td></td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">TRN</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.partner_id.vat">
+                                        <span t-field="o.partner_id.vat" />
+                                    </span>
+                                </td>
+                            </tr> -->
+                        <!-- </table> -->
+
+                        <!-- <table width="411.5px" style="border: 1px solid black; border-collapse: collapse; float: left;height:197px;"> -->
+                            <!-- <tr>
+                                <td width="143.85px" style="font-weight: bold; padding-top: 15px; padding-left: 5px;">Date</td>
+                                <td width="41.1px" style="padding-top: 15px; text-align: center;">:</td>
+                                <td width="226.05px" style="padding-top: 15px;">
+                                    <span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}' />
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">Invoice No.</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-field="o.name" />
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">M Number</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.partner_id.code">
+                                        <span t-field="o.partner_id.code" />
+                                    </span>
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">Job No.</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.job_no">
+                                        <span t-field="o.job_no" />
+                                    </span>
+                                </td>
+                            </tr> -->
+                            <!-- <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">LPO No.</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span t-if="o.lpo_no">
+                                        <span t-field="o.lpo_no" />
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold; padding-left: 5px;">Payment Terms</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <span>100% Advance</span>
+                                </td>
+                            </tr>
+                        </table> -->
+
+                        <table width="100%" style="border:none;">
+                            <tr width="100%">
+                            </tr>
+                        </table>
+
+                        <table width="100%" style="width: 100%;">
+                            <tr style="border:1px solid black;font-size: 14px; font-weight: bold;">
+                                <td width="2%" style="text-align:center; font-weight: bold;  background-color:#1b497f; color:white; padding-top:10px; padding-bottom:10px; border-right:1px solid black;">
+                                    <b>Sr.No.</b>
+                                    <br/>
+                                    م.
+                                </td>
+                                <td width="28%" style="text-align:center; font-weight: bold; background-color:#1b497f; color:white; padding-top:10px; padding-bottom:10px; border-right:1px solid black;">
+                                    <b>Description</b>
+                                    <br/>
+                                    التفاصيل
+                                </td>
+                                <td width="2%" style="text-align:center; font-weight: bold; background-color:#1b497f; color:white;padding-top:10px; padding-bottom:10px; border-right:1px solid black;">
+                                    <b>Qty</b>
+                                    <br/>
+                                    الكمية
+                                </td>
+                                <td width="5%" style="text-align:center; font-weight: bold; background-color:#1b497f; color:white; padding-top:10px; padding-bottom:10px; border-right:1px solid black;">
+                                    <b>Unit Price</b>
+                                    <br/>
+                                    الوحد سعر
+                                </td>
+                                <td width="10%" style="text-align:center; font-weight: bold; background-color:#1b497f; color:white; padding-top:10px; padding-bottom:10px; border-right:1px solid black;">
+                                    <b>Taxable Amount</b>
+                                    <br/>
+                                    للضريبة الخاضع المبلغ
+                                </td>
+                                <td width="10%" style="text-align:center; font-weight: bold; background-color:#1b497f; color:white; padding-top:10px; padding-bottom:10px; border-right:1px solid black;">
+                                    <b>(5%)Tax Amount</b>
+                                    <br/>
+                                    (5%)الضريبة مبلغ
+                                </td>
+                                <td width="10%" style="text-align:center; font-weight: bold; background-color:#1b497f; color:white; padding-top:10px; padding-bottom:10px;">
+                                    <b>Total Amount</b>
+                                    <br/>
+                                    الكلي لجمالى
+                                </td>
+                            </tr>
+                            <t t-set="sl_counter" t-value="1"/>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <tr style="font-size: 14px;border-bottom:hidden;border-left:1px solid black;border-right:1px solid black;">
+                                    <td style="text-align:center;">
+                                        <span t-esc="sl_counter"/>
+                                    </td>
+                                    <td style="text-align:left;border: 1px solid black;">
+                                            <span t-if="line.product_label">
+                                                <span t-esc="line.product_id.name"/>
+                                                <span t-field="line.product_label"/>
+                                            </span>
+                                    </td>
+                                    <td style="text-align:right;border: 1px solid black;">
+                                        <span t-if="line.quantity">
+                                            <span t-esc="'{:.3f}'.format(line.quantity)"/>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:right;border: 1px solid black;">
+                                        <span t-if="line.price_unit">
+                                            <span t-esc="'{:.3f}'.format(line.price_unit)"/>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:right;border: 1px solid black;">
+                                        <span t-if="line.price_unit">
+                                            <span t-esc="'{:.3f}'.format(line.price_unit * line.quantity)"/>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:right;border: 1px solid black;">
+                                        <span t-if="line.price_subtotal">
+                                            <span t-esc="'{:.3f}'.format(line.price_subtotal * 5 / 100)"/>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:right;border: 1px solid black;">
+                                        <span t-if="line.price_subtotal">
+                                            <!--<span t-esc="'{:.3f}'.format(line.price_unit + (line.price_unit * 5 / 100))"/>-->
+                                            <span t-esc="'{:.3f}'.format(line.price_subtotal + (line.price_subtotal * 5 / 100))"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <t t-set="sl_counter" t-value="sl_counter + 1"/>
+                            </t>
+                            <!-- <t t-set="last_row_style" t-value="'height: %spx; border: 1px solid black; font-size: 14px;' % (280 - (sl_counter * 100))" />
+                            <t t-if="(280 - (sl_counter * 80)) > 0">
+                                <tr t-att-style="last_row_style">
+                                    <td style="text-align: center; border: 1px solid black;" />
+                                    <td style="text-align: left; border: 1px solid black;" />
+                                    <td style="text-align: right; border: 1px solid black;" />
+                                    <td style="text-align: right; border: 1px solid black;" />
+                                    <td style="text-align: right; border: 1px solid black;" />
+                                    <td style="text-align: right; border: 1px solid black;" />
+                                    <td style="text-align: right; border: 1px solid black;" />
+                                </tr>
+                            </t> -->
+                            <tr style="border:none;border: 1px solid black;font-size: 14px; padding-top: 5px; padding-bottom: 5px; height: 290px;">
+                                <td style="text-align:center; border: 1px solid black;padding-top:5px; padding-bottom:5px;"/>
+                                <td style="text-align:left; border: 1px solid black;padding-top:5px; padding-bottom:5px;"/>
+                                <td style="text-align:right;border: 1px solid black; padding-top:5px; padding-bottom:5px;"/>
+                                <td style="text-align:right; border: 1px solid black;padding-top:5px; padding-bottom:5px;"/>
+                                <td style="text-align:right; border: 1px solid black;padding-top:5px; padding-bottom:5px;"/>
+                                <td style="text-align:right;border: 1px solid black; padding-top:5px; padding-bottom:5px;"/>
+                                <td style="text-align:right;border: 1px solid black; padding-top:5px; padding-bottom:5px;"/>
+                            </tr>
+                            <tr style=" border:none;border: 1px solid black; font-weight: bold;">
+                                <td colspan="4" rowspan="3" style="text-align:left;vertical-align: middle; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-left: 5px;">
+                                    In Words : <span t-esc="o.currency_id.amount_to_text(sum(line.price_subtotal * 1.05 for line in o.invoice_line_ids))+ ' Only'"/><br/>
+                                    <span style="padding-left:90px;" t-esc="o.amount_to_text_bi(sum(line.price_subtotal * 1.05 for line in o.invoice_line_ids))"/>
+                                </td>
+                                <td colspan="2" style="line-height:14px;border:none;text-align:right; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-right:3px;">
+                                    Gross Amount<br/>لمجموع الكليا
+                                </td>
+                                <td style="border:none;text-align:right; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-right:3px;">
+                                     <b>
+                                        <!-- <span t-esc="sum(line.price_subtotal for line in o.invoice_line_ids)"/> -->
+                                        <span t-esc="'{:.3f}'.format(sum(line.price_subtotal for line in o.invoice_line_ids))"/>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="line-height:14px;border:none;text-align:right; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-right:3px;">
+                                    Tax Amount Total<br/>الضريبة مبلغ إجمالي
+                                </td>
+                                <td style="border:none;text-align:right; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-right:3px;">
+                                    <b>
+                                        <span t-esc="'{:.3f}'.format(sum(line.price_subtotal * 5 / 100 for line in o.invoice_line_ids))"/>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="line-height:14px;border:none;text-align:right; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-right:3px;">
+                                    Net Total<br/>الصافي الجمالي
+                                </td>
+                                <td style="border:none;text-align:right; font-weight: bold; padding-top:10px; padding-bottom:10px; border: 1px solid black;padding-right:3px;">
+                                    <b>
+                                        <span t-esc="'{:.3f}'.format(sum(line.price_subtotal + (line.price_subtotal * 5 / 100) for line in o.invoice_line_ids))"/>
+                                    </b>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <t t-if="o.company_id.bank_ids">
+                            <t t-foreach="o.company_id.bank_ids" t-as="bank">
+                                <div style="margin-top: 30px;border:none;">
+                                    <table class="table table-sm table-borderless" style="border-collapse: collapse;width: 60%;">
+                                        <tr style="border:none;line-height: 1;">
+                                            <td colspan="2" style="border:none;text-align: left; font-weight: bold; font-size: 17px;">
+                                                Bank Account Details
+                                            </td>
+                                            <td style="border:none;">
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;line-height: 1;">
+                                            <td style="border:none;width: 25%; display: flex; align-items: center;">
+                                                <span>Account Name</span>
+                                            </td>
+                                            <td style="border:none;">
+                                                <span style="border:none;width: 5px; text-align: center;">:</span>
+                                            </td>
+                                            <td style="border:none;width: 30%;">
+                                                <span t-if="bank.partner_id">
+                                                    <span t-field="bank.partner_id.name" style="border:none;text-align: left; white-space: nowrap; padding-left: 2ch;"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;line-height: 1;">
+                                            <td style="border:none;width: 25%; display: flex; align-items: center;">
+                                                <span style="border:none;flex-grow: 1;">Bank Name</span>
+                                            </td>
+                                            <td style="border:none;">
+                                                <span style="border:none;width: 5px; text-align: center;">:</span>
+                                            </td>
+                                            <td style="border:none;width: 30%;">
+                                                <span t-if="bank.partner_id">
+                                                    <span t-field="bank.bank_id.name" style="border:none;white-space: nowrap; padding-left: 2ch;"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;line-height: 1;">
+                                            <td style="border:none;width: 25%; display: flex; align-items: center;">
+                                                <span style="flex-grow: 1;">Bank Address</span>
+                                            </td>
+                                            <td style="border:none;">
+                                                <span style="border:none;width: 5px; text-align: center;">:</span>
+                                            </td>
+                                            <td style="border:none;width: 30%;">
+                                                <span t-if="bank.bank_id">
+                                                    <span t-field="bank.bank_id.street" style="border:none;white-space: nowrap; padding-left: 2ch;"/>
+                                                    <!-- <t t-if="bank.bank_id.street and bank.bank_id.country">, </t> -->
+                                                    <!-- <span t-field="bank.bank_id.country" style="border:none;white-space: nowrap; padding-left: 2ch;" /> -->
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;line-height: 1;">
+                                            <td style="border:none;width: 25%; display: flex; align-items: center;">
+                                                <span style="flex-grow: 1;">Account No</span>
+                                            </td>
+                                            <td style="border:none;">
+                                                <span style="width: 5px; text-align: center;border:none;">:</span>
+                                            </td>
+                                            <td style="border:none;width: 30%;">
+                                                <span t-if="bank.acc_number">
+                                                    <span t-field="bank.acc_number" style="border:none;white-space: nowrap; padding-left: 2ch;"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;line-height: 1;">
+                                            <td style="border:none;width: 25%; display: flex; align-items: center;">
+                                                <span style="border:none;flex-grow: 1;">Iban No</span>
+                                            </td>
+                                            <td style="border:none;">
+                                                <span style="border:none;width: 5px; text-align: center;">:</span>
+                                            </td>
+                                            <td style="border:none;width: 30%;">
+                                                <span t-if="bank.bank_id">
+                                                <span t-field="bank.bank_id.bank_iban_no" style="border:none;white-space: nowrap; padding-left: 2ch;"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;">
+                                            <td style="border:none;width: 25%; display: flex; align-items: center;">
+                                                <span style="border:none;flex-grow: 1;">Swift Code</span>
+                                            </td>
+                                            <td style="border:none;">
+                                                <span style="border:none;width: 5px; text-align: center;">:</span>
+                                            </td>
+                                            <td style="border:none;width: 30%;">
+                                                <span t-if="bank.bank_id">
+                                                    <span t-field="bank.bank_id.swift_code" style="border:none;white-space: nowrap; padding-left: 2ch;"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </t>
+            </t>
+            </t>
+        </template>
+    </data>
+</odoo>

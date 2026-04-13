@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- Define the tree views for each model -->
+        <record id="view_list_completion_period_master" model="ir.ui.view">
+            <field name="name">completion.period.master.list</field>
+            <field name="model">completion.period.master</field>
+            <field name="arch" type="xml">
+               <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+
+        <!-- Define the actions for the submenus -->
+        <record id="action_completion_period_master" model="ir.actions.act_window">
+            <field name="name">Completion Period</field>
+            <field name="res_model">completion.period.master</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_completion_period_master"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="view_list_scope_of_work_master" model="ir.ui.view">
+            <field name="name">scope.of.work.list</field>
+            <field name="model">scope.of.work</field>
+            <field name="arch" type="xml">
+               <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Define the actions for the submenus -->
+        <record id="action_scope_of_work_master" model="ir.actions.act_window">
+            <field name="name">General Scope of Work</field>
+            <field name="res_model">scope.of.work</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_list_scope_of_work_master"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="view_vas_payment_terms_list" model="ir.ui.view">
+            <field name="name">vas.payment.terms.list</field>
+            <field name="model">vas.payment.terms</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_payment_terms_vas" model="ir.actions.act_window">
+            <field name="name">Payment Terms</field>
+            <field name="res_model">vas.payment.terms</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_vas_payment_terms_list"/>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Submenu for Detailed Specification -->
+        <menuitem id="menu_completion_period"
+                  name="Completion Period "
+                  parent="bi_amc_proposal.prod_config_main"
+                  sequence="10"
+                  action="action_completion_period_master"/>
+
+        <menuitem id="menu_payment_terms"
+                name="Payment Terms"
+                sequence="5"
+                parent="bi_amc_proposal.prod_config_main"
+                action="action_payment_terms_vas"/>
+
+        <menuitem id="menu_scope_of_work"
+                name="General Scope of Work"
+                sequence="6"
+                parent="bi_amc_proposal.prod_config_main"
+                action="action_scope_of_work_master"/>
+
+    </data>
+</odoo>

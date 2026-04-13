@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_job_view_form_inherit_view2" model="ir.ui.view">
+        <field name="name">hr.job.view.form.inherit.view</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <group>
+                    <field name="is_sales_executive"/>
+                    <field name="is_sales_engineer"/>
+                    <field name="is_operational_manager"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

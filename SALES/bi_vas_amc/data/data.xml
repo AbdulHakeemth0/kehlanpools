@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_amc_confirm" model="res.groups">
+        <field name="name">AMC Head</field>
+    </record>
+
+    <record id="group_vas_confirm" model="res.groups">
+        <field name="name">VAS Head</field>
+    </record>
+
+    <record id="group_vas_amc_confirm" model="res.groups">
+        <field name="name">VAS/AMC Head</field>
+        <field name="implied_ids" eval="[(4, ref('bi_vas_amc.group_amc_confirm')),(4, ref('bi_vas_amc.group_vas_confirm'))]"/>
+    </record>
+</odoo>

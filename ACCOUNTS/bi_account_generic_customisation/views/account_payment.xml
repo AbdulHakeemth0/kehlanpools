@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+    <record id="view_account_payment_form_inherit_custom" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit.custom</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <div class="alert alert-info text-center" invisible="not is_invoice_due or payment_type not in ('inbound')" role="alert">
+                    You have a pending payment of <field name="sum_of_invoice" readonly="1"> </field><field name="inv_det"/>
+                </div>
+            </xpath>
+           <xpath expr="//button[@name='action_validate']" position="attributes">
+                <attribute name="groups">account.group_account_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='journal_id']" position="after">
+               <field name="is_invoice_due" invisible="1"/>
+               <field name="sum_of_invoice" invisible="1"/>
+               <field name="inv_det" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

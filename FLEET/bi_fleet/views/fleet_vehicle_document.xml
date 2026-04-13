@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='vehicle_document_view_form' model='ir.ui.view'>
+        <field name="name">vehicle.document.view.form</field>
+        <field name="model">vehicle.document</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="doc_attachment_ids"
+                                   widget="many2many_binary" class="oe_inline"/>
+                            <field name="vehicle_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id='vehicle_document_view_list' model='ir.ui.view'>
+        <field name="name">vehicle.document.view.list</field>
+        <field name="model">vehicle.document</field>
+        <field name="arch" type="xml">
+            <list string="docs">
+                <field name="name"/>
+                <field name="issue_date"/>
+                <field name="expiry_date"/>
+            </list>
+        </field>
+    </record>
+</odoo>

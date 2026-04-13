@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_team_user,bi_helpdesk_portal.hr.employee.team,model_hr_employee_team,base.group_user,1,1,1,1
+access_help_desk_ticket,access_help_desk_ticket,helpdesk.model_helpdesk_ticket,base.group_portal,1,1,1,0

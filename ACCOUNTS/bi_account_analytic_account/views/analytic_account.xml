@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_analytic_account_form_inherit_1" model="ir.ui.view">
+        <field name="name">account.analytic.account.form.inherit1</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="is_vas"></field>
+                <field name="is_amc"></field>
+            </xpath>
+        </field>
+    </record>
+</odoo>

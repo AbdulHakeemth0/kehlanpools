@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- VAS proposal template 1 -->
+        <template id="report_vas_proposal">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="bi_amc_proposal.vas_header"/>
+                        <div class="page">
+                        <br/><br/>
+                            <table width="100%" class="table table-borderless" style="border-collapse: collapse;font-weight:bold;margin-top:-32px;margin-left:-8px;">
+                                <tr width="100%" style="text-align-left; line-height:2px;">
+                                    <td width="50%" style="font-size:17px;">
+                                        <b>OUR REF:</b>&#160;&#160;<b t-esc="o.name"/>
+                                    </td>
+                                    <td width="25%" style="margin-left:5%; font-size: 20px;">
+                                    </td>
+                                    <td width="25%" style="margin-left:9%; font-size: 30px;">
+                                        <b>OFFER</b>
+                                    </td>
+                                </tr>
+                                <tr style="text-align:left; line-height:15px;font-size:17px;">
+                                    <td>
+                                        <b t-if="o.date_order" t-esc="o.date_order.strftime('%A – %d %B %Y')"/>
+                                    </td>
+                                </tr>
+                                <tr style="height:17px;">
+                                </tr>
+                                <tr style="line-height:24px;">
+                                    <td style="font-size:17px;">
+                                        <b>Attn:-
+                                            <br/>
+                                                <t t-if="o.partner_id.title.name == 'Doctor'">
+                                                    <t t-esc="o.partner_id.title.shortcut"/>
+                                                </t>
+                                                <t t-if="o.partner_id.title.name == 'Madam'">
+                                                    <t t-esc="o.partner_id.title.shortcut"/>
+                                                </t>
+                                                <t t-if="o.partner_id.title.name == 'Miss'">
+                                                    <t t-esc="o.partner_id.title.shortcut"/>
+                                                </t>
+                                                <t t-if="o.partner_id.title.name == 'Mister'">
+                                                    <t t-esc="o.partner_id.title.shortcut"/>
+                                                </t>
+                                                <t t-if="o.partner_id.title.name == 'Professor'">
+                                                    <t t-esc="o.partner_id.title.shortcut"/>
+                                                </t>
+                                            <t t-if="o.partner_id">
+                                                <t t-esc="o.partner_id.name"/>
+                                                <t t-if="o.partner_id.street">
+                                                <span t-field="o.partner_id.street"/>
+                                                </t>,
+                                                <span t-field="o.partner_id.street2"/>
+                                                <br/>
+                                                <!-- PO -<span t-field="o.partner_id.zip"/> -->
+                                                <span t-field="o.partner_id.city"/>
+                                                <t t-if="o.partner_id.country_id">
+                                                    <t t-if="o.partner_id.country_id.code == 'OM'">
+                                                        Sultanate of <span t-field="o.partner_id.country_id.name"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span t-field="o.partner_id.country_id.name"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:20px;font-weight:bold;font-size:17px" colspan="3" width="100%">
+                                        <b>Subject:
+                                        <span style="font-weight:bold;padding-left:45px;" t-if="o.subject">
+                                            <t t-esc="o.subject"/>
+                                        </span></b>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width="100%" style=" font-size: 17px; margin-top: -10px; margin-right: 10px;margin-left:-8px;" class="table table-borderless">
+                                <tr width="100%">
+                                    <td>Dear Sir/Madam,<br/>
+                                        Greetings from Kehlan Pools &amp; Fountains!!!<br/>
+                                        Reference to the subject, please find the below price for your kind perusal and approval,
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                            <t t-set="sl_no" t-value="1"/>
+                            <t t-set="option_no" t-value="1"/>
+                            <t t-set="is_first_section" t-value="True"/>
+                            <t t-set="section_total" t-value="0"/>
+                            <t t-set="discount_amount_total" t-value="0"/>
+                            <t t-set="total_value" t-value="0"/>
+
+                            <!-- Loop through the order lines and process the options -->
+                       <!-- Check if there are product lines (not sections), and render the header -->
+                            <t t-if="o.order_line and not any(line.display_type == 'line_section' for line in o.order_line)">
+                                <table width="100%" style="font-size: 15px; margin-top: 20px; margin-right: 10px;">
+                                    <tr style="background-color:#cecfcc;">
+                                        <td width="5%"
+                                            style="padding: 3px; border: 1px solid black; text-align:center;">
+                                            <b>S/N</b>
+                                        </td>
+                                        <td width="52%"
+                                            style="padding: 3px; border: 1px solid black; text-align:center;">
+                                            <b>Description</b>
+                                        </td>
+                                        <td width="9%"
+                                            style="padding: 3px; border: 1px solid black; text-align:center;">
+                                            <b>QTY</b>
+                                        </td>
+                                        <td width="11%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                            <b>UoM</b>
+                                        </td>
+                                        <td width="10%"
+                                            style="padding: 3px; border: 1px solid black; text-align:center;">
+                                            <b>U PRICE</b>
+                                        </td>
+                                        <td width="13%"
+                                            style="padding: 3px; border: 1px solid black; text-align:center;">
+                                            <b>Total</b>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+
+                            <!-- Loop through the order lines and process the options -->
+                            <t t-foreach="o.order_line.filtered(lambda l:l.product_template_id or l.name)" t-as="line" t-att-index="index">
+                                <!-- Check if the line is a section -->
+                                <t t-if="line.display_type == 'line_section' and 'Down Payments' not in line.name">
+                                    <!-- If it's not the first section, calculate and display totals for the previous section -->
+                                    <t t-if="not is_first_section">
+                                        <table width="100%" style="font-size: 15px; margin-top: 0px; margin-right: 15px;">
+                                            <tr width="100%">
+                                                <td width="85%" colspan="4" style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <b>Total Amount in OMR</b>
+                                                </td>
+                                                <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <t t-if="section_total">
+                                                        <t t-esc="'{:.3f}'.format(section_total)"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <t t-if="discount_amount_total != 0">
+                                                <tr>
+                                                    <td colspan="4" style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                        <b>Total Discount</b>
+                                                    </td>
+                                                    <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                        <t t-esc="'{:.3f}'.format(discount_amount_total)"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"
+                                                        style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                        <b>Total Amount in OMR after Discount</b>
+                                                    </td>
+                                                    <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                        <t t-if="discount_amount_total">
+                                                            <t t-esc="'{:.3f}'.format(section_total-discount_amount_total)"/>
+                                                            <t t-set="total_value" t-value="section_total-discount_amount_total"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-set="total_value" t-value="section_total"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+
+                                            <tr>
+                                                <td colspan="4" style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <b>VAT (5%)</b>
+                                                </td>
+                                                <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <t t-if="section_total">
+                                                        <t t-esc="'{:.3f}'.format((section_total-discount_amount_total) * 0.05)"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <b>Grand Total Amount in OMR</b>
+                                                </td>
+                                                <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <t t-esc="'{:.3f}'.format(total_value + (total_value * 0.05))"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </t>
+
+                                    <!-- Set the flag to false after the first section -->
+                                    <t t-set="is_first_section" t-value="False"/>
+                                    <t t-set="section_total" t-value="0"/> <!-- Reset section total for new section -->
+                                    <t t-set="discount_amount_total" t-value="0"/>
+
+                                    <!-- Start a new option table -->
+                                    <table width="100%" style="font-size: 15px; margin-top: 20px; margin-right: 10px;">
+                                        <tr>
+                                            <td colspan="5" style="border-left:hidden; border-right:hidden; border-top:hidden;">
+                                                <t t-set="sl_no" t-value="1"/>
+                                                <b>
+                                                    <t t-esc="line.name"/>
+                                                </b>
+                                                <t t-set="option_no" t-value="option_no + 1"/>
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color:#cecfcc;">
+                                            <td width="5%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <b>S/N</b>
+                                            </td>
+                                            <td width="52%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <b>Description</b>
+                                            </td>
+                                            <td width="9%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <b>QTY</b>
+                                            </td>
+                                            <td width="11%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <b>UoM</b>
+                                            </td>
+                                            <td width="10%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <b>U PRICE</b>
+                                            </td>
+                                            <!-- <td width="10%" style="padding: 5px; border: 1px solid black; text-align:center;">
+                                                <b>UoM</b>
+                                            </td> -->
+                                            <td width="13%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <b>Total</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+
+                                <!-- Display product lines under the current section -->
+                                <t t-if="line.display_type != 'line_section'">
+                                    <!-- Add header if it's the first product line -->
+                                    <t t-if="index == 0">
+                                        <table width="100%" style="font-size: 15px; margin-top: 20px; margin-right: 10px;">
+                                            <tr style="background-color:#cecfcc;">
+                                                <td width="5%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                    <b>S/N</b>
+                                                </td>
+                                                <td width="52%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                    <b>Description</b>
+                                                </td>
+                                                <td width="9%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                    <b>QTY</b>
+                                                </td>
+                                                <td width="11%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                    <b>UoM</b>
+                                                </td>
+                                                <td width="10%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                    <b>U PRICE</b>
+                                                </td>
+                                                <td width="13%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                    <b>Total</b>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </t>
+
+                                    <table width="100%" style="font-size: 15px; margin-top: 0px; margin-right: 10px;">
+                                        <tr>
+                                            <td width="5%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <t t-esc="sl_no"/>
+                                            </td>
+                                            <td width="52%" style="padding: 3px; border: 1px solid black;">
+                                                <t t-if="line.product_template_id">
+                                                    <t t-esc="line.product_template_id.name"/><br/>
+                                                    <t t-if="line.name.find('\n') != -1">
+                                                        <t t-esc="line.name"/>
+                                                    </t>
+                                                </t>
+                                                <br/>
+                                                <center>
+                                                    <img t-if="line.image" t-att-src="image_data_uri(line.image)"
+                                                        style="width: 100px; height: 100px; margin: 5px;"
+                                                        alt="Product Image"/>
+                                                </center>
+                                            </td>
+                                            <td width="9%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <t t-esc="line.product_uom_qty"/>
+                                            </td>
+                                            <td width="11%" style="padding: 3px; border: 1px solid black; text-align:center;">
+                                                <t t-esc="line.product_uom.name"/>
+                                            </td>
+                                            <td width="10%" style="padding: 3px; border: 1px solid black; text-align:right;">
+                                                <t t-esc="'{:.3f}'.format(line.price_unit)"/>
+                                            </td>
+                                            <td width="13%" style="padding: 3px; border: 1px solid black; text-align:right;">
+                                                <t t-esc="'{:.3f}'.format((line.price_unit)*(line.product_uom_qty))"/>
+                                                <t t-set="section_total" t-value="section_total + ((line.price_unit)*(line.product_uom_qty))"/>
+                                                <t t-if="line.discount_amount">
+                                                    <t t-set="discount_amount_total" t-value="discount_amount_total + line.discount_amount"/>
+                                                </t>
+                                                <t t-if="discount_amount_total">
+                                                    <t t-set="total_value" t-value="section_total-discount_amount_total"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="total_value" t-value="section_total"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <t t-set="sl_no" t-value="sl_no + 1"/>
+                                </t>
+                            </t>
+
+                            <!-- After the loop, append the totals for the last section -->
+                            <t t-if="o.order_line">
+                            <t t-if="o.order_line[-1].display_type != 'line_section'">
+                                <table width="100%" style="font-size: 15px; margin-top: 0px; margin-right: 15px;">
+                                <t t-set="discount_value" t-value="o.get_discount_value(o.partner_id)"/>
+                                    <tr width="100%">
+                                        <td width="85%" colspan="4"
+                                            style="padding: 5px; border: 1px solid black; text-align:right;">
+                                            <b>Total Amount in OMR</b>
+                                        </td>
+                                        <td width="15%" style="padding: 5px; border: 1px solid black; text-align:right;">
+                                            <t t-esc="'{:.3f}'.format(section_total)"/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <t t-if="discount_amount_total != 0">
+                                        <tr>
+                                            <td colspan="4"
+                                                style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                <b>Total Discount Amount</b>
+                                            </td>
+                                            <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                <t t-esc="'{:.3f}'.format(discount_amount_total)"/>
+                                                <!-- <t t-set="o.get_discount_value(o.partner_id)" t-value="discount_value"/> -->
+                                                <!-- <t t-esc="'{:.3f}'.format(discount_amount_total)"/> -->
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td colspan="4"
+                                                style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                <b>Total Amount in OMR after Discount</b>
+                                            </td>
+                                            <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                <t t-if="discount_amount_total">
+                                                    <t t-esc="'{:.3f}'.format(section_total-discount_amount_total)"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <!-- </t> -->
+                                    <!-- <tr>
+                                        <td colspan="4"
+                                            style="padding: 5px; border: 1px solid black; text-align:right;">
+                                            <b>VAT
+                                                <t t-if="o.order_line">
+                                                    <t t-if="o.order_line[0].tax_id">
+                                                        <t t-esc="o.order_line[0].tax_id[0].name"/>
+                                                    </t>
+                                                </t>
+                                            </b>
+                                        </td> -->
+                                        <!-- <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                            <t t-if="o.order_line">
+                                                <t t-if="o.order_line[0].tax_id">
+                                                    <t t-set="vat_amount" t-value="o.order_line[0].tax_id[0].amount"/>
+                                                </t>
+                                            </t> -->
+                                            <!-- <t t-if="line.display_type != 'line_section'"> -->
+                                                <!-- <t t-if="vat_amount">
+                                                    <t t-esc="'{:.3f}'.format(((section_total-discount_amount_total) * vat_amount)/100)"/>
+                                                </t> -->
+                                            <!-- </t> -->
+                                        <!-- </td>
+                                    </tr> -->
+                                    <tr>
+                                                <td colspan="4" style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <b>VAT (5%)</b>
+                                                </td>
+                                                <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                                    <t t-if="section_total">
+                                                        <t t-esc="'{:.3f}'.format((section_total-discount_amount_total) * 0.05)"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                    <tr>
+                                        <td colspan="4"
+                                            style="padding: 5px; border: 1px solid black; text-align:right;">
+                                            <b>Grand Total Amount in OMR</b>
+                                        </td>
+                                        <td style="padding: 5px; border: 1px solid black; text-align:right;">
+                                            <t t-esc="'{:.3f}'.format(total_value + (total_value * 0.05))"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+                            </t>
+
+                            <t t-if="o.vas_exclusions">
+                                <div width="100%" class="div table-borderless" style="margin-top:10px; ">
+                                <tr width="100%" >
+                                    <td style="font-size:17px;padding-left: 40px;">
+                                    <span style="font-weight:bold;font-size:17px;text-decoration:underline;">Exclusions:</span>
+                                        <ul style="padding-left: 50px; list-style-type: disc;text-align:justify">
+                                            <t t-foreach="o.vas_exclusions" t-as="exc">
+                                                <li style="text-align:justify;padding-left:1px;">
+                                                    <span style="font-size:17px;"><t t-esc="exc.description"/></span>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </div>
+                            </t>
+                            <div width="100%" class="table table-borderless" style="margin-top:10px; ">
+                                <t t-if="o.payment_term_ids">
+                                    <h6 style="font-weight: bold; text-decoration:underline;font-size:17px">Payments:</h6>
+                                    <tr width="100%">
+                                        <td colspan="6" style="font-size:17px;padding-left: 40px;">
+                                            <ul style="padding-left: 50px; list-style-type: disc;text-align:justify">
+                                                <t t-if="o.payment_term_ids">
+                                                    <t t-foreach="o.payment_term_ids" t-as="p">
+                                                        <li style="text-align:justify;padding-left:1px;">
+                                                            <span style="font-size:17px;"><t t-esc="p.payment_term_id.name"/></span>
+                                                        </li>
+                                                    </t>
+                                                </t>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.filled_with">
+                                    <span><p style="font-size:17px">Note: Pool water need to be filled within <t t-if="o.filled_with">
+                                                <t t-esc="round(o.filled_with)"></t>
+                                            </t> days after completing tiling works.</p></span>
+                                </t>
+                            </div>
+                            <t t-if="o.delivery_period_ids">
+                                <div width="100%" class="table table-borderless" style="margin-top:10px; ">
+                                <h6 style="font-weight: bold; text-decoration:underline;font-size:17px">Delivery Period:</h6>
+                                <tr width="100%">
+                                    <td colspan="6">
+                                        <ul style="padding-left: 50px; list-style-type: disc;">
+                                            <t t-foreach="o.delivery_period_ids" t-as="delivery">
+                                                <li>
+                                                    <span style="font-size:17px"><t t-esc="delivery.description"/></span>
+                                                </li>
+                                            </t>
+                                        </ul>
+
+                                    </td>
+                                </tr>
+                            </div>
+
+                            </t>
+                                <div width="100%" class="table table-borderless" style="margin-top:10px; ">
+                                <t t-if="o.vas_warranty_details">
+                                    <h6 style="font-weight: bold; text-decoration:underline;font-size:17px">Warranty:</h6>
+                                </t>
+                                <tr width="100%">
+                                    <td colspan="6">
+                                        <ul style="padding-left: 20px; list-style-type: disc;">
+                                            <t t-foreach="o.vas_warranty_details" t-as="vas_war">
+                                                <li><t t-esc="vas_war.description"/></li>
+                                            </t>
+                                        </ul>
+
+                                        <t t-if="o.warranty_exclusions_ids">
+                                            <p><span style="font-size:17px">Warranty Exclusion:</span></p>
+                                            <ul>
+                                                <t t-foreach="o.warranty_exclusions_ids" t-as="war_exc">
+                                                    <li><t  t-esc="war_exc.description" style="padding-left:10px;font-size:17px"/></li>
+                                                </t>
+                                            </ul>
+                                        </t>
+
+                                        <t t-if="o.offer_validity">
+                                            <p><span style="font-size:17px">Note: This offer is valid for <t t-if="o.offer_validity">
+                                                <t t-esc="o.offer_validity"></t>
+                                            </t> only</span></p>
+                                        </t>
+                                        <p><span style="font-size:17px">For any further clarifications please contact<b> Mr. Anssar Mullapurath Mob: +968
+                                            9944 1731 </b>Thanking you and assuring you of our best service always.</span>
+                                        </p>
+                                        <p style="margin-top:20px;font-size:20px">
+                                            <b>Authorized Signature</b>
+                                        </p>
+                                        <span style="margin-top:40px;font-weight:bold;font-size:28px">Kehlan Pools and Fountains L.L.C</span>
+                                        <!-- <t t-set="approved_user" t-value="request.env['res.users'].sudo().search([('id', '=', o.approved_by.id)], limit=1)"/>
+                                        <span t-if="approved_user.digital_sign" style="height:4cm;width:6cm;">
+                                            <img t-att-src="image_data_uri(approved_user.digital_sign)" style="max-height: 4cm;"/>
+                                        </span> -->
+                                    </td>
+                                </tr>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

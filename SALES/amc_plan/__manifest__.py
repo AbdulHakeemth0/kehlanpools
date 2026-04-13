@@ -1,0 +1,22 @@
+{
+    'name': 'AMC Plans',
+    'author': 'Bassam Infotech LLP',
+    'company': 'Bassam Infotech LLP',
+    'maintainer': 'Bassam Infotech LLP',
+    'website': 'https://bassaminfotech.com',
+    'version': '18.0.1.0.4',
+    'category': 'Sales',
+    'summary': 'Manage recurring services as plans',
+    'description': 'This module provides the functionality to manage product plans, recurring plans, fixed intervals, and invoicing for customers.',
+    'depends': ['sale', 'account','base', 'stock'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/maintenance_plan_views.xml',
+        'views/maintenance_plan_menu.xml',
+        'views/ir_sequence.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'images': [],
+    'license': 'OPL-1',
+}

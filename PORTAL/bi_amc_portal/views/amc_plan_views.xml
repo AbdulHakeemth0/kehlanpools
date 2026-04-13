@@ -1,0 +1,260 @@
+<odoo>
+    <!-- Breadcrumbs for AMC Overview -->
+    <template id="amc_plan_portal" name="AMC Breadcrumb" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <input type="hidden" name="amc_plan" t-att-value="amc_plan"/>
+            <li t-if="page_name == 'amc_overview'" t-attf-class="breadcrumb-item #{'active' if amc_plans else ''}">
+                <a href="/amc_overview?{{ keep_query() }}">/ AMC Plans</a>
+            </li>
+            <li t-if="page_name == 'amc_contract'" t-attf-class="breadcrumb-item #{'active' if amc_plans else ''}">
+                <a href="/amc_overview?{{ keep_query() }}">/ AMC Plans</a>
+            </li>
+            <li t-if="page_name == 'amc_history'" t-attf-class="breadcrumb-item #{'active' if amc_plans else ''}">
+                <t t-foreach="amc_plan" t-as="record">
+                    <a t-att-href="'/amc_contract/%s' % record.id">/ AMC Plan Contract</a>
+                </t>               
+            </li>
+            <li t-if="page_name == 'amc_invoices'" t-attf-class="breadcrumb-item #{'active' if amc_plans else ''}">
+                <t t-foreach="amc_plan" t-as="record">
+                    <a t-att-href="'/amc_contract/%s' % record.id">/ AMC Plan Contract</a>
+                </t>            
+            </li>
+        </xpath>
+    </template>
+
+    <!-- Sidebar Menu for AMC -->
+    <template id="portal_home_menu_amc" name="AMC Plans Overview" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/amc_plan/static/description/icon.svg'"/>
+                <t t-set="title">AMC</t>
+                <t t-set="url" t-value="'/amc_overview'"/>
+                <t t-set="text">View all your AMC Plans</t>
+                <t t-set="placeholder_count" t-value="'amc_plan_portal'"/>
+            </t>
+        </div>
+    </template>
+
+    <!-- AMC Plans Overview Template -->
+    <template id="amc_plans_overview_template" name="AMC Plans Overview">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">AMC Plans Overview</t>
+            </t>
+
+            <t t-if="not amc_plans">
+                <p class="alert alert-warning">You currently have no AMC Plans</p>
+            </t>
+
+            <!-- AMC Records Table -->
+            <style>
+                /* Hover effect for table rows */
+                td:hover {
+                    background-color: #e0e0ff;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                    transform: translateY(-2px);
+                }
+                /* General table styling */
+                table td {
+                    transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+                }
+            </style>
+            <t t-if="amc_plans">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th class="text-left">AMC</th>
+                            <th class="text-center">Customer</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-end">Next Maintenance Date</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="amc_plans" t-as="plan">
+                        <tr>
+                            <td class="text-left">
+                                <span t-field="plan.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="plan.customer_id"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="plan.state"/>
+                            </td>
+                            <td class="text-end">
+                                <span t-field="plan.next_maintenance_date"/>
+                            </td>
+                            <td class="text-end">
+                                <a t-attf-href="/amc_contract/{{ plan.id }}" class="btn btn-secondary me-2">View Contract</a>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- AMC Plan Contract Template -->
+    <template id="amc_plan_contract_template" name="AMC Contract Form">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">AMC Contract Details</t>
+
+            <div class="container mt-5 p-4 border rounded shadow-sm bg-white">
+                <div class="text-center mb-4">
+                    <h2 class="text-uppercase font-weight-bold">Annual Maintenance Contract</h2>
+                    <h5>For <span t-field="amc_plan.name"/></h5>
+                    <hr class="my-4"/>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="fw-bold text-muted">Customer Name:</td>
+                                <td><span t-field="amc_plan.customer_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-muted">Start Date:</td>
+                                <td><span t-field="amc_plan.start_date"/></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-muted">Contract Status:</td>
+                                <td><span t-field="amc_plan.state" class="badge bg-info text-dark"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="fw-bold text-muted">Next Maintenance:</td>
+                                <td><span t-field="amc_plan.next_maintenance_date"/></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-muted">Contract Period:</td>
+                                <td><span t-field="amc_plan.recurring_interval_type"/></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-muted">Duration:</td>
+                                <td><span t-field="amc_plan.recurring_interval"/></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold text-muted">End Date:</td>
+                                <td><span t-field="amc_plan.end_date"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Services Involved Section -->
+                <!-- <div class="mb-4">
+                    <h5 class="fw-bold text-muted">Services Involved</h5>
+                    <div class="border p-3 bg-light">
+                        <span t-field="amc_plan.services_involved" widget="many2many_tags"/>
+                    </div>
+                </div> -->
+
+                <!-- Signature and Footer -->
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <!-- <div class="text-muted">
+                        <p class="mb-0"><strong>Authorized Signature:</strong></p>
+                        <p class="mt-2">(____________________)</p>
+                    </div> -->
+                    <div class="text-end">
+                        <a t-attf-href="/amc_history/{{ amc_plan.id }}" class="btn btn-secondary me-2">View History</a>
+                        <a t-attf-href="/amc_invoices/{{ amc_plan.id }}" class="btn btn-secondary">View Invoices</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- AMC Plan History Template -->
+    <template id="amc_plan_history_template" name="AMC Plan History">
+        <t t-call="portal.portal_layout">
+            <h2>AMC History for <span t-field="amc_plan.name"/></h2>
+            <t t-if="not amc_history">
+                <p class="alert alert-warning">No history available for this AMC Plan.</p>
+            </t>
+
+            <t t-if="amc_history">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-left">AMC</th>
+                            <th class="text-center">Customer</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-end">Next Maintenance Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="amc_history" t-as="history">
+                            <tr>
+                                <td class="text-left">
+                                    <span t-field="history.name"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="history.customer_id"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="history.state"/>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="history.next_maintenance_date"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <!-- AMC Plan Invoices Template -->
+    <template id="amc_plan_invoices_template" name="AMC Plan Invoices">
+        <t t-call="portal.portal_layout">
+            <h2>Invoices for AMC Contract <span t-field="amc_plan.name"/></h2>
+    
+            <t t-if="not invoices">
+                <p class="alert alert-warning">No invoices available for this AMC plan.</p>
+            </t>
+    
+            <t t-if="invoices">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Invoice Number</th>
+                            <th class="text-center">Due Date</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-end">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="invoices" t-as="invoice">
+                            <tr>
+                                <td class="text-left">
+                                    <span t-field="invoice.name"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="invoice.invoice_date_due"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-field="invoice.amount_total_in_currency_signed" t-options='{"widget": "monetary", "display_currency": invoice.currency_id}'/>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="invoice.status_in_payment"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+</odoo>

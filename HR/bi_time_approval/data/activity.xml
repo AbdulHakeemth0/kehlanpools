@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Activity Type to Schedule (Used for notification) -->
+        <record id="mail_activity_data_approve_reject" model="mail.activity.type">
+            <field name="name">Notification for Approve/Reject Attendance</field>
+            <field name="icon">fa-users</field>
+            <field name="sequence">9</field>
+        </record>
+
+        <record id="time_off_notify_activity_id" model="mail.activity.type">
+            <field name="name">Time off Approval</field>
+        </record>
+    </data>
+</odoo>

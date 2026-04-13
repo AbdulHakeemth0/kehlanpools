@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="purchase_order_header">
+            <div class="header" style="width: 100%;">
+                <table class="table table-borderless" width="100%" style="border-collapse: collapse;">
+                <tr>
+                    <td width="70%" style="text-align:left;">
+                        <div style="font-size: 17px; font-weight: bold;color: #bd562f;">
+                            Kehlan Pools and Fountains L.L.C
+                        </div>
+                        <div style="font-size: 14px;">
+                            P.O.Box 1386, PC 114 MUSCAT, OMAN
+                        </div>
+                        <div style="font-size: 14px;">
+                            Tel: +968 2449 9861 | Fax: +968 2449 9204 | Web: www.kehlanpools.com
+                        </div>
+                    </td>
+                    <td width="30%" style="text-align:right">
+                        <img class="pt2" t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 100%; height: auto;" alt="Company Logo"/>
+                    </td>
+                </tr>
+                    <tr>
+
+                    </tr>
+                
+                </table>
+<!--                <span style="padding-left:650px; padding-top:-20%; font-size:13px;"><b>TRN:<t t-if="o.company_id">-->
+<!--                                    <t t-if="o.company_id.vat">-->
+<!--                                        <t t-esc="o.company_id.vat"/>-->
+<!--                                    </t>-->
+<!--                                    <t t-else="">-->
+<!--                                        NA-->
+<!--                                    </t>-->
+<!--                                    </t>-->
+<!--                                    </b></span>-->
+            </div>
+            <div class="footer">
+                <div class="row">
+                    <table width="100%" class="table table-borderless" style="border-collapse: collapse; width: 100%;">
+                        <tr>
+                            <td style="text-align: center; padding-left: 50px;">
+                               <b></b> 
+                            </td>
+                            <td style="text-align: right; padding-right: 30px;">
+                               <b></b> 
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

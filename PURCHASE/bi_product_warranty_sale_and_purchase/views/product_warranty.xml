@@ -1,0 +1,80 @@
+<odoo>
+    <record id="product_warranty_form" model="ir.ui.view">
+        <field name="name">product.warranty.form.view</field>
+        <field name="model">product.warranty</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="Warranty details">
+                    <group>
+                        <group>
+                            <field name='product_id'/>
+                            <field name='lot_id'/>
+                            <!-- <field name="batch_id"/> -->
+                            <field name="account_move_ids" widget="many2many_tags"/>
+                            <field name="move_line_id" invisible="1"/>
+                            <field name="picking_id" invisible="1"/>
+                            <label for="vendor_id" string="Customer" style="font-weight:bold;"
+                                       invisible="picking_type not in ('outgoing')"/>
+                            <label for="vendor_id" string="Vendor" style="font-weight:bold;"
+                                       invisible="picking_type not in ('incoming')"/>
+                            <field name="vendor_id" nolabel="1"/>
+                        </group>
+                        <group>
+                            <field name="purchase_date" invisible ="not purchase_date"/>
+                            <field name="sale_date" invisible ="not sale_date"/>
+                            <field name="warranty_start"/>
+                            <field name="current_date"/>
+                            <field name="warranty_end"/>
+                            <field name="warranty_left"/>
+                            <field name="picking_type" invisible="1"/>
+                            <field name="sale_id" />
+                            <field name="purchase_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_warranty_filter" model="ir.ui.view">
+        <field name="name">product.warranty.list.select</field>
+        <field name="model">product.warranty</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search product warranty">
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="vendor_id"/>
+                <field name="purchase_date"/>
+                <field name="sale_date"/>
+                <field name="account_move_ids" widget="many2many_tags"/>
+                <!-- <field name="warranty_start"/>
+                <field name="warranty_left"/>
+                <field name="warranty_end"/> -->
+            </search>
+        </field>
+    </record>
+
+    <record id="product_warranty_tree_view" model="ir.ui.view">
+        <field name="name">product.warranty.tree.view</field>
+        <field name="model">product.warranty</field>
+        <field name="arch" type="xml">
+            <list string="Warranty Details">
+                <field name="product_id"/>
+                <field name="vendor_id"/>
+                <!-- <field name="purchase_date"/>
+                <field name="sale_date"/> -->
+                <field name="warranty_start"/>
+                <field name="warranty_end"/>
+                <field name="warranty_left"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_warranty_action" model="ir.actions.act_window">
+        <field name="name">Warranty Details</field>
+        <field name="res_model">product.warranty</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

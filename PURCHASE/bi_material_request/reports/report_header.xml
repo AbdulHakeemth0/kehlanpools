@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="material_request_header">
+            <div class="header" style="width: 100%;">
+                <table class="table table-borderless" width="100%"
+                       style="border-collapse: collapse;border-bottom:none;margin-bottom:none;">
+                    <tr>
+                        <td width="70%" style="text-align:left;margin-bottom:none;border:none; padding-top:4%;">
+                            <div style="font-size: 20px; font-weight: bold;color:#880808; line-height:20px;">
+                                <t t-if="o.company_id">
+                                    <t t-esc="o.company_id.name"/>
+                                </t>
+                            </div>
+                            <div style="font-size: 16px; margin-top:20px; line-height:20px;">
+                                <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">
+                                    C.R.No:
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.company_registry">
+                                    <t t-out="o.company_id.company_registry"/>.
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">
+                                    PO.Box -
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.zip">
+                                    <t t-out="o.company_id.zip"/>
+                                </span>&#160;<br/>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.street">
+                                    <t t-out="o.company_id.street"/>,
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.city">
+                                    <t t-out="o.company_id.city"/>,
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.country_id">
+                                    Sultanate of<t t-out="o.company_id.country_id.name"/>.
+                                </span>
+                            </div>
+                            <div style="font-size: 16px;margin-bottom:none;border:none;">
+                                 <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">
+                                    Tel :
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.phone">
+                                    <t t-out="o.company_id.phone"/>
+                                    |
+                                </span>&#160;
+
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">
+                                    Fax :
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.fax">
+                                    <t t-out="o.company_id.fax"/>
+                                    |
+                                </span>
+                                <span style="font-size: 15px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;">
+                                    Web :
+                                </span>
+                                <span style="font-size: 16px;font-family:'Calibri';text-align:start;display: inline-block; white-space: nowrap;"
+                                      t-if="o.company_id.fax">
+                                    <t t-out="o.company_id.website"/>
+                                </span>
+                            </div>
+                        </td>
+                        <td width="30%" style="text-align:right;border:none;display:flex; padding-top:-20px;">
+                            <img class="pt2" t-att-src="image_data_uri(o.company_id.logo)"
+                                 style="max-width: 100%; height: auto;" alt="Company Logo"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+             <!-- <div class="footer" style="width: 100%;">
+                <table class="table table-borderless" width="100%" style="border-collapse: collapse; background-color: #f2f2f2; font-size: 12px; font-family: 'Calibri'; ">
+                    <tr>
+                        <td width="25%" style="text-align: left;">
+                            <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+                        </td>
+                        <td width="25%" style="text-align: left;">
+                            <span style="font-weight: bold;">Status:</span>
+                            <span t-esc="o.state"/>
+                        </td>
+
+                        <td width="25%" style="text-align: left;">
+
+                                <span>Page <span class="page"/> of <span class="topage"/></span>
+                        </td>
+
+                         <td width="25%" style="text-align: left;">
+                                <span style="font-weight: bold;">User: </span>
+                                <span t-esc="user.name"/>
+                        </td>
+                    </tr>
+                </table>
+             </div> -->
+        </template>
+    </data>
+</odoo>

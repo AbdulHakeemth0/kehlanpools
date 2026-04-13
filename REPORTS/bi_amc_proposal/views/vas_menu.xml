@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--
+        <menuitem id="menu_vas_template2_details"
+                  name="VAS Template2 Details"
+                  parent="sale.sale_menu_root"
+                  sequence="35"/> -->
+
+
+<!--template 2-->
+        <record id="view_tree_client_exclusion" model="ir.ui.view">
+            <field name="name">client.exclusion.tree</field>
+            <field name="model">client.exclusion</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_tree_warranty_details" model="ir.ui.view">
+            <field name="name">warranty.details.tree</field>
+            <field name="model">warranty.details</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+<!--template 1-->
+        <record id="view_warranty_tree" model="ir.ui.view">
+            <field name="name">vas.warranty</field>
+            <field name="model">vas.warranty</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_warranty_exclusion_tree" model="ir.ui.view">
+            <field name="name">warranty.exclusion</field> 
+            <field name="model">warranty.exclusion</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_delivery_period_tree" model="ir.ui.view">
+            <field name="name">delivery.period</field> 
+            <field name="model">delivery.period</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_exclusion_tree" model="ir.ui.view">
+            <field name="name">product.exclusion</field>
+            <field name="model">product.exclusion</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_warranty" model="ir.actions.act_window">
+            <field name="name">Warranties</field>
+            <field name="res_model">vas.warranty</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+             <field name="view_id" ref="view_warranty_tree"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_view_warranty_exclusion_tree" model="ir.actions.act_window">
+            <field name="name">Warranty Exclusion</field>
+            <field name="res_model">warranty.exclusion</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+             <field name="view_id" ref="view_warranty_tree"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_view_delivery_period_tree" model="ir.actions.act_window">
+            <field name="name">Delivery period</field>
+            <field name="res_model">delivery.period</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+             <field name="view_id" ref="view_warranty_tree"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_exclusion" model="ir.actions.act_window">
+            <field name="name">Exclusions</field>
+            <field name="res_model">product.exclusion</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_exclusion_tree"/>
+            <field name="context">{}</field>
+        </record>
+
+
+
+<!--templat2-->
+        <record id="action_client_exclusion" model="ir.actions.act_window">
+            <field name="name">Client Exclusion</field>
+            <field name="res_model">client.exclusion</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_tree_client_exclusion"/>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Vas warranty details -->
+
+
+         <record id="view_vas_warranty_exclusion_list" model="ir.ui.view">
+            <field name="name">vas.warranty.exclusion.tree</field>
+            <field name="model">vas.warranty.exclusion</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_vas_warranty_exclusion" model="ir.actions.act_window">
+            <field name="name">Warranty Exclusion</field>
+            <field name="res_model">vas.warranty.exclusion</field>
+            <field name="view_mode">list</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="view_id" ref="view_vas_warranty_exclusion_list"/>
+            <field name="context">{}</field>
+        </record>
+        
+
+    <!-- warrant details -->
+
+        <record id="view_form_warranty_details" model="ir.ui.view">
+            <field name="name">warranty.details.form</field>
+            <field name="model">warranty.details</field>
+            <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <!-- <notebook>
+                        <page name="Warranty">
+                            <field name="warranty_lines" >
+                                <list editable="bottom">
+                                    <field name="warranty_ids"/>
+                                </list>
+                                <list editable="bottom">
+                                    <control>
+                                        <create name="add_line_control" string="Add a line"/>
+                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                    </control>
+                                        <field name="name" style="font-weight:bold;"/>
+                                        <field name="display_type" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook> -->
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="warranty_lines" widget="section_and_note_one2many">
+                            <list editable="bottom">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                    <create name="add_section_control" string="Add a section"
+                                            context="{'default_display_type': 'line_section'}"/>
+                                </control>
+                                <field name="name"/>
+                                <field name="display_type" column_invisible="True"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_list_warranty_details" model="ir.ui.view">
+            <field name="name">warranty.details.list</field>
+            <field name="model">warranty.details</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_warranty_details" model="ir.actions.act_window">
+            <field name="name">Warranty Details</field>
+            <field name="res_model">warranty.details</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <!-- <field name="view_id" ref="view_tree_warranty_details"/> -->
+            <field name="context">{}</field>
+        </record>
+
+
+        <!-- Submenu for Client Exclusion -->
+        <!-- <menuitem id="menu_client_exclusion"
+                  name="Client Exclusion"
+                  parent="menu_vas_template2_details"
+                  sequence="2"
+                  action="action_client_exclusion"/> -->
+
+        <!-- Submenu for Warranty Details -->
+        <!-- <menuitem id="menu_warranty_details"
+                  name="Warranty Details"
+                  parent="menu_vas_template2_details"
+                  sequence="3"
+                  action="action_warranty_details"/> -->
+<!--
+        <menuitem id="menu_detailed_specification"
+                name="Detailed Specification "
+                parent="bi_amc_proposal.menu_vas_template2_details"
+                sequence="1"
+                action="bi_vas_amc.action_detailed_specification_master"/> -->
+
+    <menuitem id="menu_template_details"
+                  name="Template Details"
+                  parent="sale.sale_menu_root"
+                  sequence="40"/>
+        
+        <!-- <menuitem id="payment_term_main"
+            name="Payment Term Details"
+            parent="bi_amc_proposal.menu_template_details"
+            sequence="18"/> -->
+
+          <menuitem id="payment_term_menu"
+                name="Payment Term"
+                parent="bi_amc_proposal.prod_config_main1"
+                action="bi_amc_proposal.action_payment_term_details"
+                sequence="1"/>     
+
+        <menuitem id="prod_config_main1"
+                name="VAS Template1"
+                parent="bi_amc_proposal.menu_template_details"
+                sequence="1"/>   
+
+        <!-- <menuitem id="payment_term_main"
+            name="Payment Term"
+            parent="bi_amc_proposal.menu_template_details"
+            sequence="2"/> -->
+
+        <menuitem id="menu_exclusion_details"
+                  name="Exclusion"
+                  sequence="1"
+                  parent="bi_amc_proposal.prod_config_main1"
+                  action="action_exclusion"/>
+        <menuitem id="menu_warranty_details_template"
+                  name="Warranty"
+                  sequence="2"
+                  parent="bi_amc_proposal.prod_config_main1"
+                  action="action_warranty"/>
+
+        <menuitem id="menu_warranty_exclution_template"
+                  name="Warranty Exclusion"
+                  sequence="3"
+                  parent="bi_amc_proposal.prod_config_main1"
+                  action="action_view_warranty_exclusion_tree"/>
+
+        <menuitem id="menu_warranty_delivery_period_template"
+                  name="Delivery Period"
+                  sequence="4"
+                  parent="bi_amc_proposal.prod_config_main1"
+                  action="action_view_delivery_period_tree"/>
+
+    <menuitem id="prod_config_main"
+                name="VAS Template2"
+                parent="bi_amc_proposal.menu_template_details"
+                sequence="2">
+
+            <menuitem id="menu_warranty_details"
+                  name="Warranty Details"
+                  sequence="1"
+                  action="action_warranty_details"/>
+
+            <menuitem id="menu_detailed_specification"
+                name="Detailed Specification "
+                sequence="2"
+                action="bi_vas_amc.action_detailed_specification_master"/>
+
+            <menuitem id="menu_client_exclusion"
+                  name="Client Exclusion"
+                  sequence="3"
+                  action="action_client_exclusion"/>
+
+             <menuitem id="menu_vas_warranty_exclusion"
+                            name="VAS Warranty Exclusion"
+                            sequence="4"
+                            action="action_vas_warranty_exclusion"/>
+
+            </menuitem>
+        <!-- <menuitem id="menu_vas_warranty_exclusion"
+                    name="VAS Warranty Exclusion"
+                    sequence="4"
+                    parent="bi_amc_proposal.prod_config_main"
+                    action="action_vas_warranty_exclusion"/> -->
+
+            <!-- <menuitem id="amc_config_main"
+                name="AMC"
+                parent="menu_template_details"
+                sequence="2"/> -->
+
+            <!-- <menuitem id="menua_amc_corporate_template"
+                  name="Corporate Template Details"
+                  action="bi_amc_proposal.action_corporate_template"
+                  active="False"/>
+            </menuitem> -->
+
+    </data>
+</odoo>

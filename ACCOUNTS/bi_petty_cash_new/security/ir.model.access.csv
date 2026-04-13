@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_petty_cash_request_user,bi_petty_cash_new.petty.cash.request,model_petty_cash_request,base.group_user,1,1,1,1
+access_petty_cash_line_user,bi_petty_cash_new.petty.cash.line,model_petty_cash_line,base.group_user,1,1,1,1
+access_ir_attachment_user,base.ir.attachment,base.model_ir_attachment,,1,1,1,1

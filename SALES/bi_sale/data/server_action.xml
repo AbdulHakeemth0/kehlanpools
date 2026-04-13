@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record model="ir.actions.server" id="action_sale_next_invoice_date">
+            <field name="name">Update Next Invoice Date</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.update_next_invoice_date()
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_update_sale_invoice_description">
+            <field name="name">Update Next Invoice Description</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.update_sale_invoice_description()
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_form_custom" model="ir.ui.view">
+        <field name="name">sale.order.form.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook " position="inside">
+            <!--                 Terms and Conditions -->
+            <page name="terms_conditions_noncrp" string="Terms and Conditions" invisible="not is_amc_non_corporate">
+                <field name="terms_conditions_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <page name="terms_conditions_crp" string="Terms and Conditions" invisible="is_amc_non_corporate">
+                <field name="terms_condtion_corporate_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <!--                 Specific Conditions -->
+            <page name="specific_condition_non" string="Specific Conditions" invisible="not is_amc_non_corporate">
+                <field name="specific_conditions_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <page name="specific_condition_corp" string="Specific Conditions" invisible="is_amc_non_corporate">
+                <field name="specific_conditions_corporate_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <!--                 General Scope of Work  -->
+            <page name="general_scope_non" string="General Scope of Work" invisible="not is_amc_non_corporate">
+                <field name="general_scope_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <page name="general_scope_corp" string="General Scope of Work" invisible="is_amc_non_corporate">
+                <field name="general_scope_corporate_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <!--                 Detailed Scope of Work and Specification -->
+            <page name="detailed_scope_non" string="Detailed Scope of Work and Specification" invisible="not is_amc_non_corporate">
+                <field name="detailed_scope_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <page name="detailed_scope_corp" string="Detailed Scope of Work and Specification" invisible="is_amc_non_corporate">
+                <field name="detailed_scope_corporate_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <!--                 AMC Scope of Work -->
+            <page name="amc_scope_non" string="AMC Scope of Work" invisible="not is_amc_non_corporate">
+                <field name="amc_scope_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+            <page name="amc_scope_corp" string="AMC Scope of Work" invisible="is_amc_non_corporate">
+                <field name="amc_scope_corporate_ids" widget="section_and_note_one2many"
+                       options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <control>
+                            <create name="add_line_control" string="Add a line"/>
+                        </control>
+                        <field name="sale_order_id" store="True" column_invisible="1"
+                               options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                    </list>
+                </field>
+            </page>
+        </xpath>
+         <!-- terms and condition--> 
+             <xpath expr="//page[@name='terms_conditions_noncrp']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_non_corporate</attribute>
+            </xpath>
+             <xpath expr="//page[@name='terms_conditions_crp']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_corporate</attribute>
+            </xpath>
+
+        <!--specefic condition-->
+             <xpath expr="//page[@name='specific_condition_non']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_non_corporate</attribute>
+            </xpath>
+             <xpath expr="//page[@name='specific_condition_corp']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_corporate</attribute>
+            </xpath>
+
+        <!--general scope   -->
+            <xpath expr="//page[@name='general_scope_non']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_non_corporate</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_scope_corp']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_corporate</attribute>
+            </xpath>
+
+
+        <!--detailed scope-->
+            <xpath expr="//page[@name='detailed_scope_non']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_non_corporate</attribute>
+            </xpath>
+            <xpath expr="//page[@name='detailed_scope_corp']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_corporate</attribute>
+            </xpath>
+
+        <!--amc scope of work-->
+            <xpath expr="//page[@name='amc_scope_non']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_non_corporate</attribute>
+            </xpath>
+            <xpath expr="//page[@name='amc_scope_corp']" position="attributes">
+                <attribute name="invisible">not is_amc or not is_amc_corporate</attribute>
+            </xpath>
+
+
+            <xpath expr="//page[@name='scope_of_work']" position="attributes">
+                <attribute name="invisible">not is_vas_template1 or is_amc</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='detailed_specification_sale']" position="attributes">
+                <attribute name="invisible">not is_vas_template1 or is_amc</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='client_exclusions_sale']" position="attributes">
+              <attribute name="invisible">not is_vas_template1 or is_amc</attribute>
+            </xpath>
+            <xpath expr="//page[@name='warranty_details_sale']" position="attributes">
+                <attribute name="invisible">not is_vas_template1 or is_amc</attribute>
+            </xpath>
+            <xpath expr="//page[@name='vas_warranty_details_sale']" position="attributes">
+                <attribute name="invisible">not is_vas_template1 or is_amc</attribute>
+            </xpath>
+            <xpath expr="//page[@name='vas_payment_terms_ids']" position="attributes">
+                <attribute name="invisible">not is_vas_template1 or is_amc</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='subject']" position="after">
+                <field name="filled_with" invisible="type not in '[vas]'"/>
+                <field name="offer_validity" invisible="type not in '[vas]'"/>
+              <label for="first_payment_percentage" string="Payment" class="o_inline" invisible="1"/>
+                 <div class="oe_kanban_details" style="display: flex; gap: 10px;">
+                        <field name="first_payment_percentage" class="o_field_widget" style="width: 10%;" invisible="1"/>
+                        <field name="second_payment_percentage" class="o_field_widget" style="width: 10%;" invisible="1"/>
+                    </div>
+                <field name="is_vas_template" invisible="1"/>
+                <field name="is_vas_template1" invisible="1"/>
+                <field name="is_amc" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook//page//field[@name='product_template_id']" position="after">
+                    <field name="service_property_location" force_save="1"/>
+            </xpath>
+            <xpath expr="//notebook " position="inside">
+            <page string="Exclusions " invisible="not is_vas_template or is_amc" >
+                 <field name="vas_exclusions" widget="section_and_note_one2many" options="{'no_create': False, 'no_create_edit': False}" >
+                         <list editable="bottom"  >
+                            <control>
+                                <create name="add_line_control" string="Add a line" />
+                            </control>
+                            <field name="order_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                        </list>
+                    </field>
+            </page>
+               
+
+                
+            <page string="Warranty "  invisible="not is_vas_template or is_amc" >
+                 <field name="vas_warranty_details" widget="section_and_note_one2many" options="{'no_create': False, 'no_create_edit': False}" >
+                         <list editable="bottom"  >
+                            <control>
+                                <create name="add_line_control" string="Add a line" />
+                            </control>
+                            <field name="order_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                        </list>
+                    </field>
+            </page>
+            <page string="Warranty Exclusion"  invisible="not is_vas_template or is_amc" >
+                 <field name="warranty_exclusions_ids" widget="section_and_note_one2many" options="{'no_create': False, 'no_create_edit': False}" >
+                         <list editable="bottom"  >
+                            <control>
+                                <create name="add_line_control" string="Add a line" />
+                            </control>
+                            <field name="order_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                        </list>
+                    </field>
+            </page>
+            <page string="Delivery Period"  invisible="not is_vas_template or is_amc" >
+                 <field name="delivery_period_ids" widget="section_and_note_one2many" options="{'no_create': False, 'no_create_edit': False}" >
+                         <list editable="bottom"  >
+                            <control>
+                                <create name="add_line_control" string="Add a line" />
+                            </control>
+                            <field name="order_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                        </list>
+                    </field>
+            </page>
+            </xpath>
+             <xpath expr="//field[@name='sale_order_template_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='validity_date']" position="before">
+                <field name="report_template_id"   invisible="type != 'vas'"/>
+                <field name="report_template_amc_id"   invisible="pool_type != 'swimming_pool' or type != 'amc'"
+                    options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                <field name="report_template_amc_id_water"   invisible="pool_type != 'water_feature' or type != 'amc'"
+                    options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                <field name="is_amc_corporate" invisible="1"></field>
+                <field name="is_amc_non_corporate" invisible="1"></field>
+                <field name="is_vas_template" invisible="1"></field>
+                <field name="is_vas_template1" invisible="1"></field>
+            </xpath>
+            <xpath expr="//notebook " position="inside">
+            <page string="AMC Corporate Asset Details" invisible="not is_amc or not is_amc_corporate" >
+                <field name="amc_asset_details" widget="section_and_note_one2many">
+                    <list editable="bottom">
+                         <control>
+                                <create name="add_line_control" string="Add a line"/>
+                                <!-- <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/> -->
+                            </control>
+                        <field name="sl_no" force_save="1"/>
+                       <field name="name"/>
+                        <field name="asset_action"/>
+                         <field name="display_type" column_invisible="True"/>
+                        <!-- <field name="sale_order_id" invisible="1"/> -->
+                    </list>
+                </field>
+            </page>
+            <page name="vas_payment_terms_temp2_ids" string="Payment term" invisible="not is_vas_template or is_amc">
+                <field name="payment_term_ids" widget="section_and_note_one2many"
+                            options="{'no_create': False, 'no_create_edit': False}">
+                    <list editable="bottom">
+                        <field name="payment_term_id"/>
+                    </list>
+                </field>
+            </page>
+        </xpath>
+        <xpath expr="//group[@name='sale_reporting']" position="after">
+            <group name="general_specification_parameters" string="General Specification Parameters">
+                <field name="type_shape"/>
+                <field name="size"/>
+                <field name="depth"/>
+                <field name="surface_area"/>
+                <field name="volume"/>
+            </group>
+        </xpath>
+        <xpath expr="//page[@name='vas_warranty_details_sale']" position="after">
+            <page name="completion_period" string="Completion Period " invisible="not is_vas_template1 or is_amc">
+            <field name="completion_line_ids" widget="section_and_note_one2many" options="{'no_create': False, 'no_create_edit': False}" >
+                    <list editable="bottom" >
+                    <control>
+                        <create name="add_line_control" string="Add a line" />
+                    </control>
+                    <field name="sale_order_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="description" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                </list>
+            </field>
+            </page>
+        </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button string="AMC Proposal" type="object" name="action_amc_proposal" invisible="type == 'vas'"/>
+                <button string="VAS Proposal" type="object" name="action_vas_proposal" invisible="type == 'amc'"/>
+            </xpath>
+        </field>
+    </record>
+     <record id="view_order_form_inherit_sale_stock" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.delivery.period</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_policy']" position="after">
+                    <field name="delivery_period" invisible="not is_vas_template"/>
+                </xpath>
+            </field>
+        </record>
+
+    <record id="ir_actions_report_form_inherit_account" model="ir.ui.view">
+        <field name="name">ir.actions.report.form.inherit.account</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base.act_report_xml_view"/>
+        <field name="arch" type="xml">
+            <field name="paperformat_id" position="after">
+                <field name="is_vas_report"/>
+                <field name="is_swimming_template"/>
+                 <field name="is_water_template"/>
+            </field>
+        </field>
+    </record>
+</odoo>

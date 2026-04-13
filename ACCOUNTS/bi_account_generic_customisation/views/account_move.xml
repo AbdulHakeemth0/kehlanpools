@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+    <record id="view_account_move_form_inherit_custom" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.custom</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <div class="alert alert-info text-center" invisible="not is_invoice_due or move_type not in ('out_invoice')" role="alert">
+                    You have a pending payment of <field name="sum_of_invoice" readonly="1"> </field><field name="inv_det"/>
+                </div>
+            </xpath>
+           <xpath expr="//button[@name='%(account.action_view_account_move_reversal)d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                 <attribute name="groups">bi_account_generic_customisation.group_reset_draft</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_date']" position="after">
+               <field name="is_invoice_due" invisible="1"/>
+               <field name="sum_of_invoice" invisible="1"/>
+               <field name="inv_det" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

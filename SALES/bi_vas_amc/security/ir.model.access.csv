@@ -1,0 +1,15 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_revision_user,bi_vas_amc.sale.revision,model_sale_revision,base.group_user,1,1,1,1
+access_detailed_specification_master,bi_vas_amc.detailed.specification.master,bi_vas_amc.model_detailed_specification_master,base.group_user,1,1,1,1
+access_detailed_specification_user,bi_vas_amc.detailed.specification,bi_vas_amc.model_detailed_specification,base.group_user,1,1,1,1
+access_specification_line_user,bi_vas_amc.specification.line,bi_vas_amc.model_specification_line,base.group_user,1,1,1,1
+access_client_exclusion_user,bi_vas_amc.client.exclusion,bi_vas_amc.model_client_exclusion,base.group_user,1,1,1,1
+access_warranty_details_user,bi_vas_amc.warranty.details,bi_vas_amc.model_warranty_details,base.group_user,1,1,1,1
+access_client_exclusion_line_user,bi_vas_amc.client.exclusion.line,model_client_exclusion_line,base.group_user,1,1,1,1
+access_client_exclusion_line_user,bi_vas_amc.client.exclusion.line,model_client_exclusion_line,base.group_user,1,1,1,1
+access_warranty_details_line_user,bi_vas_amc.warranty.details.line,model_warranty_details_line,base.group_user,1,1,1,1
+access_vas_warranty_exclusion_user,bi_vas_amc.vas.warranty.exclusion,model_vas_warranty_exclusion,base.group_user,1,1,1,1
+access_vas_warranty_exclusion_line_user,bi_vas_amc.vas.warranty.exclusion.line,model_vas_warranty_exclusion_line,base.group_user,1,1,1,1
+access_warranty_vas_exclusion_user,bi_vas_amc.warranty.vas.exclusion,model_warranty_vas_exclusion,base.group_user,1,1,1,1
+access_payment_term_vas_user,bi_vas_amc.payment.term.vas,model_payment_term_vas,base.group_user,1,1,1,1
+access_scope_of_work_page_user,bi_vas_amc.scope.of.work.page,model_scope_of_work_page,base.group_user,1,1,1,1

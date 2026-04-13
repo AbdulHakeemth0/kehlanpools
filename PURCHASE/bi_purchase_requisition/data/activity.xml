@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+       <record id="material_request_id" model="mail.activity.type">
+           <field name="name">Material Request Notification</field>
+       </record>
+        <record id="material_request_approve_id" model="mail.activity.type">
+           <field name="name">Material Request Approve Notification</field>
+       </record>
+   </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_wizard" model="ir.ui.view">
+        <field name="name">Wps salary report</field>
+        <field name="model">wizard.wps.salary</field>
+        <field name="arch" type="xml">
+            <form string="Choose your details">
+                <group>
+                    <group>
+                        <field name="data_month"/>
+                    </group>
+                    <group>
+                        <field name="data_year"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_excel" string="Export" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_wizard_wizard" model="ir.actions.act_window">
+        <field name="name">WPS Excel</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.wps.salary</field>
+        <field name="view_mode">list,form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_wizard_wizard"/>
+    </record>
+
+    <menuitem id="employee_report_main_menu" 
+        name="WPS Excel Report"
+        parent="hr.hr_menu_hr_reports" 
+        action="action_view_wizard_wizard" 
+        sequence="100"/>
+</odoo>

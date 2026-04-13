@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="view_leave_form_inherit_bi_leave_generic_customizations" model="ir.ui.view">
+            <field name="name">hr.leave.form.inherit.bi_leave_generic_customizations</field>
+            <field name="model">hr.leave.type</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='leave_validation_type']" position="before">
+                    <field name="is_maternity_leave"/>
+                    <field name="is_paternity_leave"/>
+                    <field name="is_marriage_leave"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

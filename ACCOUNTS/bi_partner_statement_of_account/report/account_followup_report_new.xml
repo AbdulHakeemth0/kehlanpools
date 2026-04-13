@@ -1,0 +1,1024 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="outstanding_statement_document">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="bi_partner_statement_of_account.purchase_custom_layout_header"/>
+                    <div class="page">
+                    <style>
+                        /* Importing the Outfit font */
+                        @import url('https://fonts.googleapis.com/css?family=Outfit');
+                    </style>
+                        <div class="row" style="font-family: 'Outfit';margin-top:10px">
+
+                            <div class="col-6">
+                                    <div style="border:1px solid black; width:98%;border-radius: 5px; border-collapse: separate; border-spacing: 0; overflow: hidden;">
+                                        <div style="height:44px;border-bottom:2px solid black; text-align:start; background-color:#5185b6;border-radius: 5px 5px 0px 0px;padding:10px;">
+                                            <h6><span style="font-weight: 600;font-size:14px">Billing Details </span></h6> 
+                                        </div>
+                                        <div style="border-bottom:1px solid black;"></div>                                        
+                                        <div style="display: flex; justify-content: space-between; padding: 0px 0px 0px 6px;font-size:14px;height:35px;">
+                                        <t t-if="doc.customer_rank == 1">
+                                        <div style="text-align: start;padding-top:5px"><b>Account Number <span style="padding-left:5px;">:</span></b> <span t-field="doc.id"/></div>
+                                        </t>
+                                        <t t-elif="doc.supplier_invoice_count >= 1">
+                                        <div style="text-align: start;padding-top:5px"><b>VAT Number <span style="padding-left:25px;">:</span> </b><span t-field="doc.vat"/></div>
+                                        </t>
+                                        <t t-else="">
+                                        <div style="text-align: start;padding-top:5px"><b>Account Number <span style="padding-left:5px;">:</span></b> <span t-esc="banks"/></div>
+                                        </t>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; padding: 4px 0px 4px 6px;word-break: break-word;font-size:14px;">
+                                            <div style="text-align: start;"><b>Account Name <span style="padding-left:16px;">:</span></b><span t-field="doc.name"/></div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; padding: 4px 0px 4px 6px;font-size:14px;height:55px">
+                                            <div style="text-align: start; display: inline-block;"><b>Address <span style="padding-left:57px;">:</span></b>
+                                                <t t-if="doc.street">
+                                                    <span t-field="doc.street"/>
+                                                </t>
+                                                <t t-if="doc.street2">
+                                                    <span t-field="doc.street2"/>
+                                                </t>
+                                                <t t-if="doc.zip">
+                                                    <span t-field="doc.zip"/>
+                                                </t>
+                                                <t t-if="doc.city">
+                                                    <span t-field="doc.city"/>
+                                                </t>
+                                                <t t-if="docs.state_id.name">
+                                                    <span t-esc="docs.state_id.name"/>
+                                                </t>
+                                                <t t-if="docs.country_id.name">
+                                                    <span t-esc="docs.country_id.name"/>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; padding: 4px 0px 4px 6px;font-size:14px;">
+                                            <div style="text-align: start;"><b>M number<span style="padding-left:47px;">:</span></b><span t-field="doc.code"/></div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; padding: 4px 0px 4px 6px;font-size:14px;">
+                                            <div style="text-align: start;"><b>TRN <span style="padding-left:80px;">:</span> </b><span t-field="doc.vat"/></div>
+                                            <!-- <div style="display: inline-block; margin-right: 15px;padding-left:7px;"></div> -->
+                                        </div>
+
+                                        <!-- <div style="display: flex; justify-content: space-between; padding: 2px 0px 5px 6px;font-size:14px;">
+                                            <div style="text-align: start; display: inline-block;">Email <span style="padding-left:36px;">:</span></div>
+                                            <div style="display: inline-block; margin-right: 15px;padding-left:7px;"><span t-field="doc.email"/></div>
+                                        </div> -->
+                                    </div>
+                            </div>
+                            <div class="col-6" style="margin-left:1px; width:620px">
+                                <table cellspacing="0" class="table table-sm o_main_table table-bordered" 
+                                    style="height: 218px; border-radius: 5px; border-collapse: separate; border-spacing: 0; overflow: hidden;border:1px solid black;">
+                                    <!-- <tr>
+                                        <td width="55%" style="text-align: start; vertical-align: middle; height: 13%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                            <span><b>Statement Type</b></span>
+                                        </td>
+                                        <t t-if="doc.supplier_invoice_count == 0">
+                                        <td width="45%" style="text-align: center; vertical-align: middle; height:13%; font-size: 13px;border-right:none;border-top:none;">
+                                            <span>Account Receivable</span>
+                                        </td>
+                                        </t>
+                                        <t t-if="doc.supplier_invoice_count >= 1">
+                                            <td width="45%" style="text-align: center; vertical-align: middle; height: 13%; font-size: 13px;border-right:none;border-top:none;">
+                                                <span>Account Payable</span>
+                                            </td>
+                                        </t>    
+                                            <t t-else="">
+                                                <td width="45%" style="text-align: center; vertical-align: middle; height: 13%; font-size: 13px;border-right:none;border-top:none;">
+                                                    <span>NA</span>
+                                                </td>
+                                                
+                                            </t> 
+                                    </tr> -->
+
+                                    <tr>
+                                        <td width="25%" style="text-align: start; vertical-align: middle; height: 10%;font-size: 13px;border-top:none;border-right:none;border-bottom:none;border-left:thin solid #C8C8C8;">
+                                            <b>Telephone<span style="padding-left:62px;">:</span></b>
+                                        </td>
+                                        <td width="75%" style="text-align: left; vertical-align: middle; height: 10%; font-size: 13px;border-right:none;border-top:none;">
+                                            <span t-field="doc.phone"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="25%" style="text-align: start; vertical-align: middle; height: 10%;font-size: 13px;border-top:none;border-right:none;border-bottom:none;border-left:thin solid #C8C8C8;">
+                                            <b>Email<span style="padding-left:91px;">:</span></b>
+                                        </td>
+                                        <td width="75%" style="text-align: left; vertical-align: middle; height: 10%; font-size: 13px;border-right:none;border-top:none;border-bottom:none;">
+                                            <span t-field="doc.email"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" style="text-align: start; vertical-align: middle; height: 10%;font-size: 13px;border-top:none;border-right:none;border-bottom:none;border-left:thin solid #C8C8C8;">
+                                            <b>Date <span style="padding-left:92px;">:</span></b>
+                                        </td>
+                                        <td width="75%" style="text-align: left; vertical-align: middle; height: 10%; font-size: 13px;border-right:none;border-top:none;">
+                                            <span t-esc="datetime.date.today().strftime('%d-%m-%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td width="55%" style="text-align: start; vertical-align: middle; height: 10%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                            <b>Contract <span style="padding-left:5px;">:</span></b>
+                                        </td>
+                                        <td width="45%" style="text-align: left; vertical-align: middle; height: 10%; font-size: 13px;border-right:none;border-top:none;">
+                                                <span>N/A</span>
+                                        </td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td width="55%" style="text-align: start; vertical-align: middle; height: 10%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                            <b>Job <span style="padding-left:5px;">:</span></b>
+                                        </td>
+                                        <td width="45%" style="text-align: left; vertical-align: middle; height: 10%; font-size: 13px;border-right:none;border-top:none;">
+                                                <span>N/A</span>
+                                        </td>
+                                    </tr> -->
+                                    
+                                    <!-- <tr>
+                                        <td width="55%" style="text-align: start; vertical-align: middle; height: 13%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                            <b>Payment Terms</b>
+                                        </td>
+                                        <td width="45%" style="text-align: center; vertical-align: middle; height: 13%; font-size: 13px;border-right:none;border-top:none;">
+                                            <span t-if="doc.property_payment_term_id.name" t-field="doc.property_payment_term_id.name"/>
+                                                <t t-else="">
+                                                    <span>N/A</span>
+                                                </t>
+                                        </td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td width="55%" style="text-align: start; vertical-align: middle; height: 13%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                            <b>Currency</b>
+                                        </td>
+                                        <td width="45%" style="text-align: center; vertical-align: middle; height: 13%; font-size: 13px;border-right:none;border-top:none;">
+                                            <span t-if="doc.property_purchase_currency_id" 
+                                                t-field="doc.property_purchase_currency_id.name"/>
+                                                <t t-else="">
+                                                    <span>N/A</span>
+                                                </t>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <t t-if="doc.customer_rank == 1">
+                                            <td width="25%" style="text-align: start; vertical-align: middle; height: 15%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                                <b>Total Outstanding <span style="padding-left:15px;">:</span></b>
+                                            </td>
+                                            <td width="75%" style="text-align: left; vertical-align: middle; height: 15%; font-size: 13px; border-right: none; border-top: none;">
+                                                <t t-set="total_debit" t-value="0"/>
+                                                <t t-set="total_credit" t-value="0"/>
+                                                <t t-foreach="d['currencies'].items()" t-as="curr">
+                                                    <t t-set="currency" t-value="curr[1]"/>
+                                                    <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                        <t t-set="total_debit" t-value="total_debit + line['debit']"/>
+                                                        <t t-set="total_credit" t-value="total_credit + line['credit']"/>
+                                                    </t>
+                                                </t>
+
+                                                <t t-set="last_balance" t-value="total_debit - total_credit + d.get('initial_balance', 0)"/>
+                                                <span t-esc="'{0:,.2f}'.format(last_balance)"/>
+                                                <!-- <t t-foreach="d['currencies'].items()" t-as="curr">
+                                                    <t t-set="currency" t-value="curr[1]"/>
+                                                    <t t-set="currency_amountdue" t-value="curr['amount_due']"/>
+                                                    <t t-set="currency_data" t-value="curr[1]"/>
+                                                    <span t-esc="'{0:,.2f}'.format(abs(currency_data['amount_due']))"/>
+                                                </t> -->
+                                            </td>
+                                        </t>
+                                        <t t-elif="doc.supplier_invoice_count >= 1">
+                                            <td width="25%" style="text-align: start; vertical-align: middle; height: 15%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                                <b>Credit Limit <span style="padding-left:53px;">:</span></b>
+                                            </td>
+                                            <td width="75%" style="text-align: left; vertical-align: middle; height: 15%; font-size: 13px; border-right: none; border-top: none;">
+                                                <t t-set="total_debit" t-value="0"/>
+                                                <t t-set="total_credit" t-value="0"/>
+                                                <t t-foreach="d['currencies'].items()" t-as="curr">
+                                                    <t t-set="currency" t-value="curr[1]"/>
+                                                    <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                        <t t-set="total_debit" t-value="total_debit + line['debit']"/>
+                                                        <t t-set="total_credit" t-value="total_credit + line['credit']"/>
+                                                    </t>
+                                                </t>
+
+                                                <t t-set="last_balance" t-value="total_debit - total_credit + d.get('initial_balance', 0)"/>
+                                                <span t-esc="'{0:,.2f}'.format(last_balance)"/>
+                                                <!-- <t t-foreach="d['currencies'].items()" t-as="curr">
+                                                    <t t-set="currency_data" t-value="curr[1]"/>
+                                                    <span t-esc="'{0:,.2f}'.format(abs(currency_data['amount_due'] + d['initial_balance']))"/>
+                                                </t> -->
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td width="25%" style="text-align: start; vertical-align: middle; height: 15%;font-size: 13px;border-top:none;border-right:none;border-left:thin solid #C8C8C8;">
+                                                <b>Total Outstanding <span style="padding-left:15px;">:</span></b>
+                                            </td>
+                                            <td width="75%" style="text-align: left; vertical-align: middle; height: 15%; font-size: 13px; border-right: none; border-top: none;">
+                                                <t t-set="total_debit" t-value="0"/>
+                                                <t t-set="total_credit" t-value="0"/>
+                                                <t t-foreach="d['currencies'].items()" t-as="curr">
+                                                    <t t-set="currency" t-value="curr[1]"/>
+                                                    <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                        <t t-set="total_debit" t-value="total_debit + line['debit']"/>
+                                                        <t t-set="total_credit" t-value="total_credit + line['credit']"/>
+                                                    </t>
+                                                </t>
+
+                                                <t t-set="last_balance" t-value="total_debit - total_credit + d.get('initial_balance', 0)"/>
+                                                <span t-esc="'{0:,.2f}'.format(last_balance)"/>
+                                                <!-- <t t-foreach="d['currencies'].items()" t-as="curr">
+                                                    <t t-set="currency_data" t-value="curr[1]"/>
+                                                    <span t-esc="'{0:,.2f}'.format(abs(currency_data['amount_due']))"/>
+                                                </t> -->
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <br></br>
+                        <style>
+                            #myTable tbody tr:nth-child(even) {
+                                background-color: #f2f2f2; 
+                            }
+                        </style>
+                        <t t-if="doc.customer_rank > 1">
+                            <table id="myTable" class="table-borderless" style=" font-family: 'Outfit'; font-size:12px; width:100%;">
+                                <tr style="background-color:#5185b6;height:80px">
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">V.No<br/></th> -->
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>V.Date</b><br/></th>
+                                    <th style="width:30%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Description</b><br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Bank/Cash</b> <br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Invoice No</b><br/></th>
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">INV.Date <br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Due.Date <br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Job <br/></th> -->
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Debit</b><br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Credit</b><br/></th>
+                                    <th style="width:15%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Balance</b><br/></th>
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">PO <br/>Reference <br/><span style="font-weight:normal">رقم أمر الشراء</span><br/><span style="font-weight:normal;font-size:8px">(Click to Download)</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Cur <br/><span style="font-weight:normal">العملة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Invoice Amount <br/><span style="font-weight:normal">قيمة الفاتورة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Paid<br/><span style="font-weight:normal">المبلغ المدفوع</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Outstanding<br/><span style="font-weight:normal">المبالغ المستحقة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Running Balance<br/><span style="font-weight:normal">الرصيد الجاري</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-right:0.5px solid #333333;">Over Due <br/>By Days<br/><span style="font-weight:normal">متأخرة عن</span><br/><span style="font-weight:normal">موعدها بأيام</span></th> -->
+                                </tr>
+                                <tbody>
+                                    
+                                    <t t-foreach="d['currencies'].items()" t-as="currency">
+                                        <t t-set="total_debit" t-value="0.0"/>
+                                        <t t-set="total_credit" t-value="0.0"/>
+                                        <t t-set="balance" t-value="0"/>
+                                        <tr height="70px" style="text-align:center">
+                                             
+                                            <!-- <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>     -->
+                                            <td style="vertical-align: middle; "></td>
+                                            
+                                            <td style="vertical-align: middle; ">
+                                                <span>Initial Balance</span>
+                                            </td>
+                                           
+    
+                                            <td style="vertical-align: middle"></td>
+                                            <td style="vertical-align: middle;"></td>  
+                                            <td style="vertical-align: middle">
+                                                <t t-if="d['initial_balance'] > 0">
+                                                    <span t-esc="d['initial_balance']"/>
+                                                    <t t-set="total_debit" t-value="total_credit + d['initial_balance']"/>
+                                                    <t t-set="balance" t-value="balance + abs(d['initial_balance'])"/>
+                                                </t>
+                                            </td>
+                                            <td style="vertical-align: middle">
+                                                <t t-if="d['initial_balance'] &lt; 0">
+                                                    <span t-esc="abs(d['initial_balance'])"/>
+                                                    <t t-set="total_credit" t-value="total_credit + abs(d['initial_balance'])"/>
+                                                    <t t-set="balance" t-value="balance - abs(d['initial_balance'])"/>
+                                                </t>
+                                            </td>
+                                            <td style="vertical-align: middle"> <span t-esc="d['initial_balance']"/></td>
+                                          
+                                        </tr>
+                                        <t t-set="display_currency" t-value="Currencies[currency[0]]"/>
+                                        <t t-set="currency" t-value="currency[1]"/>
+                                        <t t-set="currency_amountdue" t-value="currency['amount_due']"/>
+                                        <t t-set="last_balance" t-value="0"/>
+                                        <t t-if="currency_amountdue != 0">
+                                            <t t-foreach="currency['lines']"
+                                            t-as="line"
+                                            t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                <!-- <t t-if="line['open_amount'] != 0.00"> -->
+                                                    <tr height="70px" style="text-align:center">
+                                                        <t t-set="invoice1" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>     
+                                                        <!-- <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>     -->
+                                                        <td style="vertical-align: middle; "><span t-esc="line['date']"/></td>
+                                                        <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                        <td style="vertical-align: middle; ">
+                                                            <t t-if="line['ref']">
+                                                                <span t-esc="line['ref']"/>
+                                                            </t>
+                                                            <t t-elif="invoice.line_ids">
+                                                                <t t-if="invoice.line_ids[0].product_label">
+                                                                    <span t-esc="invoice.line_ids[0].product_id.name"/><span style="padding-left:5px;" t-field="invoice.line_ids[0].product_label"/>
+                                                                </t>
+                                                                <t t-elif="invoice.line_ids[0].product_id">
+                                                                    <span t-esc="invoice.line_ids[0].product_id.name"/>
+                                                                </t>
+                                                                <t t-elif="invoice.line_ids[0].name">
+                                                                    <span t-esc="invoice.line_ids[0].name"/>
+                                                                </t>
+                                                            </t>
+                                                        </td>
+                                                        <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                        <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)]).mapped('credit')"/>
+                                                        <t t-set="payment" t-value="request.env['account.payment'].search([('name', '=', invoice1.name)], limit=1)"/>
+                                                        <td style="vertical-align: middle">
+                                                            <t t-if="payment">
+                                                                <t t-if="invoice1.journal_id">
+                                                                    <span t-esc="invoice1.journal_id.name"/>
+                                                                </t>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>  
+                                                        <!-- <td style="vertical-align: middle; "><span t-esc="line['date']"/></td> -->
+                                                        <!-- <td style="vertical-align: middle">
+                                                            <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                            <span t-esc="invoice.invoice_date_due"/>
+                                                        </td> -->
+                                                        <!-- <td style="vertical-align: middle">
+                                                            <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/> 
+                                                            <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)], limit=1)"/> 
+                                                            <t t-set="sale_line" t-value="request.env['sale.order.line'].search([('invoice_lines','=',move_line.id)],limit = 1)"/> 
+                                                            <t t-if="sale_line.order_id.name">                                                        
+                                                                <span t-esc="sale_line.order_id.name"/>
+                                                            </t>  
+                                                        </td> -->
+                                                        
+                                                        <td style="vertical-align: middle"> 
+                                                            <t t-if="line['debit']">
+                                                                <t t-set="total_debit" t-value="total_debit + line['debit']"/>
+                                                                <span t-esc="line['debit']"/>
+                                                                <t t-set="balance" t-value="balance + line['debit']"/>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle">
+                                                            <t t-if="line['credit']">
+                                                                <t t-set="total_credit" t-value="total_credit + line['credit']"/>
+                                                                <span t-esc="line['credit']"/>
+                                                                <t t-set="balance" t-value="balance - line['credit']"/>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(balance)"/></td>
+                                                        <!-- <td style="vertical-align: middle"><span t-esc="line['lpo_no']"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="display_currency.name"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="abs(line['amount'])-abs(line['open_amount'])"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['open_amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['balance']))"/></td>
+                                                        <td style="vertical-align: middle; border-right:0.5px solid #333333;"></td> -->
+                                                    </tr>
+                                                <!-- </t> -->
+                                            </t>
+                                            <tr height="70px" style="text-align:center;font-size:13px">
+                                                <td colspan="3" style="border-bottom:0.5px solid #333333;"></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;"><b>Net Amount</b></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(total_debit)"/>
+                                                </td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(total_credit)"/>
+                                                </td>
+                                                 
+                                                <!-- <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                    <t t-if="line['open_amount'] != 0.00">
+                                                        <t t-set="last_balance" t-value="abs(line['balance'])"/>
+                                                    </t>
+                                                </t>  -->
+                                                <t t-set="last_balance" t-value="total_debit - total_credit"/>
+                                                <td style="vertical-align:middle;text-align:center; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(last_balance)"/>
+                                                </td> 
+                                            </tr>
+                                            
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <!-- <table id="myTable" class="table-borderless" style=" font-family: 'Outfit'; font-size:12px; width:100%;">
+                                <tr style="background-color:#5185b6;height:80px"> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-left:0.5px solid #333333;">V.No<br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Paid<br/><span style="font-weight:normal">المبلغ المدفوع</span></th>
+                                    <th styZle="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-left:0.5px solid #333333;">V.Date <br/></th>
+                                    <th style="width:12%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Invoice No<br/><span style="font-weight:normal;padding-bottom:200px">رقم الفاتورة</span><br/><span style="font-weight:normal;font-size:8px;">(Click to Download)</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">PO <br/>Reference <br/><span style="font-weight:normal">رقم أمر الشراء</span><br/><span style="font-weight:normal;font-size:8px">(Click to Download)</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Cur <br/><span style="font-weight:normal">العملة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Invoice Amount <br/><span style="font-weight:normal">قيمة الفاتورة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Outstanding<br/><span style="font-weight:normal">المبالغ المستحقة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Running Balance<br/><span style="font-weight:normal">الرصيد الجاري</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-right:0.5px solid #333333;">Over Due <br/>By Days<br/><span style="font-weight:normal">متأخرة عن</span><br/><span style="font-weight:normal">موعدها بأيام</span></th>
+                                </tr>
+                                <tbody>
+                                    <t t-foreach="d['currencies'].items()" t-as="currency">
+                                        <t t-set="display_currency" t-value="Currencies[currency[0]]"/>
+                                        <t t-set="currency" t-value="currency[1]"/>
+                                        <t t-set="currency_amountdue" t-value="currency['amount_due']"/>
+                                        <t t-if="currency_amountdue != 0">
+                                            <t t-foreach="currency['lines']"
+                                            t-as="line"
+                                            t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                <t t-if="line['open_amount'] != 0.00">
+                                                    <tr height="70px" style="text-align:center"> -->
+                                                        <!-- <td style="vertical-align: middle; border-left:0.5px solid #333333;"><span t-esc=" line['name']"/></td>          -->
+                                                        <!-- <td style="vertical-align: middle; border-left:0.5px solid #333333;"><span t-esc="line['date']"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="line['move_id']"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="line['lpo_no']"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="display_currency.name"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="abs(line['amount'])-abs(line['open_amount'])"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['open_amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['balance']))"/></td>
+                                                        <td style="vertical-align: middle; border-right:0.5px solid #333333;"></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                            <tr height="70px" style="text-align:center;font-size:13px">
+                                                <td colspan="5" style="border-bottom:0.5px solid #333333; border-left:0.5px solid #333333;"></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">Closing</td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;"><span t-esc="display_currency.name"/></td>
+                                                <t t-set="last_balance" t-value="0"/>
+                                                <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                    <t t-if="line['open_amount'] != 0.00">
+                                                        <t t-set="last_balance" t-value="abs(line['balance'])"/>
+                                                    </t>
+                                                </t>
+                                                <td style="vertical-align:middle;text-align:center; border-bottom:0.5px solid #333333;"><span t-esc="'{0:,.2f}'.format(abs(last_balance))"/></td> 
+                                                <td style="border-bottom:0.5px solid #333333; border-right:0.5px solid #333333;"></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table> -->
+                        </t>
+                        <t t-elif="doc.supplier_rank > 0">
+                            <table id="myTable" class="table-borderless" style="font-family: 'Outfit'; font-size:14px; line-height: 1.4; width:100%;">
+                            <!-- <table id="myTable" class="table-borderless" style=" font-family: 'Outfit'; font-size:12px; width:100%;"> -->
+                                <tr style="background-color:#5185b6;height:80px">
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">V.No<br/></th> -->
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>V.Date</b><br/></th>
+                                    <th style="width:30%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Description</b><br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Bank/Cash</b> <br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Invoice No</b><br/></th>
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">INV.Date <br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Due.Date <br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Job <br/></th> -->
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Debit</b><br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Credit</b><br/></th>
+                                    <th style="width:15%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Balance</b><br/></th>
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">PO <br/>Reference <br/><span style="font-weight:normal">رقم أمر الشراء</span><br/><span style="font-weight:normal;font-size:8px">(Click to Download)</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Cur <br/><span style="font-weight:normal">العملة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Invoice Amount <br/><span style="font-weight:normal">قيمة الفاتورة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Paid<br/><span style="font-weight:normal">المبلغ المدفوع</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Outstanding<br/><span style="font-weight:normal">المبالغ المستحقة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Running Balance<br/><span style="font-weight:normal">الرصيد الجاري</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-right:0.5px solid #333333;">Over Due <br/>By Days<br/><span style="font-weight:normal">متأخرة عن</span><br/><span style="font-weight:normal">موعدها بأيام</span></th> -->
+                                </tr>
+                                <tbody>
+                                    <t t-foreach="d['currencies'].items()" t-as="currency">
+                                        <t t-set="total_debit" t-value="0.0"/>
+                                        <t t-set="total_credit" t-value="0.0"/>
+                                        <t t-set="balance" t-value="0"/>
+                                        <!-- <tr height="70px" style="text-align:center"> -->
+                                        <tr style="text-align:center; height:30px;">
+
+                                            <!-- <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>     -->
+                                            <td style="vertical-align: middle; "></td>
+                                            
+                                            <td style="vertical-align: middle; ">
+                                                <span>Initial Balance</span>
+                                            </td>
+                                           
+    
+                                            <td style="vertical-align: middle"></td>
+                                            <td style="vertical-align: middle;"></td>  
+                                            <td style="vertical-align: middle">
+                                                <t t-if="d['initial_balance'] > 0">
+                                                    <span t-esc="d['initial_balance']"/>
+                                                    <t t-set="total_debit" t-value="total_debit + d['initial_balance']"/>
+                                                    <t t-set="balance" t-value="balance + abs(d['initial_balance'])"/>
+                                                </t>
+                                            </td>
+                                            <td style="vertical-align: middle">
+                                                <t t-if="d['initial_balance'] &lt; 0">
+                                                    <span t-esc="abs(d['initial_balance'])"/>
+                                                    <t t-set="total_credit" t-value="total_credit + abs(d['initial_balance'])"/>
+                                                    <t t-set="balance" t-value="balance - abs(d['initial_balance'])"/>
+                                                </t>
+                                            </td>
+                                            <td style="vertical-align: middle"> <span t-esc="d['initial_balance']"/></td>
+                                          
+                                        </tr>
+                                        <t t-set="display_currency" t-value="Currencies[currency[0]]"/>
+                                        <t t-set="currency" t-value="currency[1]"/>
+                                        <t t-set="currency_amountdue" t-value="currency['amount_due']"/>
+                                        <t t-set="last_balance" t-value="0"/>
+                                        <t t-if="currency_amountdue != 0">
+                                            <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                <!-- <t t-if="line['open_amount'] != 0.00"> -->
+                                                    <!-- <tr height="70px" style="text-align:center"> -->
+                                                    <tr style="text-align:center; height:38px;">
+                                                        <t t-set="invoice1" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>     
+                                                        <!-- <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>     -->
+                                                        <td style="vertical-align: middle; "><span t-esc="line['date']"/></td>
+                                                        <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                        <td style="vertical-align: middle; ">
+                                                            <t t-if="line['name']">
+                                                                <span t-esc="line['name']"/>
+                                                            </t>
+                                                            <t t-elif="line['ref']">
+                                                                <span t-esc="line['ref']"/>
+                                                            </t>
+                                                            <t t-elif="invoice.line_ids">
+                                                                <t t-if="invoice.line_ids[0].product_label">
+                                                                    <span t-esc="invoice.line_ids[0].product_label"/>
+                                                                    <span t-esc="invoice.line_ids[0].product_id.name"/>
+                                                                </t>
+                                                                <t t-elif="invoice.line_ids[0].product_id">
+                                                                    <span t-esc="invoice.line_ids[0].product_id.name"/>
+                                                                </t>
+                                                                <t t-elif="invoice.line_ids[0].name">
+                                                                    <span t-esc="invoice.line_ids[0].name"/>
+                                                                </t>
+                                                            </t> 
+                                                        </td>
+                                                        <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                        <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)]).mapped('credit')"/>
+                                                        <t t-set="payment" t-value="request.env['account.payment'].search([('name', '=', invoice1.name)], limit=1)"/>
+                                                        <td style="vertical-align: middle">
+                                                            <t t-if="payment">
+                                                                <t t-if="invoice1.journal_id">
+                                                                    <span t-esc="invoice1.journal_id.name"/>
+                                                                </t>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>  
+                                                        <!-- <td style="vertical-align: middle; "><span t-esc="line['date']"/></td> -->
+                                                        <!-- <td style="vertical-align: middle">
+                                                            <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                            <span t-esc="invoice.invoice_date_due"/>
+                                                        </td> -->
+                                                        <!-- <td style="vertical-align: middle">
+                                                            <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/> 
+                                                            <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)], limit=1)"/> 
+                                                            <t t-set="sale_line" t-value="request.env['sale.order.line'].search([('invoice_lines','=',move_line.id)],limit = 1)"/> 
+                                                            <t t-if="sale_line.order_id.name">                                                        
+                                                                <span t-esc="sale_line.order_id.name"/>
+                                                            </t>  
+                                                        </td> -->
+                                                        
+                                                        <td style="vertical-align: middle"> 
+                                                            <t t-if="line['debit']">
+                                                                <t t-set="total_debit" t-value="total_debit + line['debit']"/>
+                                                                <span t-esc="line['debit']"/>
+                                                                <t t-set="balance" t-value="balance + line['debit']"/>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle">
+                                                            <!-- <t t-set="payment" t-value="doc._get_soa_value(doc, line)"/>  -->
+                                                            <t t-if="line['credit']">
+                                                                <t t-set="total_credit" t-value="total_credit + line['credit']"/>
+                                                                <span t-esc="line['credit']"/>
+                                                                <t t-set="balance" t-value="balance - line['credit']"/>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(balance)"/></td>
+                                                        <!-- <td style="vertical-align: middle"><span t-esc="line['lpo_no']"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="display_currency.name"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="abs(line['amount'])-abs(line['open_amount'])"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['open_amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['balance']))"/></td>
+                                                        <td style="vertical-align: middle; border-right:0.5px solid #333333;"></td> -->
+                                                    </tr>
+                                                <!-- </t> -->
+                                            </t>
+                                            <tr height="70px" style="text-align:center;font-size:13px">
+                                                <td colspan="3" style="border-bottom:0.5px solid #333333;"></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;"><b>Net Amount</b></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(total_debit)"/>
+                                                </td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(total_credit)"/>
+                                                </td>
+                                                 
+                                                <!-- <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                    <t t-if="line['open_amount'] != 0.00">
+                                                        <t t-set="last_balance" t-value="abs(line['balance'])"/>
+                                                    </t>
+                                                </t>  -->
+                                                <t t-set="last_balance" t-value="total_debit - total_credit"/>
+                                                <td style="vertical-align:middle;text-align:center; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(last_balance)"/>
+                                                </td> 
+                                            </tr>
+                                            
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <table id="myTable" class="table-borderless" style=" font-family: 'Outfit'; font-size:12px; width:100%;">
+                                <tr style="background-color:#5185b6;height:80px">
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">V.No<br/></th> -->
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>V.Date</b><br/></th>
+                                    <th style="width:30%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Description</b><br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Bank/Cash</b> <br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Invoice No</b><br/></th>
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">INV.Date <br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Due.Date <br/></th> -->
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Job <br/></th> -->
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Debit</b><br/></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Credit</b><br/></th>
+                                    <th style="width:15%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;"><b>Balance</b><br/></th>
+                                    <!-- <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">PO <br/>Reference <br/><span style="font-weight:normal">رقم أمر الشراء</span><br/><span style="font-weight:normal;font-size:8px">(Click to Download)</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Cur <br/><span style="font-weight:normal">العملة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Invoice Amount <br/><span style="font-weight:normal">قيمة الفاتورة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Paid<br/><span style="font-weight:normal">المبلغ المدفوع</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Outstanding<br/><span style="font-weight:normal">المبالغ المستحقة</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">Running Balance<br/><span style="font-weight:normal">الرصيد الجاري</span></th>
+                                    <th style="width:11%; vertical-align: middle; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-right:0.5px solid #333333;">Over Due <br/>By Days<br/><span style="font-weight:normal">متأخرة عن</span><br/><span style="font-weight:normal">موعدها بأيام</span></th> -->
+                                </tr>
+                                <tbody>
+                                    <t t-foreach="d['currencies'].items()" t-as="currency">
+                                        <t t-set="total_debit" t-value="0.0"/>
+                                        <t t-set="balance" t-value="0"/>
+                                        <t t-set="total_credit" t-value="0.0"/>
+                                        <tr height="70px" style="text-align:center">
+                                             
+                                            <!-- <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>     -->
+                                            <td style="vertical-align: middle; "></td>
+                                            
+                                            <td style="vertical-align: middle; ">
+                                                <span>Initial Balance</span>
+                                            </td>
+                                           
+    
+                                            <td style="vertical-align: middle"></td>
+                                            <td style="vertical-align: middle;"></td>  
+                                            <td style="vertical-align: middle">
+                                                <t t-if="d['initial_balance'] > 0">
+                                                    <span t-esc="d['initial_balance']"/>
+                                                    <t t-set="total_debit" t-value="total_debit + d['initial_balance']"/>
+                                                    <t t-set="balance" t-value="balance + abs(d['initial_balance'])"/>
+                                                </t>
+                                            </td>
+                                            <td style="vertical-align: middle">
+                                                <t t-if="d['initial_balance'] &lt; 0">
+                                                    <span t-esc="abs(d['initial_balance'])"/>
+                                                    <t t-set="total_credit" t-value="total_credit + abs(d['initial_balance'])"/>
+                                                    <t t-set="balance" t-value="balance - abs(d['initial_balance'])"/>
+                                                </t>
+                                            </td>
+                                            <td style="vertical-align: middle"> <span t-esc="d['initial_balance']"/></td>
+                                          
+                                        </tr>
+                                        <t t-set="display_currency" t-value="Currencies[currency[0]]"/>
+                                        <t t-set="currency" t-value="currency[1]"/>
+                                        <t t-set="currency_amountdue" t-value="currency['amount_due']"/>
+                                        <t t-set="last_balance" t-value="0"/>
+                                        <t t-if="currency_amountdue != 0">
+                                            <t t-foreach="currency['lines']"
+                                            t-as="line"
+                                            t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                <!-- <t t-if="line['open_amount'] != 0.00"> -->
+                                                    <tr height="70px" style="text-align:center">
+                                                        <t t-set="invoice1" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>     
+                                                        <!-- <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>     -->
+                                                        <td style="vertical-align: middle; "><span t-esc="line['date']"/></td>
+                                                        <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                        <td style="vertical-align: middle; ">
+                                                            <t t-if="line['ref']">
+                                                                <span t-esc="line['ref']"/>
+                                                            </t>
+                                                            <t t-elif="invoice.line_ids">
+                                                                <t t-if="invoice.line_ids[0].product_label">
+                                                                    <span t-esc="invoice.line_ids[0].product_id.name"/><span style="padding-left:5px;" t-field="invoice.line_ids[0].product_label"/>
+                                                                </t>
+                                                                <t t-elif="invoice.line_ids[0].product_id">
+                                                                    <span t-esc="invoice.line_ids[0].product_id.name"/>
+                                                                </t>
+                                                                <t t-elif="invoice.line_ids[0].name">
+                                                                    <span t-esc="invoice.line_ids[0].name"/>
+                                                                </t>
+                                                            </t>
+                                                        </td>
+                                                        <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                        <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)]).mapped('credit')"/>
+                                                        <t t-set="payment" t-value="request.env['account.payment'].search([('name', '=', invoice1.name)], limit=1)"/>
+                                                        <td style="vertical-align: middle">
+                                                            <t t-if="payment">
+                                                                <t t-if="invoice1.journal_id">
+                                                                    <span t-esc="invoice1.journal_id.name"/>
+                                                                </t>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle;"> <span t-esc="invoice1.name"/></td>  
+                                                        <!-- <td style="vertical-align: middle; "><span t-esc="line['date']"/></td> -->
+                                                        <!-- <td style="vertical-align: middle">
+                                                            <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/>
+                                                            <span t-esc="invoice.invoice_date_due"/>
+                                                        </td> -->
+                                                        <!-- <td style="vertical-align: middle">
+                                                            <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/> 
+                                                            <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)], limit=1)"/> 
+                                                            <t t-set="sale_line" t-value="request.env['sale.order.line'].search([('invoice_lines','=',move_line.id)],limit = 1)"/> 
+                                                            <t t-if="sale_line.order_id.name">                                                        
+                                                                <span t-esc="sale_line.order_id.name"/>
+                                                            </t>  
+                                                        </td> -->
+                                                        <!-- <t t-set="invoice" t-value="request.env['account.move'].search([('name', '=', line['move_id'])], limit=1)"/> -->
+                                                        <!-- <t t-set="move_line" t-value="request.env['account.move.line'].search([('move_id', '=', invoice.id)]).mapped('credit')"/>   -->
+                                                        
+                                                        <td style="vertical-align: middle"> 
+                                                            <t t-if="line['debit']">
+                                                                <t t-set="total_debit" t-value="total_debit + line['debit']"/>
+                                                                <span t-esc="line['debit']"/>
+                                                                <t t-set="balance" t-value="balance + line['debit']"/>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle">
+                                                            <t t-if="line['credit']">
+                                                                <t t-set="total_credit" t-value="total_credit + line['credit']"/>
+                                                                <span t-esc="line['credit']"/>
+                                                                <t t-set="balance" t-value="balance - line['credit']"/>
+                                                            </t>
+                                                        </td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(balance)"/></td>
+                                                        <!-- <td style="vertical-align: middle"><span t-esc="line['lpo_no']"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="display_currency.name"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="abs(line['amount'])-abs(line['open_amount'])"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['open_amount']))"/></td>
+                                                        <td style="vertical-align: middle"><span t-esc="'{0:,.2f}'.format(abs(line['balance']))"/></td>
+                                                        <td style="vertical-align: middle; border-right:0.5px solid #333333;"></td> -->
+                                                    </tr>
+                                                <!-- </t> -->
+                                            </t>
+                                            <tr height="70px" style="text-align:center;font-size:13px">
+                                                <td colspan="3" style="border-bottom:0.5px solid #333333;"></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;"><b>Net Amount</b></td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(total_debit)"/>
+                                                </td>
+                                                <td style="vertical-align: middle; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(total_credit)"/>
+                                                </td>
+                                                 
+                                                <!-- <t t-foreach="currency['lines']" t-as="line" t-att-class="'statement-blocked' if line['blocked'] else ''">
+                                                    <t t-if="line['open_amount'] != 0.00">
+                                                        <t t-set="last_balance" t-value="abs(line['balance'])"/>
+                                                    </t>
+                                                </t>  -->
+                                                <t t-set="last_balance" t-value="total_debit - total_credit"/>
+                                                <td style="vertical-align:middle;text-align:center; border-bottom:0.5px solid #333333;">
+                                                    <span t-esc="'{0:,.2f}'.format(last_balance)"/>
+                                                </td> 
+                                            </tr>
+                                            
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <br/>
+                        <t t-if="pdc">
+                        <table class="table-borderless" style="font-family: 'Outfit'; font-size:13px; width:100%;page-break-inside: avoid;">
+                            <tr>
+                                <td colspan="6" style="text-align:center; font-size:17px; padding:15px; font-family: 'Outfit';">
+                                    PDC DETAILS
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width:16%; padding:10px; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-left:0.5px solid #333333;">
+                                    S.No
+                                    <br/>
+                                    <span >الرقم المسلسل</span>
+                                </th>
+                                <th style="width:17%; padding:10px; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">
+                                    Cheque Number
+                                    <br/>
+                                    <span >رقم الشيك</span>
+                                </th>
+                                <th style="width:17%; padding:10px; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">
+                                    Date 
+                                    <br/>
+                                    <span >الوصف </span>
+                                </th>
+                                <th style="width:17%; padding:10px; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">
+                                    Amount 
+                                    <br/>
+                                    <span >المبلغ</span>
+                                </th>
+                                <th style="width:16%; padding:10px; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333;">
+                                    Status 
+                                    <br/>
+                                    <span >حالة الفاتورة</span>
+                                </th>
+                                <th style="width:16%; padding:10px; border-bottom:0.5px solid #333333; border-top:0.5px solid #333333; border-right:0.5px solid #333333;">
+                                    Approval Status
+                                    <br/>
+                                    <span >حالة الموافقة</span>
+                                </th>
+                            </tr>
+                            <tbody>
+                                <t t-set="total_amount" t-value="0"/>
+                                <t t-set="index" t-value="0"/>
+                                <t t-foreach="pdc" t-as="o">
+                                    <tr>          
+                                        <td style="padding-top:25px; padding-bottom:25px; text-align:center;">
+                                        <t t-set="index" t-value="index + 1"/>
+                                            <span t-esc="index"/>
+                                        </td>
+                                        <td style="padding-top:25px; padding-bottom:25px; text-align:center;">
+                                            <span t-esc="o.check_number"/>
+                                        </td>
+                                        <td style="padding-top:25px; padding-bottom:25px; text-align:center;">
+                                            <span t-esc="o.date"/>
+                                        </td>
+                                        <td style="padding-top:25px; padding-bottom:25px; text-align:center;">
+                                            <span t-esc="'{0:,.2f}'.format(o.check_amount)"/>
+                                            <t t-set="total_amount" t-value="total_amount + abs(o.check_amount)"/>
+                                        </td>
+                                        <td style="padding-top:25px; padding-bottom:25px; text-align:center;">
+                                            <span t-esc="o.state"/>
+                                        </td>
+                                        <td style="padding-top:25px; padding-bottom:25px; text-align:center;"></td>
+                                    </tr>
+                                </t>  
+                                <tr >
+                                    <td colspan="2"></td>
+                                    <td style="text-align:right; border-top:0.5px solid #333333; padding-top:45px; font-size:16px;">Total</td>
+                                    <td style="text-align:center; border-top:0.5px solid #333333; padding-top:45px;">
+                                        <strong><span t-esc="'{0:,.2f}'.format(total_amount)"/></strong>
+                                    </td>
+                                    <td colspan="2" style="text-align:right; padding-top:45px; padding-right:3px;">Net Due : 
+                                        <span>
+                                            <t t-foreach="d['currencies'].items()" t-as="currency">
+                                                <t t-set="currency" t-value="currency[1]"/>
+                                                <t t-set="currency_amountdue" t-value="currency['amount_due']"/>
+                                                <span t-esc="'{0:,.2f}'.format(abs(currency['amount_due']))"/>
+                                            </t>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </t>
+                        <!-- <div style="page-break-inside: avoid;page-break-before: auto;page-break-after: auto; font-family: 'Outfit';margin-top:20px;">
+                        <t t-if="d['currencies']">
+                            <t t-foreach="d['currencies'].items()" t-as="currency">
+                                <t t-set="display_currency" t-value="Currencies[currency[0]]"/>
+                                <t t-set="currency" t-value="currency[1]"/>
+                                <t t-set="currency_amountdue" t-value="currency['amount_due']"/>
+                                <t t-if="currency_amountdue != 0">
+                                    <h5 style="font-size:16px; font-family: 'Outfit';">
+                                    **Balance in this statement is subject to realisation of the above mentioned PDC cheques.
+                                    </h5>
+                                    <br/>
+                                    <t t-if="doc.customer_rank == 1">
+                                        <h5 style="font-size:16px; font-family: 'Outfit'; padding:3px;">
+                                        Ageing (From Invoice Date)
+                                        </h5>
+                                    </t>
+                                    <t t-elif="doc.supplier_rank == 1">
+                                        <h5 style="font-size:16px; font-family: 'Outfit'; padding:3px;">
+                                        Ageing (From Bill Date)
+                                        </h5>
+                                    </t>
+                                    <t t-else="">
+                                        <h5 style="font-size:16px; font-family: 'Outfit'; padding:3px;">
+                                        Ageing (From Invoice Date)
+                                        </h5>
+                                    </t>
+                                    <t t-set="amount_over_due" t-value="0"/>
+                                    <t t-if="currency['buckets']">
+                                        <t t-set="buckets" t-value="currency['buckets']"/>
+                                        <t t-set="amount_over_due"
+                                           t-value="amount_over_due + buckets.get('b_1_30', 0.0)"/>
+                                        <t t-set="amount_over_due"
+                                           t-value="amount_over_due + buckets.get('b_30_60', 0.0)"/>
+                                        <t t-set="amount_over_due"
+                                           t-value="amount_over_due + buckets.get('b_60_90', 0.0)"/>
+                                        <t t-set="amount_over_due"
+                                           t-value="amount_over_due + buckets.get('b_90_120', 0.0)"/>
+                                        <t t-set="amount_over_due"
+                                           t-value="amount_over_due + buckets.get('b_over_120', 0.0)"/>
+                                    </t>
+                                    <t
+                                        t-call="bi_partner_statement_of_account.aging_buckets"
+                                        t-if="currency['buckets']"
+                                    />
+                                    <br/>
+                                </t>
+                            </t>
+                        </t>
+                        </div>
+                        <p t-if="d.get('no_entries')">
+                            <strong>The partner doesn't have due entries.</strong>
+                        </p> -->
+
+                        <!-- Commented to hide bank details woth 2 div last -->
+                         
+                    <!-- <div style="font-family: 'Outfit';page-break-inside: avoid;page-break-before: auto;page-break-after: auto;">
+                        <h4>Note:</h4>
+                        <h5 style="font-size:20px">1. If you have any queries regarding this account, please contact as soon as possible</h5>
+                        <h5 style="font-size:20px">2. Bank details for online transfer :</h5>
+
+                        <div class="row" style="page-break-inside: avoid;page-break-before: auto;page-break-after: auto; font-family: 'Outfit';margin-top:11px;">
+                            <div class="col-6">
+                                <table class="table table-sm o_main_table table-bordered" style="border:1px solid #000000;border-radius: 5px; border-collapse: separate;overflow: hidden;border-spacing: 0;border-left:thin solid black;border-right:1px solid black;">
+                                    <tr>
+                                        <td colspan="2" style="text-align: center;vertical-align: middle;height:30px;background-color: #E7E7E7;font-size:15px;"><b>Bank Details</b>  | تفاصيل البنك </td>
+                                    </tr>
+                                    <tbody >
+                                        <t t-foreach="env.company.bank_ids" t-as="bank">
+                                        <tr>
+                                            <td style="text-align: start;height:30px;background-color: #E7E7E7;width:50%;font-size:14px;vertical-align: middle;border-right: none;"><b>Account Name</b> | اسم الحساب</td>
+                                            <th style="text-align: start;height:30px;width:50%;font-size:12px;vertical-align: middle;border-left: none;">
+                                            <t t-esc="bank.acc_holder_name"/></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="text-align: start;height:30px;background-color: #E7E7E7;width:50%;font-size:14px;vertical-align: middle;border-right: none;"><b>Account No |</b> رقم الحساب</td>
+                                            <th style="text-align: start;height:30px;width:50%;font-size:12px;vertical-align: middle;border-left: none;"><t t-esc="bank.acc_number"/></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: start;height:30px;background-color: #E7E7E7;width:50%;font-size:14px;vertical-align: middle;border-right: none;"><b>Bank |</b> البنك</td>
+                                            <th style="text-align: start;height:30px;width:50%;font-size:12px;vertical-align: middle;border-left: none;"><t t-esc="bank.bank_id.name"/></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: start;height:30px;background-color: #E7E7E7;width:50%;font-size:14px;vertical-align: middle;border-right: none;"><b>Swift Code |</b> رمز السويفت</td>
+                                            <th style="text-align: start;height:30px;width:50%;font-size:12px;vertical-align: middle;border-left: none;"><t t-esc="bank.swift_code"/></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: start;height:30px;background-color: #E7E7E7;width:50%;font-size:14px;vertical-align: middle;border-right: none;"><b>Cheque Payment |</b><span style="font-size:13px;">الدفع عبر الشيك</span></td>
+                                            <td style="text-align: center;height:30px;width:50%;font-size:12px;border-left: none;"><span><b>Please prepare all cheques in favor of</b></span><br></br>
+                                                <span >يرجى إعداد جميع الشيكات لصالح</span><br></br>
+                                                <b><span style="color: red;" t-field="env.company.name"/></b><br></br>
+                                            </td>
+                                        </tr></t>
+                                    </tbody>
+                                </table>
+
+                            </div> -->
+                            <!-- <div class="col-6" style="padding-left:20px;">
+                                <table class="table table-sm o_main_table table-bordered" style="border:1px solid #000000;height:292px;border-radius: 5px; border-collapse: separate;overflow: hidden;border-left:1px solid black;border-right:1px solid black;">
+                                    <tr>
+                                        <th style="text-align: center;vertical-align: middle;height:30px;background-color: #E7E7E7;font-size:15px;text-transform: uppercase;">FOR <span t-field="env.company.name"/></th>
+                                    </tr>
+                                    <tr style="height: auto;">
+                                        <td style="text-align: center; vertical-align: middle; padding: 10px;">
+                                            <img t-att-src="'/bi_partner_statement_of_account/static/stamp.jpeg'" 
+                                                style="width: 260px; height: 140px;" alt="Stamp"/>
+                                        </td>
+                                    </tr>
+                                </table> 
+                            </div> -->
+                        <!-- </div>
+                    </div>    -->
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="outstanding_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="d" t-value="data.get(o.id)"/>
+                <t
+                        t-call="bi_partner_statement_of_account.outstanding_statement_document"
+                        t-lang="o.lang"
+                />
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_account_followup_new" model="ir.actions.report">
+        <field name="name">Account Statement - PDF</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bi_partner_statement_of_account.outstanding_statement</field>
+        <field name="print_report_name">'Account Statement - PDF'</field>
+        <field name="report_file">account_statement_template</field>
+        <field name="paperformat_id" ref="bi_partner_statement_of_account.paperformat_report_account_followup"/>
+    </record>
+
+    <record id="action_report_account_statement_xlsx" model="ir.actions.report">
+        <field name="name">Account Statement - Xlsx</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">bi_partner_statement_of_account.os_statement_xlsx</field>
+        <field name="print_report_name">'Account Statement - Excel'</field>
+        <field name="report_file">account_statement_template</field>
+    </record>
+
+</odoo>

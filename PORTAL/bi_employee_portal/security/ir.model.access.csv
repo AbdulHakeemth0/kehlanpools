@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_leave_custom,access_hr_leave_custom,hr_holidays.model_hr_leave,base.group_portal,1,0,0,0
+access_hr_leave_allocation_custom,access_hr_leave_allocation_custom,hr_holidays.model_hr_leave_allocation,base.group_portal,1,0,0,0
+access_hr_employee_public_custom,access_hr_employee_public_custom,hr.model_hr_employee_public,base.group_portal,1,0,0,0
+access_hr_leave_type_custom,access_hr_leave_type_custom,hr_holidays.model_hr_leave_type,base.group_portal,1,0,0,0
+access_hr_employee_custom,access_hr_employee_custom,hr.model_hr_employee,base.group_portal,1,0,0,0
+access_hr_employee_team,access_hr_employee_team,bi_helpdesk_portal.model_hr_employee_team,base.group_portal,1,0,0,0

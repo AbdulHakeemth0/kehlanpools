@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_petty_cash_imbursement_tree" model="ir.ui.view">
+        <field name="name">petty.cash.imbursement.tree</field>
+        <field name="model">petty.cash.imbursement</field>
+        <field name="arch" type="xml">
+            <list string="Petty Cash Imbursement">
+                <field name="number" string="Document No."/>
+                <field name="document_date"/>
+                <field name="account_id"/>
+                <field name="reference"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_petty_cash_imbursement_form" model="ir.ui.view">
+        <field name="name">petty.cash.imbursement.form</field>
+        <field name="model">petty.cash.imbursement</field>
+        <field name="arch" type="xml">
+            <form string="Petty Cash Imbursement">
+                <header>
+<!--                    <field invisible="1" name="is_account_manager"/>-->
+<!--                    <field invisible="1" name="is_audit_executive"/>-->
+                    <button class="oe_highlight" invisible="state not in ['draft']" name="action_request"
+                            string="Request For Approval" type="object"/>
+                    <button class="oe_highlight"  name="button_approve"
+                            string="Approve" type="object" groups="bi_petty_cash.group_petty_cash" invisible="state in ('approve','reject')"/>
+                    <!-- <button class="oe_highlight"  name="proforma_voucher"
+                            string="Audit Executive Approval" type="object"/> -->
+                    <button class="btn-danger"
+                            name="button_reject" groups="bi_petty_cash.group_petty_cash" string="Reject" type="object" invisible="state in ('approve','cancel','reject')"/>
+                    <button class="oe_highlight"
+                            name="button_cancel_entry" groups="bi_petty_cash.group_petty_cash" string="Cancel" type="object" invisible="state in ('cancel','reject')"/>
+                    <field name="state" widget="statusbar"/>
+                    <!--                    statusbar_visible="draft,verify,approve,proforma,posted,cancel"-->
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-pencil-square-o" name="show_transfer" string="Expenses"
+                                type="object"/>
+                    </div>
+                    <label for="number" string="Petty Cash Imbursement"/>
+                    <h1>
+                        <field name="number" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="state in ['posted', 'approve', 'cancel', 'reject']"/>
+                            <field name="account_id" string="Credit Account"
+                                   readonly="state in ['posted','approve','cancel','reject']"/>
+                            <field name="reference" readonly="state in ['posted','approve','cancel','reject']"/>
+                            <field name="currency_id" required="1"
+                                   readonly="state in ['posted','approve','cancel','reject']"/>
+                            <field name="amount" readonly="state in ['posted','approve','cancel','reject']"/>
+                        </group>
+                        <group>
+                            <field domain="['|',('type','=','bank'),('type','=','cash')]" name="journal_id"
+                                   widget="selection"/>
+                            <field force_save="1" name="account_account_id" string="Debit Account"
+                                   readonly="state in ['posted','approve','cancel','reject']"/>
+                            <field name="date" readonly="state in ['posted','approve','cancel','reject']"/>
+                            <field invisible="1" name="document_date"
+                                   readonly="state in ['posted','approve','cancel','reject']"/>
+                            <field invisible="1" name="date_due"/>
+                            <field invisible="1" name="name"
+                                   readonly="state in ['posted','approve','cancel','reject']"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <!-- <page invisible="1" string="Account Details">
+                            <group>
+                                <group> -->
+                        <!-- <field groups="analytic.group_analytic_accounting" invisible="1" name="account_analytic_id" readonly= "state in ['posted','approve','cancel']"/> -->
+                        <!-- <field groups="analytic.group_analytic_tags" invisible="1" name="analytic_tag_ids" ttrs="{'readonly': [('state', 'in',['posted','approve','cancel'])]}" widget="many2many_tags"/> -->
+                        <!-- </group>
+                    </group>
+                </page> -->
+                        <page string="Journal Items">
+                            <group>
+                                <group>
+                                    <field name="account_date"/>
+                                    <field name="move_id" readonly="1"/>
+                                </group>
+                                <group invisible="1">
+                                    <field name="description"
+                                           readonly="state in ['posted','approve','cancel','reject']"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="narration" nolabel="1" placeholder="Internal Notes"
+                                       readonly="state != 'draft'"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                </div>-->
+            <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_petty_cash_imbursement_action" model="ir.actions.act_window">
+        <field name="name">Petty Cash Imbursement</field>
+        <field name="res_model">petty.cash.imbursement</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_petty_cash_imbursement_tree"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p>
+                Petty Cash Imbursement
+            </p>
+        </field>
+    </record>
+        <menuitem action="view_petty_cash_imbursement_action" id="petty_cash_imbursement_menu" name="Petty Cash Imbursement"
+              parent="cash_management" sequence="10"/>
+</odoo>

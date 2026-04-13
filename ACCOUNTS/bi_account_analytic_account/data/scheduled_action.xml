@@ -1,0 +1,28 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Scheduled Action: Update Invoice M Numbers (Run once) -->
+        <record id="ir_cron_update_invoice_numbers" model="ir.cron">
+            <field name="name">Update Invoice M Numbers</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">model.update_invoice_numbers()</field>
+            <field name="interval_number">1</field> 
+            <field name="interval_type">months</field> 
+            <!-- <field name="numbercall">1</field>  -->
+            <field name="nextcall" eval="(DateTime.now() + timedelta(hours=1))"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="ir_cron_update_analytic_account" model="ir.cron">
+            <field name="name">Update Analytic Account</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">model.update_analytic_account()</field>
+            <field name="interval_number">1</field> 
+            <field name="interval_type">days</field>
+            <field name="active">False</field>
+        </record>
+
+    </data>
+</odoo>

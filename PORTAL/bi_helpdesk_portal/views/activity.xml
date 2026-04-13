@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+       <record id="help_desk_activity_id" model="mail.activity.type">
+           <field name="name">Help Desk Notification</field>
+       </record>
+       
+        <record id="opportunity_notify_activity_id" model="mail.activity.type">
+            <field name="name">Opportunity Created Notification</field>
+        </record>
+   </data>
+</odoo>

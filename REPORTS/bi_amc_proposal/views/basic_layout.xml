@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_sale_order_document_demo1" inherit_id="bi_amc_proposal.report_amc">
+        <xpath expr="//h3[hasclass('text-center')]" position="after">
+        <t t-if="o.state in ('draft','submitted')">
+            <div class="row" t-if="report_type == 'pdf'">
+                <div name="watermark">
+                    <span style="-webkit-transform:rotate(-45deg); transform:rotate(-45deg); color:coral; font-size:8em;position:absolute; opacity:0.2;padding-left:300px;text-align: center;padding-top:100px">
+                        DRAFT
+                    </span>
+                </div>
+            </div>
+        </t>
+        </xpath>
+    </template>
+    <template id="custom_sale_order_document_demo2" inherit_id="bi_amc_proposal.report_amc_corporate">
+        <xpath expr="//h3[hasclass('text-center')]" position="after">
+        <t t-if="o.state in ('draft','submitted')">
+            <div class="row" t-if="report_type == 'pdf'">
+                <div name="watermark">
+                    <span style="-webkit-transform:rotate(-45deg); transform:rotate(-45deg); color:coral; font-size:6em;position:absolute; opacity:0.2;padding-left:200px;padding-top:100px">
+                        DRAFT
+                    </span>
+                </div>
+            </div>
+        </t>
+        </xpath>
+    </template>
+    <template id="custom_sale_order_document_demo3" inherit_id="bi_amc_proposal.report_vas_proposal">
+        <xpath expr="//table[hasclass('table', 'table-borderless')][1]" position="inside">
+        <t t-if="o.state in ('draft','submitted')">
+            <div class="row" t-if="report_type == 'pdf'">
+                <div name="watermark">
+                    <span style="-webkit-transform:rotate(-45deg); transform:rotate(-45deg); color:coral; font-size:6em; text-align:center; position:absolute; opacity:0.2;padding-left:80px;padding-top:450px">
+                        DRAFT
+                    </span>
+                </div>
+            </div>
+        </t>
+        </xpath>
+    </template>
+    <template id="custom_sale_order_document_demo5" inherit_id="bi_amc_proposal.report_vas_proposal1">
+        <xpath expr="//table[1]" position="before">
+        <t t-if="o.state in ('draft','submitted')">
+            <div class="row" t-if="report_type == 'pdf'">
+                <div name="watermark">
+                    <span style="-webkit-transform:rotate(-45deg); transform:rotate(-45deg); color:coral; font-size:6em; text-align:center; position:absolute; opacity:0.2;padding-left:380px;padding-bottom:150px">
+                        DRAFT
+                    </span>
+                </div>
+            </div>
+        </t>
+        </xpath>
+    </template>
+    <template id="custom_sale_order_document_demo4" inherit_id="bi_swimming_pool_report.report_swimming_pool_template">
+        <xpath expr="(//table[hasclass('table', 'table-borderless')])[2]" position="after">
+        <t t-if="o.state in ('draft','submitted')">
+            <div class="row" t-if="report_type == 'pdf'">
+                <div name="watermark">
+                    <span style="-webkit-transform:rotate(-45deg); transform:rotate(-45deg); color:coral; font-size:6em; text-align:center; position:absolute; opacity:0.2;padding-left:220px;padding-top:200px">
+                        DRAFT
+                    </span>
+                </div>
+            </div>
+        </t>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_plan_form_custom" model="ir.ui.view">
+        <field name="name">sale.order.plan.form.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="plan_end_date" invisible="1"/>
+            </xpath>
+             <xpath expr="//notebook//page//field[@name='product_template_id']" position="after">
+                    <field name="product_label" column_invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

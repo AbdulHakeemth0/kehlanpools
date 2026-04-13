@@ -1,0 +1,8 @@
+<odoo>
+    <record id="partner_code_server_action" model="ir.actions.server">
+        <field name="name">Generate Missing Partner Codes</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">records.action_assign_missing_partner_codes()</field>
+    </record>
+</odoo>

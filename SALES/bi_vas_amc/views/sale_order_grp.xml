@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_order_form_grps" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header/button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="groups">bi_vas_amc.group_vas_amc_confirm,bi_vas_amc.group_vas_confirm,bi_vas_amc.group_amc_confirm</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">state not in ['draft', 'approved']</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo> 

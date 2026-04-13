@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_project_form_inherit_revise_saleorder" model="ir.ui.view">
+            <field name="name">project.form.revise.saleorder</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="before">
+                        <field name="sale_order_id" invisible="1"/>
+                        <field name="order_id"/>
+                        <field name="is_field_service"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

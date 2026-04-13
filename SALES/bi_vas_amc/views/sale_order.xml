@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <div name="button_box" position="inside">
+                <button name="action_view_projects" type="object" class="oe_stat_button" icon="fa-puzzle-piece" string="Projects"
+                        context="{'default_sale_order_id': id}" invisible = "state != 'sale'">
+                </button>
+            </div>
+             <xpath expr="//header" position="inside">
+                <button name="create_revision"
+                        type="object"
+                        string="Revise"
+                        invisible = "not is_revise and state not in ['approved','sent','sale']"
+                        />
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button name="action_submits" type="object" string="Submit" invisible="state not in ['draft']"/>
+            </xpath>
+
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,submitted,approved,sent,revise,sale</attribute>
+            </xpath>
+            <!-- <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">state !='submitted'</attribute>
+            </xpath> -->
+
+            <xpath expr="//label[@for='plan_id']" position="attributes">
+                <attribute name="string">Invoicing Frequency</attribute>
+                <attribute name="invisible">type in ['vas']</attribute>
+            </xpath>
+            <xpath expr="//div[@name='plan_block']" position="after">
+                <field name="start_date" string="Contract start date" groups="!sales_team.group_sale_manager"
+                        readonly="subscription_state in ['2_renewal', '3_progress', '4_paused']" 
+                        invisible="not is_subscription and subscription_state != '7_upsell'"/>
+                <field name="start_date" string="Contract start date" groups="sales_team.group_sale_manager"
+                        readonly="subscription_state == '2_renewal'"
+                        invisible="not is_subscription and subscription_state != '7_upsell'"/>
+                <field name='contract_start_date' invisible="1"/>
+                <field name='contract_end_date' invisible="1"/>
+                <field name="vas_temp_amount" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="before">
+                <field name="type" readonly="state == 'sale'" />
+                <field name="is_revise" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//notebook/page/field[@name='order_line']" position="attributes">
+                <attribute name="readonly">state not in ['draft']</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="revision_number" invisible="1"/>
+                <field name="original_sale_order_id" readonly="1"/>
+                <field name="project_ids" readonly="1" invisible="1" force_save="1"/>
+                <field name="is_revision" invisible="1"/>
+                 <field name="is_amc" invisible="1"/>
+                 <field name="amc_start_date" invisible="1"/>
+                 <field name="amc_end_date" invisible="1"/>
+                <field name="amc_revision_number" invisible="1"/>
+                <field name="visit_freq" invisible="1"/>
+                <field name="is_not_latest_revision" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook/page/field[@name='order_line']/list/field[@name='product_template_id']" position="after">
+                <field name='product_ids' column_invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook/page/field[@name='order_line']/list/field[@name='product_template_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', product_ids)]</attribute>
+            </xpath>
+            <xpath expr="//div[@name='plan_block']/span[1]" position="replace">
+                <span style="font-weight:bold;" invisible="not plan_id or subscription_state == '7_upsell'">Contract end date</span>
+            </xpath>
+
+            <xpath expr="//group[@name='subscription_info']/field[@name='start_date'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//group[@name='subscription_info']/field[@name='start_date'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            
+
+            <xpath expr="//div[@name='plan_block']/field[1]" position="replace">
+                <field name="plan_id" groups="!sales_team.group_sale_manager"
+                    readonly="subscription_state in ['3_progress', '4_paused', '5_renewed', '6_churn', '7_upsell'] or state in ['sale']"
+                    options="{'no_create': True}"
+                        invisible="type in ['vas']"
+                    required="has_recurring_line and is_subscription"/>
+            </xpath>
+            <xpath expr="//div[@name='plan_block']/field[2]" position="replace">
+                    <field name="plan_id" groups="sales_team.group_sale_manager"
+                        readonly="subscription_state == '7_upsell' or state in ['sale']"
+                        options="{'no_create': True}"
+                           invisible="type in ['vas']"
+                        required="has_recurring_line and is_subscription"/>
+            </xpath>
+            <xpath expr="//div[@name='plan_block']" position="attributes">
+                <attribute name="invisible">type in ['vas']</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="custom_confirm_button" id="custom_confirm_button" data-hotkey="q" string="Confirm" class="btn-primary" type="object" context="{'validate_analytic': True}" invisible="1"/>
+                <button name="custom_confirm_button" data-hotkey="q" string="Confirm" type="object" context="{'validate_analytic': True}" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                <attribute name="invisible">state != 'sent'</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        name="action_amc_view"
+                        type="object"
+                        icon="fa-pencil-square-o"
+                        invisible="amc_count == 0">
+                    <field string="AMC" name="amc_count" widget="statinfo" invisible="1"/>
+                </button>
+            </xpath>
+
+            <!-- <xpath expr="//page[@name='mep_equipment_specifications_sale']" position="after">
+                <page  name="sale_revision" string="Sale Revision">
+                    <field name="sale_revision_ids" >
+                        <list editable="bottom" create="0">
+                            <field name="sale_order_history_id" store="True"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath> -->
+            <xpath expr="//page[@name='other_information']" position="after">
+                <page name="detailed_specification_sale" string="Detailed Specification" invisible= "type not in '[vas]'">
+                    <field name="detailed_specification_ids" widget="section_and_note_one2many" >
+                        <list editable="bottom" >
+                            <control>
+                                <create name="add_line_control" string="Add a line" context="{'default_display_type': 'line_item'}"/>
+                                <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                 <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                            </control>
+<!--                            <field name="description_note"/>-->
+                            <field name="name" />
+                            <field name="item" />
+<!--                            <field name="detailed_specification" store="True"/>-->
+                            <field name="display_type" column_invisible="True"/>
+                            <field name="qty" />
+                            <field name="uom_id" />
+                            <field name="amount" />
+                            <field name="tax_id"/>
+                            <field name="discount" />
+                            <field name="total_amount" readonly="1" force_save="1"/>
+                            <field name="section_sum" column_invisible="1"/>
+                            <field name="note_sum" column_invisible="1"/>
+                            <field name="is_sum_line" column_invisible="1"/>
+                            <field name="is_note_line" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
+
+                <page name="client_exclusions_sale" string="Client Exclusion" invisible= "type not in '[vas]'">
+                    <field name="client_exclusions_ids" widget="section_and_note_one2many" options="{'no_create': False, 'no_create_edit': False}" >
+                         <list editable="bottom"  >
+                            <control>
+                                <create name="add_line_control" string="Add a line" />
+                            </control>
+                            <field name="sale_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="exclusion_id" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                        </list>
+                    </field>
+                </page>
+                
+                <page name="warranty_details_sale" string="Warranty Details" invisible="type not in '[vas]'">
+                    <field name="warranty_details_ids" widget="section_and_note_one2many" >
+                         <list editable="bottom" create="1" edit="1" >
+                            <control>
+                                <create name="add_line_control" string="Add a line"/>
+                                <create name="add_section_control" string="Add a section"
+                                            context="{'default_display_type': 'line_section'}"/>
+                            </control>                                   
+                                <field name="name"/>
+                                <field name="display_type" column_invisible="True"/>
+                            <field name="sale_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="warranty_id" store="True" options="{'no_create_edit': False,'no_open':False}"/>
+                        </list>
+                    </field>
+                    <field name="warranty_exclusion"/>
+                    <group>
+                        <field name="completion_period"/>
+                    </group>
+                </page>
+                <page name="vas_warranty_details_sale" string="Vas Warranty Exclusion" invisible="type not in '[vas]'">
+                    <field name="vas_warranty_ids">
+                         <list editable="bottom" create="1" edit="1" >                                   
+                                <field name="name"/>
+                                <!-- <field name="display_type" column_invisible="True"/> -->
+                            <field name="sale_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <!-- <field name="vas_warranty_id" store="True" options="{'no_create_edit': False,'no_open':False}"/> -->
+                        </list>
+                    </field>
+                </page>
+
+                <page name="vas_payment_terms_ids" string="Payment Terms" invisible="type not in '[vas]'">
+                    <field name="payment_term_vas_ids">
+                        <list editable="bottom">
+                            <field name="description"/>
+                        </list>
+                    </field>
+                </page>
+
+                <page name="scope_of_work" string="General Scope of Work" invisible="type not in '[vas]'">
+                    <field name="scope_of_work_ids">
+                         <list editable="bottom" create="1" edit="1" >
+                                <field name="description"/>
+                                <field name="sale_id" store="True" column_invisible="1" options="{'no_create': True, 'no_create_edit':True}"/>
+
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale.action_orders" model="ir.actions.act_window">
+        <field name="name">Sales Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="context">{}</field>
+        <field name="path">orders</field>
+        <field name="domain">['|',('state', 'not in', ('draft', 'sent', 'cancel')),('is_not_latest_revision','=',False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+            </p><p>
+                Once the quotation is confirmed, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+            </p>
+        </field>
+    </record>
+
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="name">Quotations</field>
+        <field name="path">sales</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="view_mode">list,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="domain">[('is_not_latest_revision','=',False)]</field>
+
+        <field name="context">{'search_default_my_quotation': 1}</field>
+        <field name="help" type="html">
+            <br/>
+            <h2>
+            Beat competitors with stunning quotations!
+            </h2><p>
+            Boost sales with online payments or signatures, upsells, and a great customer portal.
+            </p>
+            <a
+                role="button"
+                class="btn btn-secondary"
+                href="https://www.odoo.com/documentation/master/_downloads/56a93429515b36105d952e1d2b802f9e/sample_quotation.pdf"
+                target="_blank"
+            >
+                Check a sample. It's clean!
+            </a>
+        </field>
+    </record>
+
+
+</odoo>

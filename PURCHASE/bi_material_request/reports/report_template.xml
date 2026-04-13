@@ -1,0 +1,245 @@
+<odoo>
+    <data>
+        <template id="material_request_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <t t-call="bi_material_request.material_request_header"/>
+                        <div class="page">
+                            <h4 style="text-align:center; font-weight: bold;">Material Request - Maintenance</h4>
+                            <hr></hr>
+                            <table class="table table-borderless"
+                                   style="width: 100%; margin-top: 10px; font-size: 16px; line-height:18px;">
+                                <tr width="100%">
+                                    <td width="10%" style="font-weight: bold; ">Doc.No</td>
+                                    <td width="25%" style="text-align:left;">
+                                        <t t-if="o.name">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.name"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; ">Remarks</td>
+                                    <td width="25%">
+                                        <t t-if="o.notes">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.notes"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%"></td>
+                                    <td width="20%"></td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="10%" style="font-weight: bold; ">Doc. Date</td>
+                                    <td width="25%">
+                                        <t t-if="o.date_order">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.date_order.strftime('%d-%m-%Y')"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; ">Exp. Del. Date</td>
+                                    <td width="25%">
+                                        <t t-if="o.delivery_date">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.delivery_date.strftime('%d-%m-%Y')"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%"></td>
+                                    <td width="20%"></td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="10%" style="font-weight: bold; ">Job No.</td>
+                                    <td width="25%">
+                                        <t t-if="o.job_number">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.job_number.name"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="25%"></td>
+                                    <td width="10%"></td>
+                                    <td width="20%"></td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="10%" style="font-weight: bold; ">M-No.</td>
+                                    <td width="25%">
+                                        <t t-if="o.m_number">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.m_number"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="25%"></td>
+                                    <td width="10%"></td>
+                                    <td width="20%"></td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="10%" style="font-weight: bold; ">Req. By</td>
+                                    <td width="25%">
+                                        <t t-if="o.requested_by">
+                                            :
+                                            <span style="padding-left:10px;">
+                                                <t t-esc="o.requested_by"/>
+                                            </span>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="25%">
+
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="20%">
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="25%"></td>
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="25%">
+                                    </td>
+                                    <td width="10%" style="font-weight: bold; "></td>
+                                    <td width="20%">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-borderless"
+                                   style="width: 100%; margin-top: 10px; font-size: 16px; line-height:18px;">
+                                <tr width="100%">
+                                    <td width="10%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Sr. No
+                                    </td>
+                                    <td width="15%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Product Code
+                                    </td>
+                                    <td width="20%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Product Desc.
+                                    </td>
+                                    <td width="15%" style="font-weight: bold; background-color:#0096FF; color:white;">
+                                        Job
+                                    </td>
+                                    <td width="10%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Job Cat.
+                                    </td>
+                                    <td width="5%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        UOM
+                                    </td>
+                                    <td width="5%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Qty
+                                    </td>
+                                    <td width="20%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Remarks
+                                    </td>
+                                </tr>
+                                <t t-set="sl_no" t-value="1"/>
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <tr>
+                                        <td width="10%" style="padding:5px; padding-left:10px;">
+                                            <t t-esc="sl_no"/> <!-- Sr. No -->
+                                        </td>
+                                        <td width="15%" style="padding:5px; padding-left:10px;">
+                                            <t t-esc="line.product_id.default_code"/> <!-- Product Code -->
+                                        </td>
+                                        <td width="20%" style="padding:5px; padding-left:10px;">
+                                            <t t-esc="line.product_id.name"/> <!-- Product Desc. -->
+                                        </td>
+                                        <td width="15%" style="padding:5px;">
+                                            <t t-esc="line.order_id.job_number.name"/> <!-- Job Number -->
+                                        </td>
+                                        <td width="10%" style="padding:5px; padding-left:10px;">
+                                        </td>
+                                        <td width="5%" style="padding:5px; padding-left:10px;">
+                                            <t t-esc="line.product_uom.name"/> <!-- UOM -->
+                                        </td>
+                                        <td width="5%" style="padding:5px; padding-left:10px;">
+                                            <t t-esc="line.product_qty"/> <!-- Quantity -->
+                                        </td>
+                                        <td width="20%" style="padding:5px; padding-left:10px;">
+                                            <!-- Remarks (optional) -->
+                                        </td>
+                                    </tr>
+                                    <t t-set="sl_no" t-value="sl_no + 1"/>
+                                </t>
+                            </table>
+
+                            <h5 style="text-align:left; margin-top:20%;">Approved By</h5>
+                            <table style="width: 80%; margin-top: 10px; font-size: 16px; line-height:18px; border: 1px solid #B2BEB5;">
+                                <tr width="80%">
+                                    <td width="10%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Action
+                                    </td>
+                                    <td width="10%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Name
+                                    </td>
+                                    <td width="10%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Designation
+                                    </td>
+                                    <td width="10%"
+                                        style="padding:5px; padding-left:10px; font-weight: bold; background-color:#0096FF; color:white;">
+                                        Date
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                        Prepared By
+                                    </td>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                        <t t-if="o.user_id">
+                                            <t t-esc="o.user_id.name"/>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                        <t t-if="o.user_id.employee_id.job_id">
+                                            <t t-esc="o.user_id.employee_id.job_id.name"/>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                        Approver 1
+                                    </td>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                        <t t-if="o.approved_by">
+                                            <t t-esc="o.approved_by.name"/>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                        <t t-if="o.approved_by.employee_id.job_id">
+                                            <t t-esc="o.approved_by.employee_id.job_id.name"/>
+                                        </t>
+                                    </td>
+                                    <td width="10%" style="padding:5px; padding-left:10px;">
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

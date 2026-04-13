@@ -1,0 +1,60 @@
+<odoo>
+
+    <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+
+    <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+        <field name="domain"></field>
+    </record>
+
+    <data>
+        <record id="seq_purchase_requests" model="ir.sequence">
+            <field name="name">Purchase Request</field>
+            <field name="code">purchase.request</field>
+            <field name="prefix">PR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+       
+    </data>
+    <data>
+        <record id="seq_purchase_requisitions" model="ir.sequence">
+            <field name="name">Purchase Requisition</field>
+            <field name="code">purchase.requisition.new</field>
+            <field name="prefix">PR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+       
+    </data>
+    <data>
+        <record id="seq_purchase_rfqs" model="ir.sequence">
+            <field name="name">Request For Quotation</field>
+            <field name="code">bi.purchase.order</field>
+            <field name="prefix">MR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+       
+    </data>
+    <data >
+        <record id="seq_purchase_quotations" model="ir.sequence">
+            <field name="name">Purchase Quotation</field>
+            <field name="code">bi.purchase.quotation</field>
+            <field name="prefix">PQ/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- <record id="seq_picking_internal_gin" model="ir.sequence">
+            <field name="name">Picking GIN</field>
+            <field name="code">stock.picking</field>
+            <field name="prefix">GIN/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record> -->
+       
+    </data>
+</odoo>

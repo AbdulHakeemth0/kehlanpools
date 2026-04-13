@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model='ir.ui.view' id='create_rfq_form'>
+            <field name="name">Create RFQ</field>
+            <field name="model">create.rfq</field>
+            <field name="arch" type="xml">
+                <form string="Wizard">
+                    <group>
+                      <group>
+                        <field name="vendor_ids" widget="many2many_tags"/>
+                        <field name="purchase_requisition_id" invisible="1"/>
+                      </group>
+                    </group>
+                    <footer>
+                        <!-- <button name="create_rfq" type="object" string="Create RFQ" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" /> -->
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model='ir.actions.act_window' id='create_rfq_form_action'>
+            <field name="name">Create RFQ</field>
+            <field name="res_model">create.rfq</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

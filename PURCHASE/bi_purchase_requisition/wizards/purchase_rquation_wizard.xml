@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="requisition_wizard_view_form" model="ir.ui.view">
+            <field name="name">requisition_wizard.form</field>
+            <field name="model">requisition.wizard</field>
+            <field name="arch" type="xml">
+                <form string="requisition Wizard">
+                    <group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags" readonly = "1"/>
+                            <!-- <field name="partner_domain_ids" widget="many2many_tags" invisible = "1"/> -->
+                            <field name="name" readonly = "1"/>
+                            <field name="date_end" readonly = "1"/>
+                            <field name="payment_term_id" />
+                            <field name="m_number" readonly="1" />
+                            <field name="job_number" readonly="1"/>
+
+                            <field name="requisition_id" invisible="1"/>
+                        </group>
+                        <field name="requisition_wiz_line_ids">
+                            <list editable="bottom" create="false" >
+                                <field name="requisition_wiz_id" force_save="1" readonly="1" column_invisible="1"/>
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name = "product_qty"/>
+                                <field name = "price_unit"/>
+                                <field name = "product_uom"/>
+                                <field name = "price_subtotal"/>
+                                
+                                <!-- <field name = "discount"/>
+                                <field name ="taxes_id" widget="many2many_tags"/> -->
+                            </list>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="create_rfq" type="object" groups="purchase.group_purchase_manager" string="Create RFQ" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="requisition_wizard_action" model="ir.actions.act_window">
+            <field name="name">requisition wizard</field>
+            <field name="res_model">requisition.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="requisition_wizard_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

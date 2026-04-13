@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_statement_wizard,access.account.statement.wizard,bi_partner_statement_of_account.model_account_statement_wizard,base.group_user,1,1,1,1

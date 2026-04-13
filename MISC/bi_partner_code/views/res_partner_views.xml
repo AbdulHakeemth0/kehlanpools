@@ -1,0 +1,58 @@
+<odoo>
+    <!-- Form View -->
+    <record id="view_partner_form_inherit_customer_vendor_code" model="ir.ui.view">
+        <field name="name">res.partner.form.customer.vendor.code</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_customer"/>
+                <field name="is_vendor"/>
+                <field name="customer_code" invisible="is_customer != True" readonly="1" string="Customer Code"/>
+                <field name="vendor_code" invisible="is_vendor != True" readonly="1" string="Vendor Code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit and add group_by filters for customer_code and vendor_code -->
+    <record id="view_partner_search_inherit_codes" model="ir.ui.view">
+        <field name="name">res.partner.search.customer.vendor.code</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="customer_code" string="Customer Code"/>
+                <field name="vendor_code" string="Vendor Code"/>
+                <separator/>
+                <filter name="group_by_customer_code" string="Customer Code" context="{'group_by': 'customer_code'}"/>
+                <filter name="group_by_vendor_code" string="Vendor Code" context="{'group_by': 'vendor_code'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Tree View (optional) -->
+    <record id="view_partner_tree_inherit_codes" model="ir.ui.view">
+        <field name="name">res.partner.tree.customer.vendor.code</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='complete_name']" position="before">
+                <field name="customer_code" string="Customer Code"/>
+                <field name="vendor_code" string="Vendor Code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <!-- Add field to search bar -->
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

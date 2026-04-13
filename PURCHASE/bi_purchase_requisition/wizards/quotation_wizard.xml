@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="quotation_wizard_view_form" model="ir.ui.view">
+            <field name="name">quotation_wizard.form</field>
+            <field name="model">quotation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Wizard">
+                    <group>
+                        <group>
+                            <field name="partner_id" required="1"/>
+                            <field name="partner_domain_ids" widget="many2many_tags" invisible = "1"/>
+                            
+                            <field name="rfq_id" readonly="1"/>
+                            <field name="m_number" readonly="1"/>
+                            <field name="job_number" readonly="1"/>
+                        </group>
+                        <field name="quotation_wiz_line_ids">
+                            <list editable="bottom" create="false" >
+                                <field name="quotation_wiz_id" force_save="1" readonly="1" column_invisible="1"/>
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="purchase_orderline_id"/>
+                                <field name = "product_qty"/>
+                                <field name = "price_unit" column_invisible="1"/>
+                                <field name = "product_uom"/>
+                                <field name = "discount" column_invisible="1"/>
+                                <field name ="taxes_id" widget="many2many_tags" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="create_quotation" type="object" string="Create PO" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="quotation_wizard_action" model="ir.actions.act_window">
+            <field name="name">Quotation wizard</field>
+            <field name="res_model">quotation.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="quotation_wizard_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

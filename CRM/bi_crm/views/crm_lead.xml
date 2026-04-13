@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="crm_lead_custom_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.form.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='lead']" position="after">
+                <page name="pool_specification" string="Pool Specification" invisible="1">
+                    <group>
+                        <group>
+                            <field name="pool_functionality" force_save="1"/>
+                            <field name="sub_pool_functionality" invisible="pool_functionality not in ['others']"/>
+                        </group>
+                        <group>
+                            <field name="no_of_pools"/>
+                            <field name="pool_type"/>
+                        </group>
+                    </group>
+                    <field name="pool_specification_ids">
+                        <list editable="bottom" create="0">
+                            <field name="pool_specification_sl_no" force_save="1" readonly="1"/>
+                            <field name="area_of_pool" force_save="1"/>
+                            <field name="location_of_pool" force_save="1" column_invisible="1"/>
+                            <field name="pool_loc" force_save="1"/>
+                            <field name="volume_of_water" force_save="1"/>
+                            <field name="pool_filteration_system" force_save="1" column_invisible="1"/>
+                            <field name="asset_location" force_save="1"/>
+                            <field name="filteration_system" force_save="1"/>
+                            <field name="auto_dozing_system" force_save="1"/>
+                            <field name="disinfection_system" force_save="1"/>
+                            <field name="pool_finishing_type" force_save="1"/>
+                            <field name="age_of_pool" force_save="1"/>
+                            <field name="distance_from_camp" force_save="1"/>
+                            <field name="distance_from_other_pools" force_save="1"/>
+                            <field name="pools_in_circuit" force_save="1"/>
+                            <field name="visit_frequency" force_save="1"/>
+                            <field name="visit_type" force_save="1"/>
+                            <field name="sub_visit_type" column_invisible="1"/>
+                            <field name="accomodation" force_save="1"/>
+                        </list>
+                    </field>
+                </page>
+                <page name="pool_dimension" string="Pool Dimension" invisible="1">
+                    <field name="pool_dimension_ids" >
+                        <list editable="bottom" create="0">
+                            <field name="pool_dimension_sl_no" force_save="1" readonly="1"/>
+                            <field name="length" force_save="1"/>
+                            <field name="breadth" force_save="1"/>
+                            <field name="pool_depth" force_save="1"/>
+                            <field name="water_depth" force_save="1"/>
+                            <field name="water_volume" />
+                            <field name="pool_surface_area" />
+                            <field name="coping_width" force_save="1"/>
+                            <field name="coping_surface_area" />
+                            <field name="total_surface_area" />
+                        </list>
+                    </field>
+                </page>
+                <page name="pricing_structure" string="Pricing Structure" invisible="1">
+                    <group>
+                        <field name="profit_margin_percentage"/>
+                        <field name="company_over_head"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="no_of_line_manpower" invisible="1"/>
+                            <field name="no_of_line_consumables" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="no_of_line_toolsandequipments" invisible="1"/>
+                            <field name="no_of_line_otheritems" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="pricing_structure_ids" widget="section_and_note_one2many">
+                        <list editable="bottom">
+                            <control>
+                                <create name="add_line_control" string="Add a line"/>
+                                <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                            </control>
+                            <field name="display_type" column_invisible="True"/>
+                            <field name="name"/>
+                            <field name="pool_structure_sl_no" force_save="1" readonly="1" column_invisible="1"/>
+                            <field name="is_manpower" column_invisible="True"/>
+                            <field name="is_consumables" column_invisible="True"/>
+                            <field name="is_toolsequipment" column_invisible="True"/>
+                            <field name="is_otheritems" column_invisible="True"/>
+                            <field name="is_sum_line" column_invisible="True"/>
+                            <field name="item_master_id" readonly="is_sum_line" force_save="1" column_invisible="1"/>
+                            <field name="out_of" readonly="is_sum_line" force_save="1" column_invisible="1"/>
+                            <field name="description" readonly="is_sum_line" force_save="1"/>
+                            <field name="unit" readonly="is_sum_line" force_save="1"/>
+                            <field name="boq" readonly="is_sum_line" force_save="1"/>
+                            <field name="unit_rate" readonly="is_sum_line" force_save="1"/>
+                            <field name="amount" force_save="1"/>
+                            <field name="total_amount" readonly="1" force_save="1" column_invisible="1"/>
+                            <field name="remarks" readonly="is_sum_line" force_save="1"/>                           
+                        </list>
+                    </field>
+                    <group>
+                        <group class="oe_subtotal_footer">
+                            <field name="total_cost" readonly="1"/>
+                            <field name="over_head" readonly="1"/>
+                            <field name="profit_margin" readonly="1"/>
+                            <field name="total_quote_amount" widget="monetary" class="h3" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="mep_equipment_specifications" string="MEP Equipment Specifications" invisible="1">
+                    <field name="mep_equipment_ids" widget="section_and_note_one2many" >
+                        <list editable="bottom">
+                            <control>
+                                <create name="add_line_control" string="Add a line"/>
+                                <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                            </control>
+                            <field name="equipment_id"/>
+                            <field name="equipment_make" />
+                            <field name="equipment_qty"/>
+                            <field name="equipment_type" />
+                            <field name="equipment_size" />
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

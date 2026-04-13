@@ -1,0 +1,4 @@
+<odoo>
+    <menuitem id="menu_petty_cash_new" name="Petty Cash Invoice" parent="accountant.menu_accounting" sequence="10"/>
+    <menuitem id="menu_petty_cash_request" name="Requests" parent="menu_petty_cash_new" action="action_petty_cash_request" sequence="1"/>
+</odoo>

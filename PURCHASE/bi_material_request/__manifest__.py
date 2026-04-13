@@ -1,0 +1,23 @@
+{
+    'name': 'BI Material Request',
+    'summary': ''' BI Material Request ''',
+    'description': ''' BI Material Request ''',
+    'author': 'Bassam Infotech LLP',
+    'company': 'Bassam Infotech LLP',
+    'maintainer': 'Bassam Infotech LLP',
+    'website': 'https://bassaminfotech.com',
+    'category': 'purchase',
+    'depends': ['purchase','bi_purchase_requisition'],
+    'version': '18.0.1.0.4',
+    'data': [
+        'views/bi_purchase_order.xml',
+        'reports/paperformat.xml',
+        'reports/report_header.xml',
+        'reports/report_action.xml',
+        'reports/report_template.xml',
+    ],
+    'images': [],
+    'license': 'OPL-1',
+    'installable': True,
+    'application': False,
+}

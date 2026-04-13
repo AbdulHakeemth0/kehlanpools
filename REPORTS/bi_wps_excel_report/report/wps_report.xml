@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <report
+        id="action_view_report_wizard_wizard_id"
+        model="wizard.wps.salary"
+        string="Wps report"
+        report_type="xlsx"
+        name="bi_wps_excel_report.wps_order_report_xlsx"
+        file="bi_wps_excel_report.wps_order_report_xlsx"
+        /> -->
+<!-- 
+    <record id="action_view_report_wizard_wizard_id" model="ir.actions.report">
+        <field name="name">WPS Salary - Xlsx</field>
+        <field name="model">wizard.wps.salary</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">bi_wps_excel_report.wps_order_report_xlsx</field>
+        <field name="report_file">bi_wps_excel_report.wps_order_report_xlsx</field>
+    </record> -->
+
+
+
+    <record id="action_view_report_wps_salary_xlsx" model="ir.actions.report">
+        <field name="name">Activity Statement XLSX</field>
+        <field name="model">hr.employee</field>
+        <field name="type">ir.actions.report</field>
+        <field name="report_name">bi_wps_excel_report.wps_order_report_xlsx</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_file">wps_order_report</field>
+    </record>
+
+</odoo>

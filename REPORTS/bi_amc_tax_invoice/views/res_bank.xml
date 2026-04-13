@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_bank_form_view_inherit" model="ir.ui.view">
+        <field name="name">res.bank.form.view.inherit</field>
+        <field name="model">res.bank</field>
+        <field name="inherit_id" ref="base.view_res_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bic']" position="after">
+                <field name="bank_iban_no"/>
+                <field name="swift_code"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_users_view_form_inherit" model="ir.ui.view">
+        <field name="name">view.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='action_id']" position="after">
+                <field name="digital_sign"  widget="signature" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+{
+    "name": "Purchase Warranty",
+    "summary": "This module helps user to add warranty on purchase order lines.",
+    "description": "This module helps user to add warranty on purchase order lines.",
+    "version": "18.0.1.0.1",
+    "category": "Purchase",
+    "author": "Bassam Infotech LLP",
+    "website": "https://bassaminfotech.com",
+    "support": "sales@bassaminfotech.com",
+    "depends": ['base', 'purchase', 'stock', 'product'],
+    "data": [
+        "security/ir.model.access.csv",
+        "view/purchase_order.xml",
+        "view/stock_quant.xml",
+        "view/product_template.xml",
+    ],
+    "images": [],
+    "license": "OPL-1",
+    "installable": True,
+    "application": False,
+}

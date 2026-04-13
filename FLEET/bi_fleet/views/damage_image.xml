@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="damage_image_view_form" model="ir.ui.view">
+        <field name="name">damage.image.form</field>
+        <field name="model">damage.image</field>
+        <field name="arch" type="xml">
+            <form string="Damage Image">
+                <sheet>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <group>
+                                <field name="image_save_1"/>
+                                <field name="image_save_2"/>
+                                <field name="image_save_3"/>
+                                <field name="image_save_4"/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="damage_image_view_list" model="ir.ui.view">
+        <field name="name">damage.image.list</field>
+        <field name="model">damage.image</field>
+        <field name="arch" type="xml">
+            <list string="Damage Image List">
+                <field name="image_save_1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id='damage_image_action' model='ir.actions.act_window'>
+        <field name="name">Damage Image Master</field>
+        <field name="res_model">damage.image</field>
+        <field name="view_mode">list,form</field>
+        <field name="context"></field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Record
+            </p><p>
+
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="damage_image_action" 
+        parent="fleet.fleet_configuration" 
+        id="damage_image_menu" 
+        groups="base.group_user" 
+        sequence="100"/>
+</odoo>

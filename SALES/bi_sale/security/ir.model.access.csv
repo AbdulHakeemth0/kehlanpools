@@ -1,0 +1,8 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_pool_dimension_sale_user,bi_sale.pool.dimension.sale,model_pool_dimension_sale,base.group_user,1,1,1,1
+access_pricing_structure_sale_user,bi_sale.pricing.structure.sale,model_pricing_structure_sale,base.group_user,1,1,1,1
+access_pool_specification_line_sale_user,bi_sale.pool.specification.line.sale,model_pool_specification_line_sale,base.group_user,1,1,1,1
+access_mep_equipment_specifications_sale_user,bi_sale.mep.equipment.specifications.sale,model_mep_equipment_specifications_sale,base.group_user,1,1,1,1
+access_reject_reason_wizard_user,bi_sale.reject.reason.wizard,model_reject_reason_wizard,base.group_user,1,1,1,1
+access_sale_chemical_use_line_user,bi_sale.sale.chemical.use.line,model_sale_chemical_use_line,base.group_user,1,1,1,1
+access_sale_manpower_line_user,bi_sale.sale.manpower.line,model_sale_manpower_line,base.group_user,1,1,1,1

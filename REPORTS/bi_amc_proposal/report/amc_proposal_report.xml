@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_amc" model="report.paperformat">
+            <field name="name">A4 Label Sheet</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">28</field>
+            <field name="margin_bottom">13</field>
+            <field name="margin_left">22</field>
+            <field name="margin_right">18</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">32</field>
+            <!-- <field name="disable_shrinking" eval="True"/> -->
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="paperformat_amc_waterfeature" model="report.paperformat">
+            <field name="name">A4 Label Sheet</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">28</field>
+            <field name="margin_bottom">13</field>
+            <field name="margin_left">22</field>
+            <field name="margin_right">18</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">32</field>
+            <!-- <field name="disable_shrinking" eval="True"/> -->
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="paperformat_amc_corporate" model="report.paperformat">
+            <field name="name">A4 Label Sheet</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">14</field>
+            <field name="margin_right">14</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <!-- <field name="disable_shrinking" eval="True"/> -->
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- For Non-Corporate (Swimming Pool-->
+        <record id="action_report_amc_proposal" model="ir.actions.report">
+            <field name="name">Non Corporate Template</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_amc_proposal.report_amc</field>
+            <field name="report_file">bi_amc_proposal.report_amc</field>
+            <field name="paperformat_id" ref="bi_amc_proposal.paperformat_amc"/>
+            <field name="print_report_name">'%s-AMC'%(object.name.replace("/", "_"))</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+            <!-- <field name="is_swimming_template">True</field>
+            <field name="is_water_template">True</field> -->
+
+        </record>
+
+        <!-- For Corporate (Swimming Pool-->
+        <record id="action_report_amc_corporate_proposal" model="ir.actions.report">
+            <field name="name">Corporate Template</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_amc_proposal.report_amc_corporate</field>
+            <field name="report_file">bi_amc_proposal.report_amc_corporate</field>
+            <field name="paperformat_id" ref="bi_amc_proposal.paperformat_amc_corporate"/>
+            <field name="print_report_name">'Corporate AMC Proposal - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+            <!-- <field name="is_swimming_template">True</field> -->
+
+        </record>
+
+        <!-- For Non-corporate (Water Feature) -->
+        <record id="action_water_feature_non_corporate" model="ir.actions.report">
+            <field name="name">Non Corporate Template(Water Feature)</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_amc_proposal.report_water_feature_corporate</field>
+            <field name="report_file">bi_amc_proposal.report_water_feature_corporate</field>
+            <field name="paperformat_id" ref="bi_amc_proposal.paperformat_amc_waterfeature"/>
+            <field name="print_report_name">'Non Corporate - Water Feature - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

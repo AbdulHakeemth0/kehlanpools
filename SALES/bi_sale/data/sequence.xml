@@ -1,0 +1,42 @@
+<odoo>
+    <record id="seq_sale_mo_number" model="ir.sequence">
+        <field name="name">Sale Mo Number</field>
+        <field name="code">sale.mo.number</field>
+        <field name="prefix">M</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_sale_amc_custom" model="ir.sequence">
+        <field name="name">Sale Amc Custom</field>
+        <field name="code">sale.amc.custom</field>
+        <field name="prefix">KPF/AMC/QT</field>
+        <field name="padding">8</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_sale_vas_custom" model="ir.sequence">
+        <field name="name">Sale vas Custom</field>
+        <field name="code">sale.vas.custom</field>
+        <field name="prefix">KPF/VAS/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_project_project" model="ir.sequence">
+        <field name="name">Project</field>
+        <field name="code">project.project</field>
+        <field name="prefix">J</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_sale_amc_custom_for_print" model="ir.sequence">
+        <field name="name">Sale Amc Sequence</field>
+        <field name="code">sale.amc.sequence</field>
+        <field name="prefix">KPF/CT</field>
+        <field name="number_next_actual">100170</field>
+        <field name="padding">8</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

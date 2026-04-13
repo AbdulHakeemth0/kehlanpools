@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_account_analytic_plan_form_inherit_employee" model="ir.ui.view">
+        <field name="name">account.analytic.plan.form.inherit.employee</field>
+        <field name="model">account.analytic.plan</field>
+        <field name="inherit_id" ref="analytic.account_analytic_plan_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/group" position="inside">
+                <field name="is_employee"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

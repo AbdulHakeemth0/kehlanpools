@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+       <record id="petty_cash_activity_id" model="mail.activity.type">
+           <field name="name">Petty Cash Request Notification</field>
+       </record>
+   </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_job_view_form_boolean_fleet" model="ir.ui.view">
+        <field name="name">hr.job.view.form.boolean.fleet</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <label for="is_fleet_visible" string="Is Fleet Visible"/>
+                <field name="is_fleet_visible"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Inherit the bi_purchase_order_form_view -->
+        <record id="view_bi_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">bi.purchase.order.form.view.inherit</field>
+            <field name="model">bi.purchase.order</field>
+            <field name="inherit_id" ref="bi_purchase_requisition.bi_purchase_order_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='bi_purchase_line']" position="after">
+                    <page name="other_info" string="Other Info">
+                        <group>
+                            <field name="prepared_by" widget="many2one" options="{'no_create': True}"/>
+                            <field name="approved_by" widget="many2one" options="{'no_create': True}"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="inherit_bi_purchase_order_tree" model="ir.ui.view">
+            <field name="name">Inherit Bi Purchase Order Tree</field>
+            <field name="model">bi.purchase.order</field>
+            <field name="inherit_id" ref="bi_purchase_requisition.bi_purchase_order_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list/field[@name='state']" position="before">
+                    <field name="approved_by"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

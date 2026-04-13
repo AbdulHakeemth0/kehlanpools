@@ -1,0 +1,256 @@
+<odoo>
+
+    <!-- bread crumps -->
+    <template id="employee_portal" name="Common Time Off" inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'common_timeoff'" t-attf-class="breadcrumb-item #{'active' if common_timeoff else ''}">
+                <a href="/Commontimeoff?{{ keep_query() }}">Time Off</a>
+                <!-- <t t-else="">Time Off</t> -->
+            </li>
+        </xpath>
+        
+        <!-- request time off button -->
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="after">
+            <!-- Request Time Off button -->
+            <a t-if="request.httprequest.path == '/Commontimeoff'" role="button" class="btn btn-primary" href="/request_timeoff">Request Time Off</a>
+        </xpath>
+    </template>
+    
+    <template id="portal_home_menu_common_timeoff" name="Common Time Off" inherit_id="portal.portal_my_home"
+              customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/hr_holidays/static/description/icon.svg'"/>
+                <t t-set="title">Time Off</t>
+                <t t-set="url" t-value="'/Commontimeoff'"/>
+                <t t-set="text">Review all timeoff related to your account</t>
+                <t t-set="placeholder_count" t-value="'employee_portal'"/>
+            </t>
+        </div>
+    </template>
+
+    <!-- form for requesting timeoff -->
+    <template id="portal_request_new_timeoff_views" name="Request TimeOff">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title" t-value="common_timeoff"/>
+            </t>
+            <form action="/my/new_timeoff" name="NewTimeoff" onsubmit="return user_err()">
+                <t t-call="portal.portal_table">
+                    <input type="hidden" name="common_timeoff" t-att-value="common_timeoff"/>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <h1 style="text-align: center; color: #8B008B; font-weight: bold">Apply leave</h1>
+                    <h5 style="text-align: center;font-weight: bold; ">Please fill the required details</h5>
+                    <table width="100%" highet="100%">
+                        <tr width="100%">
+                            <td class="text-align-left" width="10%"></td>
+                            <td class="text-align-left" width="20%"><b>Team Members</b></td>
+                            <td class="text-align-left" width="50%">
+                                <select class="form-control" name="employee_id" required="1">
+                                    <option value="">Team Members</option>
+                                    <t t-foreach="team_members" t-as="members">
+                                        <option t-att-value="members.id">
+                                            <t t-esc="members.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+                            <td class="text-align-left" width="20%"> </td>
+                        </tr>
+                        <tr width="100%">
+                            <td class="text-align-left" width="10%"></td>
+                            <td class="text-align-left" width="20%"><b>Time Off Type</b></td>
+                            <td class="text-align-left" width="50%">
+                                <select class="form-control" name="holiday_status_id" required="1">
+                                    <option value="">Select Time Off Type</option>
+                                    <t t-foreach="timeoff_types" t-as="timeoff_type">
+                                        <option t-att-value="timeoff_type.id">
+                                            <t t-esc="timeoff_type.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+                            <td class="text-align-left" width="20%"> </td>
+                        </tr>
+                        <tr width="100%">
+                            <td class="text-align-left" width="10%"></td>
+                            <td class="text-align-left" width="20%"><b>Request Start Date</b></td>
+                            <td class="text-align-left" width="50%">
+                                <input type="date" class="form-control" name="date_from" required="1"/>
+                            </td>
+                            <td class="text-align-left" width="20%"> </td>
+                        </tr>
+                        <tr width="100%">
+                            <td class="text-align-left" width="10%"></td>
+                            <td class="text-align-left" width="20%"><b>Request End Date</b></td>
+                            <td class="text-align-left" width="50%">
+                                <input type="date" class="form-control" name="date_to" required="1"/>
+                            </td>
+                            <td class="text-align-left" width="20%"> </td>
+                        </tr>
+                        <tr width="100%">
+                            <td class="text-align-left" width="10%"></td>
+                            <td class="text-align-left" width="20%"><b>Description</b></td>
+                            <td class="text-align-left" width="50%">
+                                <input type="text" class="form-control s_website_form_input" rows="5" name="description"/>
+                            </td>
+                            <td class="text-align-left" width="20%"></td>
+                        </tr>
+                    </table>
+                    
+                    
+                </t>
+                <t t-set="employee" t-value="request.env['hr.employee'].sudo().search([('user_id', '=', request.env.user.id)], limit=1)"/>
+                <!-- <div id="sick_time_off_days" style="display: none;"><t t-set="sick_time_off_days" t-value="sum(request.env['hr.leave.allocation'].sudo().search([('employee_id', '=', employee.id), ('holiday_status_id.name', '=', 'Sick Time Off'), ('state', '=', 'validate')]).mapped('number_of_days_display'))"/><t t-esc="sick_time_off_days"/></div>
+                <div id="paid_time_off_days" style="display: none;"><t t-set="paid_time_off_days" t-value="sum(request.env['hr.leave.allocation'].sudo().search([('employee_id', '=', employee.id), ('holiday_status_id.name', '=', 'Paid Time Off'), ('state', '=', 'validate')]).mapped('number_of_days_display'))"/><t t-esc="paid_time_off_days"/></div> -->
+                <div id="sick_time_off_days" style="display: none;"><t t-set="sick_time_off_days" t-esc="sick_time_off_days"/></div>
+                <div id="paid_time_off_days" style="display: none;"><t t-set="paid_time_off_days" t-esc="paid_time_off_days"/></div>
+                                <br/>
+                <center class="mb-0 py-2 col-12">
+                    <button type="submit" class="btn btn-primary" style="width: 150px">Submit</button>
+                </center>
+                <script>
+                    function user_err() {
+                        // Get the selected time off type
+                        let timeoff_type_name = document.forms["NewTimeoff"]["holiday_status_id"].options[document.forms["NewTimeoff"]["holiday_status_id"].selectedIndex].text;
+                        let date_from = new Date(document.forms["NewTimeoff"]["date_from"].value);
+                        let date_to = new Date(document.forms["NewTimeoff"]["date_to"].value);
+                        <!-- let sick_time_off_days = document.forms["NewTimeoff"]["sick_time_off_days"].value;
+                        let paid_time_off_days = document.forms["NewTimeoff"]["paid_time_off_days"].value; -->
+
+                        if (!date_from || !date_to) {
+                            alert("Please select both start and end dates.");
+                            return false;
+                        }
+
+                        // Calculate the number of requested days
+                        let requested_days = (date_to - date_from) / (1000 * 60 * 60 * 24) + 1; // +1 to include the start date
+
+                        // Get available days based on time off type
+                        let available_days = 0;
+                        if (timeoff_type_name == 'Paid Time Off') {  
+                            available_days = parseFloat(document.getElementById('paid_time_off_days').textContent);
+                        } else if (timeoff_type_name == 'Sick Time Off') {  
+                            available_days = parseFloat(document.getElementById('sick_time_off_days').textContent);
+                        }
+
+                        // Validate requested days
+                        if (timeoff_type_name == 'Paid Time Off' || timeoff_type_name == 'Sick Time Off') {
+                            if (requested_days > available_days) {
+                                alert("You are requesting more days than available. Please adjust your request.");
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                </script>
+            </form>
+        </t>
+    </template>
+
+    <template id="portal_my_home_timeoff_views" name="My Time Off">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Time Off</t>
+            </t>
+            <t t-if="not common_timeoff">
+                <p class="alert alert-warning">There are currently no time off for your account.</p>
+            </t>
+            <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-family: Arial, sans-serif;">
+                <tr style="width: 100%;">
+                    <!-- Annual Time Off -->
+                    <td class="text-right" style="width: 20%; padding: 12px; color: #604058; font-weight: bold; text-align: right; border-bottom: 2px solid #ddd; background-color: #f0f0fa;">
+                        &#128337; <!-- Time symbol for Annual Time Off -->
+                        ANNUAL TIME OFF:
+                    </td>
+                    <td class="text-center" style="width: 5%; padding: 12px; border: 1px solid #ddd; background-color: #f7f7fb; text-align: center; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                        <t t-esc="paid_timeoff"/>
+                    </td>
+                    <td style="width: 5%;"></td>
+                    <!-- Sick Time Off -->
+                    <td class="text-right" style="width: 20%; padding: 12px; color: #604058; font-weight: bold; text-align: right; border-bottom: 2px solid #ddd; background-color: #f0f0fa;">
+                        &#10004; <!-- Checkmark symbol for Sick Time Off -->
+                        SICK TIME OFF:
+                    </td>
+                    <td class="text-center" style="width: 5%; padding: 12px; border: 1px solid #ddd; background-color: #f7f7fb; text-align: center; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                        <t t-esc="sick_timeoff"/>
+                    </td>
+                    <td style="width: 40%;"></td>
+                </tr>
+            </table>
+            
+            <style>
+                /* Mouse hover style for cells */
+                td:hover {
+                    background-color: #e0e0ff; /* Light color change on hover */
+                    cursor: pointer; /* Hand icon on hover */
+                    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+                    transform: translateY(-2px); /* Slight upward movement */
+                }
+            
+                /* Animation effect on mouse movement over icons */
+                td:hover::before {
+                    content: "⏰"; /* Add an animated clock icon before content */
+                    color: #604058;
+                    margin-right: 5px;
+                    transition: transform 0.2s ease; /* Icon moves smoothly */
+                    transform: rotate(20deg); /* Rotate the icon on hover */
+                }
+            
+                /* General table styles */
+                table td {
+                    transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+                }
+            </style>
+            
+            
+            
+            <t t-if="common_timeoff" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="text-left">Employees</th>
+                        <!-- <th class="text-center">Mode</th> -->
+                        <th class="text-center">Time off Type</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Start Date</th>
+                        <th class="text-center">End Date</th>
+<!--                        <th class="text-center">Duration</th>-->
+                        <th class="text-end">Status</th>
+                    </tr>
+                </thead>
+                <t t-foreach="common_timeoff" t-as="record">
+                    <tr>
+                        <td class='text-left'>
+                            <!-- <a t-att-href="'/my/timeoff/%d' % record.id"><t t-esc="record.employee_id.name"/></a> -->
+                            <span t-field="record.employee_id.name"/>
+                        </td>
+                        <td class='text-center'>
+                            <span t-field="record.holiday_status_id.display_name"/>
+                        </td>
+                        <td class='text-center'>
+                            <span t-field="record.name"/>
+                        </td>
+                        <td class='text-center'>
+                            <span t-field="record.request_date_from"/>
+                        </td>
+                        <td class='text-center'>
+                            <span t-field="record.request_date_to"/>
+                        </td>
+<!--                        <td class='text-end'>-->
+<!--                            <span t-field="record.number_of_days_display"/>-->
+<!--                        </td>-->
+                        <td class='text-end'>
+                            <span t-field="record.state"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template> 
+</odoo>

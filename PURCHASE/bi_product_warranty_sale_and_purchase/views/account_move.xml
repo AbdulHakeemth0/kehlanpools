@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_account_move_civil_form" model="ir.ui.view">
+            <field name="name">account.move.civil.warranty</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='invoice_line_ids']/list/field[@name='product_uom_id']"
+                       position="after">
+                        <field name="civil_warranty"/>
+                        <field name="civil_warranty_period"/>
+                        <field name="warranty_expire_date"/>
+                        <field name="invoice_percentage"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

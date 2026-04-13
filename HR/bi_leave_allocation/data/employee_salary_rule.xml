@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="employee_annual_salary_commission" model="hr.salary.rule">
+            <field name="name">Annual Leave Salary</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">ASL</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (inputs['ASL'].amount if 'ASL' in inputs else 0)</field>
+            <field name="struct_id" ref="hr_payroll.structure_002"/>
+        </record>
+
+        <record id="employee_annual_salary_commision" model="hr.payslip.input.type">
+            <field name="name">ASL</field>
+            <field name="code">ASL</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,29 @@
+<odoo>
+    <!-- Add Button in HR Leave Form -->
+    <record id="view_hr_leave_form" model="ir.ui.view">
+        <field name="name">hr.salary.wizard</field>
+        <field name="model">leave.salary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Leave">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="leave_salary_type"></field>
+                            <field name="leave_date_from" invisible="leave_salary_type != 'partial'"/>
+                        </group>
+                        <group>
+                            <field name="leave_salary_annual" force_save="1" readonly="1"></field>
+                            <field name="leave_date_to" invisible="leave_salary_type != 'partial'"/>
+                        </group>
+                        <group>
+                            <field name="hr_leave_id" invisible="1"></field>
+                        </group>
+                        <footer>
+                            <button name="action_leave_salary" string="Apply Leave Salary" type="object" class="oe_highlight"/>
+                        </footer>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

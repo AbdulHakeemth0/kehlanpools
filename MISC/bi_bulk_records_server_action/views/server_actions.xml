@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <!-- Server Action for Confirming Bulk Sales Orders -->
+        <record model="ir.actions.server" id="action_confirm_bulk_sale_order">
+            <field name="name">Confirm Bulk Sale Orders</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    for order in records:
+                        if order.state == 'draft':  
+                            order.action_confirm()
+            </field>
+        </record>
+
+        <!-- Server Action for Confirming Bulk Invoices -->
+        <record model="ir.actions.server" id="action_confirm_bulk_invoices">
+            <field name="name">Confirm Bulk Invoices</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    for invoice in records:
+                        if invoice.state == 'draft':  
+                            invoice.action_post() 
+            </field>
+        </record>
+    </data>
+</odoo>

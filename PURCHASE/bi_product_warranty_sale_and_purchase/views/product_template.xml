@@ -1,0 +1,52 @@
+<odoo>
+    <record id="product_template_only_form_view_warranty" model="ir.ui.view">
+        <field name="name">product.template.only.form.view.warranty</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="view_purchase_warranty" type="object" class="oe_stat_button"
+                icon="fa-clipboard" string="Purchase Warranty" invisible="pw_count == 0">
+                <div class="o_field_widget o_stat_info">
+                    <span class="o_stat_value">
+                        <field name="pw_count" nolabel="1"/>
+                    </span>
+                    <span class="o_stat_text">
+                        Purchase Warranty
+                    </span>
+                </div>
+            </button>
+                <button name="view_sale_warranty" type="object" class="oe_stat_button"
+                icon="fa-tag" string="Sale Warranty" invisible="sw_count == 0">
+                <div class="o_field_widget o_stat_info">
+                    <span class="o_stat_value">
+                        <field name="sw_count" nolabel="1"/>
+                    </span>
+                    <span class="o_stat_text">
+                        Sale Warranty
+                    </span>
+                </div>
+            </button>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="warranty_type" readonly="0" />
+                <field name="is_civil_warranty_type" invisible="1"/>
+                <field name="is_mep_warranty_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//group[@name='group_standard_price']" position="after">
+                <group string="Purchase" name="purchase" priority="1">
+                    <field name="purchase_warranty"/>
+                    <field name="purchase_warranty_period"/>
+                </group>
+                <group string="MEP" name="sale" priority="1" invisible="is_civil_warranty_type">
+                    <field name="sale_warranty"/>
+                    <field name="sale_warranty_period"/>
+                </group>
+                <group string="Civil" name="civil" priority="1" invisible="is_mep_warranty_type">
+                    <field name="civil_warranty"/>
+                    <field name="civil_warranty_period"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

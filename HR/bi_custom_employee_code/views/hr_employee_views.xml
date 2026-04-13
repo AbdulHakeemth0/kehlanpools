@@ -1,0 +1,62 @@
+<odoo>
+    <record id="view_employee_form_inherit_emp_seq" model="ir.ui.view">
+        <field name="name">hr.employee.form.emp.sequence</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='avatar_128']" position="after">
+                <h1><field name="emp_sequence" readonly="1"/></h1>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_inherit_emp_seq" model="ir.ui.view">
+        <field name="name">hr.employee.tree.emp.sequence</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="emp_sequence"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_employee_kanban_inherit_emp_code" model="ir.ui.view">
+        <field name="name">hr.employee.kanban.inherit.emp.code</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="default_group_by">emp_sequence</attribute>
+            </xpath>
+            <xpath expr="//templates" position="before">
+                <field name="emp_sequence"/>
+            </xpath>
+            <xpath expr="//div/field[@name='name']" position="after">
+                <div class="text-muted">
+                    <t t-if="record.emp_sequence">
+                        <b><span><t t-esc="record.emp_sequence.value"/></span></b>
+                    </t>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.search.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <!-- Add field to search bar -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="emp_sequence"/>
+            </xpath>
+
+            <!-- Add custom group by -->
+            <xpath expr="//search" position="inside">
+                <filter string="Employee Sequence" name="group_by_emp_code" context="{'group_by': 'emp_sequence'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

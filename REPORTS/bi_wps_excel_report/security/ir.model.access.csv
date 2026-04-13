@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wizard_wps_salary_user,bi_wps_excel_report.wizard.wps.salary,model_wizard_wps_salary,base.group_user,1,1,1,1

@@ -1,0 +1,97 @@
+<odoo>
+  <!-- Breadcrumbs for Payment Overview -->
+  <template id="account_payment_portal" name="Payment Breadcrumb" inherit_id="portal.portal_breadcrumbs" priority="30">
+      <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+          <li t-if="page_name == 'payments_overview'" t-attf-class="breadcrumb-item #{'active' if payment_records else ''}">
+              <a href="/payments_overview?{{ keep_query() }}">Customer Payment Overview</a>
+          </li>
+      </xpath>
+  </template>
+
+  <!-- Sidebar Menu for Payment -->
+  <template id="portal_home_menu_payment" name="Customer Payment Overview" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+      <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+          <t t-set="portal_client_category_enable" t-value="True"/>
+          <t t-set="portal_alert_category_enable" t-value="True"/>
+      </xpath>
+      <div id="portal_client_category" position="inside">
+          <t t-call="portal.portal_docs_entry">
+              <t t-set="icon" t-value="'/accountant/static/description/icon.svg'"/>
+              <t t-set="title">Customer Payment</t>
+              <t t-set="url" t-value="'/payments_overview'"/>
+              <t t-set="text">View all your payments</t>
+              <t t-set="placeholder_count" t-value="'account_payment_portal'"/>
+          </t>
+      </div>
+  </template>
+
+  <!-- Payment Overview Page Template -->
+  <template id="cust_payment_overview_template" name="Customer Payment Overview">
+      <t t-call="portal.portal_layout">
+          <t t-set="breadcrumbs_searchbar" t-value="True"/>
+          <t t-call="portal.portal_searchbar">
+              <t t-set="title">Customer Payment Overview</t>
+          </t>
+
+          <t t-if="not payment_records">
+              <p class="alert alert-warning">You currently have no payments</p>
+          </t>
+
+          <!-- Payment Records Table -->
+          <style>
+              /* Hover effect for table rows */
+              td:hover {
+                  background-color: #e0e0ff;
+                  cursor: pointer;
+                  transition: background-color 0.3s ease, transform 0.2s ease;
+                  transform: translateY(-2px);
+              }
+              /* General table styling */
+              table td {
+                  transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+              }
+          </style>
+      
+          <t t-if="payment_records">
+              <t t-call="portal.portal_table">
+                  <thead>
+                      <tr class="active">
+                          <th class="text-left">Date</th>
+                          <th class="text-center">Name</th>
+                          <th class="text-center">Journal</th>
+                          <th class="text-center">Customer</th>
+                          <th class="text-center">Payment Method</th>
+                          <th class="text-center">Amount</th>
+                          <th class="text-end">State</th>
+                      </tr>
+                  </thead>
+                  <t t-foreach="payment_records" t-as="payments">
+                      <tr>
+                          <td class="text-left">
+                              <span t-field="payments.date"/>
+                          </td>
+                          <td class="text-center">
+                              <span t-field="payments.name"/>
+                          </td>
+                          <td class="text-center">
+                              <span t-field="payments.journal_id.name"/>
+                          </td>
+                          <td class="text-center">
+                            <span t-field="payments.partner_id.name"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-field="payments.payment_method_line_id.name"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-field="payments.amount_signed"/>
+                        </td>
+                          <td class="text-end">
+                              <span t-field="payments.state"/>
+                          </td>
+                      </tr>
+                  </t>
+              </t>
+          </t>
+      </t>
+  </template>
+</odoo>

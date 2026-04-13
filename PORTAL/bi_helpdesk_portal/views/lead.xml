@@ -1,0 +1,27 @@
+<odoo>
+    <record id="crm_lead_custom_form_inherit_view" model="ir.ui.view">
+        <field name="name">crm.lead.form.custom.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='phone']" position="before">
+                <label for="ticket_id" class="oe_inline"/>
+                <div class="o_row o_row_readonly">
+                    <field name="ticket_id" readonly="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_case_opportunities_filter_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.search.opportunity.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="ticket_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

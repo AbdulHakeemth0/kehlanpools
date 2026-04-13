@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="contract_expired_activity_id" model="mail.activity.type">
+           <field name="name">Contract Expired Activity</field>
+        </record>
+
+        <record id="payslip_create_activity_id" model="mail.activity.type">
+            <field name="name">Payslip Created Activity</field>
+        </record>
+   </data>
+</odoo>

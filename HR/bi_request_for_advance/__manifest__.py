@@ -1,0 +1,22 @@
+{
+    "name": "Advance Salary",
+    "version": "18.0.0.0.0",
+    "summary": """ This module is used for the purpose of the advance salary""",
+    "description": """This module is used for the purpose of the advance salary""",
+    "author": "Bassam Infotech LLP",
+    "company": "Bassam Infotech LLP",
+    "maintainer": "Bassam Infotech LLP",
+    "website": "https://bassaminfotech.com",
+    "category": "",
+    "depends": ["hr","hr_payroll","base"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/request_for_advance.xml",
+        "data/advance_sequence.xml",
+        "data/data.xml",
+    ],
+    "images": [],
+    "license": "OPL-1",
+    "installable": True,
+    "application": False,
+}

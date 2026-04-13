@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_petty_cash_expenses_form" model="ir.ui.view">
+        <field name="name">petty.cash.expenses</field>
+        <field name="model">petty.cash.expenses</field>
+        <field name="arch" type="xml">
+            <form string="Petty Cash Expenses">
+                <header>
+<!--                    <field invisible="1" name="is_business_head"/>-->
+<!--                    <field invisible="1" name="is_account_manager"/>-->
+<!--                    <field invisible="1" name="is_audit_executive"/>-->
+                    <button class="oe_highlight" invisible="state not in ['draft']" name="button_create" string="Request for Approval" type="object"/>
+                    <!-- <button name="action_request" string="Business Head Approval" attrs="{'invisible': [('is_business_head', '=', False)]}" class="oe_highlight" type="object" /> -->
+                    <button class="oe_highlight"  name="action_account_manager_approval" string="Approve" groups="bi_petty_cash.group_petty_cash" type="object" invisible="state not in ('request')"/>
+                    <!-- <button class="oe_highlight" name="proforma_voucher" string="Audit Executive Approval" type="object"/> -->
+                    <button name="cancel_voucher" groups="bi_petty_cash.group_petty_cash" string="Cancel" type="object" invisible="state == 'cancel'"/>
+                    <button class="btn-danger" name="button_reject" groups="bi_petty_cash.group_petty_cash" string="Reject" type="object" invisible="state in ('approve','cancel')"/>
+                    <!--                    <field name="state" widget="statusbar" statusbar_visible="draft,create,posted" />-->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet string="Petty Cash Expenses">
+                    <label for="number" invisible="1" string="Petty Cash Expenses"/>
+                    <h1>
+                        <field name="number" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="state in ['posted', 'cancel']"/>
+                            <field force_save="1" name="currency_id" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                            <field invisible="pay_now == 'pay_now'" name="partner_id"/>
+                            <field name="pay_now" readonly="1" required="1" invisible="1"/>
+                            <field name="account_id" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" string="Account"/>
+                            <field  name="company_id" options="{'no_create': True}"/>
+                            <field name="reference" readonly="state == 'posted'"/>
+                        </group>
+                        <group>
+                            <field invisible="pay_now != 'pay_now'" name="journal_id" required="pay_now == 'pay_now'" widget="selection"/>
+                            <field name="document_date" readonly="state == 'posted'"/>
+                            <field name="date" readonly="state == 'posted'" string="Bill Date"/>
+                            <field invisible="pay_now == 'pay_now'" name="date_due"/>
+                            <field colspan="2" invisible="pay_now == 'pay_later'" name="name" readonly="state == 'posted'"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                            <!-- <field invisible="1" name="paid"/> -->
+                        </group>
+                        <group>
+                            <field force_save="1" name="begining_balance"/>
+                            <!-- <field name="sale_order_id" invisible="1"/> -->
+                            <field invisible="1" name="petty_cash_number"/>
+                            <field invisible="1" name="add_allocation"/>
+                        </group>
+                        <group>
+                            <field name="cash_outward"/>
+                            <field name="closing_balance"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Bill Information">
+                            <field name="line_ids" readonly="state == 'posted'" >
+                                <list editable="bottom" string="Voucher Lines">
+                                    <field name="account_id" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+
+
+
+                                    <!-- <field name="sale_order_id"/> -->
+                                    <!-- <field invisible="1" name="account_analytic_ids"/> -->
+                                    <!-- <field groups="analytic.group_analytic_accounting" name="account_analytic_id" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" required="1" string="Analytic Account"/> -->
+                                    <!--,('id','in',account_analytic_ids)-->
+                                    <!-- <field groups="analytic.group_analytic_tags" invisible="1" name="analytic_tag_ids" widget="many2many_tags"/> -->
+
+
+
+
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                     <field  name="quantity"/>
+                                     <field name="price_unit"/>
+                                     <field name="res_partner_petty_cash_id" />
+                                     <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="price_subtotal"/>
+                                    <field  name="currency_id"/>
+                                    <field  name="company_id"/>
+
+                                </list>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="tax_amount"/>
+                                    <field invisible="tax_amount == 0" name="tax_correction"/>
+                                    <field name="amount"/>
+                                </group>
+                                <field name="narration" nolabel="1" placeholder="Internal Notes"/>
+                            </group>
+                        </page>
+
+                        <page string="Journal Items">
+                            <group>
+                                <field name="account_date"/>
+                                <field name="move_id" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                </div>-->
+                <chatter/>
+            </form></field>
+    </record>
+    <record id="view_petty_cash_expenses_tree" model="ir.ui.view">
+        <field name="name">petty.cash.expenses</field>
+        <field name="model">petty.cash.expenses</field>
+        <field name="arch" type="xml">
+            <list string="Petty Cash">
+                <field name="date_month"/>
+                <field name="number" string="Document No."/>
+                <field name="employee_id" string="Custodian"/>
+                <field name="begining_balance"/>
+                <field name="cash_outward"/>
+                <field name="closing_balance"/>
+                <field name="state" string="Status"/>
+            </list></field>
+    </record>
+    <record id="view_petty_cash_expenses_action" model="ir.actions.act_window">
+        <field name="name">Petty Cash</field>
+        <field name="res_model">petty.cash.expenses</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_petty_cash_expenses_tree"/>
+        <field name="help" type="html">
+            <p>
+                Petty Cash
+            </p></field>
+    </record>
+    <menuitem id="cash_management" name="Petty Cash" parent="accountant.menu_accounting" sequence="4"/>
+
+    <menuitem action="view_petty_cash_expenses_action" id="petty_cash_expenses" name="Petty Cash Expenses" parent="cash_management" sequence="1"/>
+</odoo>

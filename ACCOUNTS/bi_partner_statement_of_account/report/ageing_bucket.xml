@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="aging_buckets">
+        <table style="width:100%;">
+            <tr style="border-left:hidden;border-left:hidden;text-align:center;font-weight:bold;line-height:30px;vertical-align:middle;">
+                <t t-foreach="bucket_labels" t-as="bl">
+                    <td class="amount" style="border-left:hidden;border-right:hidden;line-height:30px;vertical-align:middle;">
+                        <span t-out="bl" />
+                    </td>
+                </t>
+            </tr>
+            <t t-set="buckets" t-value="currency['buckets']"/>
+            <tr height="40px" style="border:hidden;border-top:1px solid black">
+                <td style="text-align:center;vertical-align:middle;border-right:hidden;">
+
+                    <span
+                            t-esc="'{0:,.2f}'.format(buckets.get('current'))"
+                    />
+                </td>
+                <td style="text-align:center;vertical-align:middle;border-right:hidden;">
+                    <span
+                            t-esc="'{0:,.2f}'.format(buckets.get('b_1_30'))"
+                    />
+                </td>
+                <td style="text-align:center;vertical-align:middle;border-right:hidden;">
+                    <span
+                            t-esc="'{0:,.2f}'.format(buckets.get('b_30_60'))"
+                    />
+                </td>
+                <td style="text-align:center;vertical-align:middle;border-right:hidden;">
+                    <span
+                            t-esc="'{0:,.2f}'.format(buckets.get('b_60_90'))"
+                    />
+                </td>
+                <td style="text-align:center;vertical-align:middle;border-right:hidden;">
+                    <span
+                            t-esc="'{0:,.2f}'.format(buckets.get('b_90_120'))"
+                    />
+                </td>
+                <td style="text-align:center;vertical-align:middle;border-right:hidden;">
+                    <span
+                            t-esc="'{0:,.2f}'.format(buckets.get('b_over_120'))"
+                    />
+                </td>
+            </tr>
+        </table>
+    </template>
+</odoo>

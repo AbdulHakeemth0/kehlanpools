@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_employee_appraisal_form_inherited" model="ir.ui.view">
+            <field name="name">hr.appraisal.form</field>
+            <field name="model">hr.appraisal</field>
+            <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_id']" position="before">
+                    <field name="is_dept_skills_passed" invisible="1"/>
+                    <field name="salary_inc"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[@name='private_note']" position="after">
+                    <page string="Department Skill">
+                        <list editable="bottom">
+                            <field name="employee_appraisal_skill_line_ids">
+                                <list editable="bottom" create="0">
+                                    <field name="skill_id" force_save="1"/>
+                                    <field name="rating_scale" force_save="1"/>
+                                </list>
+                            </field>
+                        </list>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_hr_employee_appraisal_list_inherited" model="ir.ui.view">
+            <field name="name">hr.appraisal.list</field>
+            <field name="model">hr.appraisal</field>
+            <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_tree"/>
+            <field name="mode">extension</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="salary_inc"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

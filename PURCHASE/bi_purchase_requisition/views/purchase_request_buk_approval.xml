@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_Purchase_request_approve" model="ir.actions.server">
+        <field name="name">Create Purchase requisition</field>
+        <field name="model_id" ref="bi_purchase_requisition.model_purchase_request"/>
+        <field name="binding_model_id" ref="bi_purchase_requisition.model_purchase_request"/>
+        <field name="sequence">1</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.bulk_create_purchase_requisition()
+        </field>
+    </record>
+
+</odoo>

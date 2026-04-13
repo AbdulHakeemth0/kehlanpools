@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_request_wizard_view_form" model="ir.ui.view">
+            <field name="name">purchase.request.wizard.form</field>
+            <field name="model">purchase.request.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Request Wizard">
+                    <group>
+                        <group>
+                            <field name="partner_ref" readonly="1"/>
+                            <field name="date_order" readonly="1"/>
+                            <field name="date_end" readonly="1"/>
+                            <field name="m_number" readonly="1"/>
+                            <field name="job_number" readonly="1"/>
+                            
+                            <field name="request_id" invisible="1"/>
+                        </group>
+                        <field name="requisition_wiz_line_ids">
+                            <list editable="bottom" create="false" >
+                                <field name="request_wiz_id" force_save="1" readonly="1" column_invisible="1"/>
+                                <field name="name"/>
+                                <field name="product_qty"/>
+                                <field name="price_unit" column_invisible="1"/>
+                                <field name="price_subtotal" column_invisible="1"/>
+                                
+                                
+                            </list>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="create_purchase_requisition" type="object" groups="purchase.group_purchase_manager" string="Create Purchase Request" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_request_wizard_action" model="ir.actions.act_window">
+            <field name="name">Purchase Request wizard</field>
+            <field name="res_model">purchase.request.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_request_wizard_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

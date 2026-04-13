@@ -1,0 +1,88 @@
+<odoo>
+    <template id="payment_voucher_header">
+        <div class="header" style="font-family: Verdana, sans-serif">
+            <table
+                style="width: 100%;margin-top:10px;border:hidden">
+                <tr style="height:107px;border:hidden">
+                    <td width="32%" style="text-align: start;vertical-align:middle"><img t-if="docs.company_id.logo" t-att-src="image_data_uri(docs.company_id.logo)" style="width:180px;height:80px;" alt="header image"/></td>
+                    <td width="40%" style="text-align:center; vertical-align:middle; font-size:18px; padding-top:20px; border:hidden">
+                        <t t-if="docs.company_id.name">
+                            <b>
+                            <t t-esc="docs.company_id.name.split(' AMC-Department')[0]"/><br/>
+                            AMC-Department
+                            </b>
+                        </t><br/>
+                        <div style="text-align:center; font-size:14px; font-weight:bold; margin-top:5px;">                            <t t-if="docs.journal_id.code == 'CP'">CASH PAYMENT VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'CRV'">CASH RECEIPT VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'BP'">BANK PAYMENT VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'BR101'">BANK RECEIPT VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'JV'">JOURNAL VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'SLR'">SALARIES</t>
+                            <t t-elif="docs.journal_id.code == 'STJ'">INVENTORY VALUATION</t>
+                            <t t-elif="docs.journal_id.code == 'CSH1'">AMC CASH COLLECTION</t>
+                            <t t-elif="docs.journal_id.code == 'BNK2'">BANK MUSCAT</t>
+                            <t t-elif="docs.journal_id.code == 'BNK3'">NATIONAL BANK OF OMAN</t>
+                            <t t-elif="docs.journal_id.code == 'MISC'">MISCELLANEOUS OPERATIONS</t>
+                            <t t-elif="docs.journal_id.code == 'AMC'">AMC PAYMENT VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'VAS'">VAS PAYMENT VOUCHER</t>
+                            <t t-elif="docs.journal_id.code == 'PUR'">VENDOR BILLS</t>
+                            <t t-else="">PAYMENT VOUCHER</t>
+                        </div>
+                    </td>
+                    <td width="28%" style="font-size:12px;padding-top:9px">
+                    <span t-if="env.company.name"><t t-out="env.company.name"/></span><br/>
+                    <span t-if="env.company.company_registry">C.R.No: <t t-out="env.company.company_registry"/></span> <span t-if="env.company.zip"> PO.Box - <t t-out="env.company.zip"/></span><br/>
+                    <span t-if="env.company.street" t-out="env.company.street"/><span t-if="env.company.city">, <t t-out="env.company.city"/></span><span t-if="env.company.country_id">, Sultanate of <t t-out="env.company.country_id.name"/></span><br/>
+                    <span t-if="env.company.phone" >Tel- <t t-out="env.company.phone"/></span><span t-if="env.company.fax"> Fax- <t t-out="env.company.fax"/></span><br/>
+                    <span t-if="env.company.email" >Email - <t t-out="env.company.email"/></span><br/>
+                    <span t-if="env.company.website" t-esc="env.company.website.replace('http://', '')"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border-top:1px solid black; padding-top:5px;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer" style="font-family: Verdana, sans-serif">
+            <div class="last-page">
+            <table style="width:100%; border-spacing:6px 0; border-collapse:separate;font-size:13px;">
+                <tr width="100%" style="margin-top:6px;">
+                    <th width="25%" style="text-align: center;"><b>Prepared by</b></th>
+                    <th width="25%" style="text-align: center;"><b><t t-if="docs.approval1"><t t-esc="dict(docs._fields['approval1'].selection).get(docs.approval1)"/></t></b></th>
+                    <th width="25%" style="text-align: center;"><b><t t-if="docs.approval2"><t t-esc="dict(docs._fields['approval2'].selection).get(docs.approval2)"/></t></b></th>
+                    <th width="25%" style="text-align: center;"><b>Received By</b></th>
+                </tr>
+                <tr width="100%">
+                    <t t-if="docs.prepared_by">
+                        <th width="25%" style="border:hidden;text-align: center;border-top:1px solid black;"><b><t t-if="docs.prepared_by"><t t-esc="docs.prepared_by"/></t></b></th>
+                    </t>
+                    <t t-else="">
+                        <th width="25%" style="border:hidden;text-align: center;border:hidden;"/>
+                    </t>
+                    <t t-if="docs.approval1_name">
+                        <th width="25%" style="border:hidden;text-align: center;border-top:1px solid black;"><b><t t-if="docs.approval1_name"><t t-esc="docs.approval1_name"/></t></b></th>
+                    </t>
+                    <t t-else="">
+                        <th width="25%" style="border:hidden;text-align: center;border:hidden;"/>
+                    </t>
+                    <t t-if="docs.approval2_name">
+                        <th width="25%" style="border:hidden;border-top:1px solid black;text-align: center;"><b><t t-if="docs.approval2_name"><t t-esc="docs.approval2_name"/></t></b></th>
+                    </t>
+                    <t t-else="">
+                        <th width="25%" style="border:hidden;text-align: center;border:hidden;"/>
+                    </t>
+                    <t t-if="docs.received_by">
+                        <th width="25%" style="border:hidden;border-top:1px solid black;text-align: center;"><b><t t-if="docs.received_by"><t t-esc="docs.received_by"/></t></b></th>
+                    </t>
+                    <t t-else="">
+                        <th width="25%" style="border:hidden;text-align: center;border:hidden;"/>
+                    </t>
+                </tr>
+            </table>
+            <div style="border-top:1px solid black; margin-top:5px;"></div>
+            </div>
+            <div style="width:100%;text-align: center; color: #003399;border:hidden;padding-top:20px;">Swimming Pool • Fountains • Spa • Sauna Steam Room • Indoor Landscaping</div>
+        </div>
+    </template>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+        <!-- Bi Purchase Quotation Template -->
+    <record id="bi_purchase_quotation_template" model="mail.template">
+        <field name="name">Purchase Quotation Send</field>
+        <field name="model_id" ref="bi_purchase_requisition.model_bi_purchase_quotation"/>
+        <field name="subject">Request For Quotation ({{ object.name }}) {{ object.company_id.name }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="email_from">{{ object.user_id.login }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <t t-if="object.partner_id.parent_id.display_name">
+                        Dear <t t-out="object.partner_id.parent_id.display_name or ''"></t>,
+                    </t>
+                    <t t-else="object.partner_id.display_name">
+                        Dear <t t-out="object.partner_id.display_name or ''"></t>,
+                    </t>
+                    <br/><br/>
+                    Here is in attachment a request for quotation  <strong><t t-out="object.name or ''"></t></strong>,
+                     <t t-if="object.partner_ref">
+                        with reference: <t t-out="object.partner_ref or ''"></t>,
+                    </t>   
+                    from: <t t-out="object.company_id.name or ''"></t>,
+                    <br/><br/>
+                    If you have any questions, please do not hesitate to contact us.
+                    <br/><br/>
+                    Best regards,
+                </p>
+            </div>
+        </field>
+        <!-- <field name="report_template" ref="bi_purchase_requisition.action_bi_purchase_rfq_report"/> -->
+        <!-- <field name="report_name">RFQ Report</field> -->
+    </record>
+
+    
+</data>
+</odoo>

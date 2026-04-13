@@ -1,0 +1,26 @@
+<odoo>
+    <record id="product_product_normal_form_view_inherit_warranty" model="ir.ui.view">
+        <field name="name">product.product.normal.form.view.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr="//field[@name='standard_price']" position="attributes">-->
+<!--                <attribute name="groups">bi_crm_customization.group_bi_sales_manager</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//group[@name='group_standard_price']" position="after">
+                <group string="Purchase" name="purchase" priority="1">
+                    <field name="purchase_warranty"/>
+                    <field name="purchase_warranty_period"/>
+                </group>
+                <group string="MEP" name="sale" priority="1">
+                    <field name="sale_warranty"/>
+                    <field name="sale_warranty_period"/>
+                </group>
+                <group string="Civil" name="civil" priority="1">
+                    <field name="civil_warranty"/>
+                    <field name="civil_warranty_period"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

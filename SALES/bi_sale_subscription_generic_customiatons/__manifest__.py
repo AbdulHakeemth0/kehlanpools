@@ -1,0 +1,20 @@
+{
+    'name': 'Sale Subscription Customizations',
+    'author': 'Bassam Infotech LLP',
+    'company': 'Bassam Infotech LLP',
+    'maintainer': 'Bassam Infotech LLP',
+    'website': 'https://bassaminfotech.com',
+    'version': '18.0.0.0.0',
+    'category': 'SALE SUSCRIPTION',
+    'summary': ''' Sale Subscription Customizations ''',
+    'description': '''Sale Subscription Customizations''',
+    'depends': ['sale','sale_subscription','bi_sale'],
+    'data': [
+        'views/sale_subscription.xml',
+    ],
+    'images': [],
+    'installable': True,
+    'application': False,
+    'images': [],
+    'license': 'OPL-1',
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="item_master_view_form" model="ir.ui.view">
+        <field name="name">item.master.form</field>
+        <field name="model">item.master</field>
+        <field name="arch" type="xml">
+            <form string="Item Manpower">
+                <sheet>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <group>
+                                <field name="item"/>
+                            </group>
+                            <group>
+                                <field name="is_technician"/>
+                                <field name="is_supervisory_share"/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="item_master_view_list" model="ir.ui.view">
+        <field name="name">item.master.list</field>
+        <field name="model">item.master</field>
+        <field name="arch" type="xml">
+            <list string="Item Manpower List">
+                <field name="item"/>
+            </list>
+        </field>
+    </record>
+
+    <record id='item_master_action' model='ir.actions.act_window'>
+        <field name="name">Item Manpower</field>
+        <field name="res_model">item.master</field>
+        <field name="view_mode">list,form</field>
+        <field name="context"></field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Item Manpower
+          </p><p>
+            You can add various Item Manpower.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="crm_item_master_config"
+        name="Item Manpower"
+        parent="crm.crm_menu_config"
+        action="item_master_action"
+        sequence="25"
+        groups="base.group_user"
+        active="False"/>
+</odoo>

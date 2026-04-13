@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- action for VAS template 1 -->
+        <record id="action_report_vas_proposal" model="ir.actions.report">
+            <field name="name">VAS Template1</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_amc_proposal.report_vas_proposal</field>
+            <field name="report_file">bi_amc_proposal.report.report_vas_proposal</field>
+            <field name="paperformat_id" ref="bi_amc_proposal.paperformat_vas1"/>
+            <field name="print_report_name">'VAS Proposal - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Action for VAS template 2 -->
+         <record id="action_report_vas_proposal1" model="ir.actions.report">
+            <field name="name">VAS Template2</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_amc_proposal.report_vas_proposal1</field>
+            <field name="report_file">bi_amc_proposal.report.report_vas_proposal1</field>
+            <field name="paperformat_id" ref="bi_amc_proposal.paperformat_vas2"/>
+            <field name="print_report_name">'VAS Proposal - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

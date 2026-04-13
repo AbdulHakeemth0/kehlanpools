@@ -1,0 +1,26 @@
+{
+    'name': 'BI SALE',
+    'author': 'Bassam Infotech LLP',
+    'company': 'Bassam Infotech LLP',
+    'maintainer': 'Bassam Infotech LLP',
+    'website': 'https://bassaminfotech.com',
+    'version': '18.0.2.1.7',
+    'category': 'SALE',
+    'summary': ''' BI SALE ''',
+    'description': '''BI SALE''',
+    'depends': ['sale','bi_crm','bi_vas_amc','project','sale_subscription'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/sequence.xml',
+        # 'data/seq_ir_cron.xml',
+        'views/sale_order.xml',
+        'views/project_project.xml',
+        'wizard/reject_reason.xml',
+        "data/server_action.xml"
+    ],
+    'images': [],
+    'installable': True,
+    'application': False,
+    'images': [],
+    'license': 'OPL-1',
+}

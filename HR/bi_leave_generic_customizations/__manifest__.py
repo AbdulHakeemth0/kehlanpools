@@ -1,0 +1,22 @@
+{
+    'name': 'Leave generic customizations',
+    'version': '18.0.0.0.0',
+    'summary': 'Module used for the purpose of the leave generic customisations.',
+    'category': 'HR',
+    'author': 'Bassam Infotech LLP',
+    'website': 'https://www.bassaminfotech.com',
+    'depends': ['hr', 'hr_payroll', 'base','bi_service_provision','bi_time_approval'],
+    'data': [
+        'data/data.xml',
+        'data/activity.xml',
+        'data/leave_types.xml',
+        'data/salary_rules.xml',
+        'data/contract_cron.xml',
+        'views/hr_leave_type.xml',
+        'views/hr_leave.xml',
+        'views/hr_payslip.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'OPL-1',
+}

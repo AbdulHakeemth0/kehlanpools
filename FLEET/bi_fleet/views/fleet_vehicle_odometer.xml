@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="bi_fleet_inherit_fleet_vehicle_odometer_view_tree" model="ir.ui.view">
+        <field name="name">bi.fleet.fleet.vehicle.odometer.list</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='driver_id']" position="after">
+                <field name="starting_odometer_value" />
+                <field name="ending_odometer_value" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
